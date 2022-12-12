@@ -1,5 +1,7 @@
 package Board;
 
+import org.w3c.dom.Text;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -22,23 +24,23 @@ public class Board {
     }
 
     private void addTiles(int WIDTH, int HEIGHT) {
-        int x = 0;
+        int val = 0;
         JPanel jPanel;
-        for (int i = 0; i < 8; i++) {
-            for (int j = 0; j < 8; j++) {
-                if (x % 2 == 0) {
+        for (int y = 8; y >= 1; y--) {
+            for (int x = 'a'; x <= 'h'; x++) {
+                if (val % 2 == 0) {
                     jPanel = new JPanel();
                     jPanel.setBackground(Color.WHITE);
                 } else {
                     jPanel = new JPanel();
                     jPanel.setBackground(Color.BLACK);
                 }
-                x++;
+                val++;
                 jPanel.setPreferredSize(new Dimension(WIDTH / 9, HEIGHT / 9));
+                jPanel.add(new Label("" + ((char) x) + y));
                 panel.add(jPanel);
-
             }
-            x++;
+            val++;
         }
     }
 }

@@ -1,10 +1,21 @@
 package Pieces;
 
 public enum PieceType {
-    Pawn(),
-    Knight(),
-    Bishop(),
-    Tower(),
-    Queen(),
-    King()
+    Void("Void"),
+    Pawn("Pawn"),
+    Knight("Knight"),
+    Bishop("Bishop"),
+    Tower("Tower"),
+    Queen("Queen"),
+    King("King");
+
+    private final String pieceName;
+
+    PieceType(String pieceName) {
+        this.pieceName = pieceName;
+    }
+
+    public String getPieceName() {
+        return pieceName;
+    }
 }
