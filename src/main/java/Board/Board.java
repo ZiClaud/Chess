@@ -3,6 +3,9 @@ package Board;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * Board - Graphic UI that appears with all the tiles
+ */
 public class Board {
     JFrame frame = new JFrame("Chess");
     JPanel panel = new JPanel();

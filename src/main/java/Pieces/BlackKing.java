@@ -2,6 +2,9 @@ package Pieces;
 
 import java.awt.image.BufferedImage;
 
+/**
+ * Piece: Black King
+ */
 public class BlackKing extends Piece {
     public BlackKing(char posX, int posY) {
         this.pieceType = PieceType.King;
@@ -11,7 +14,7 @@ public class BlackKing extends Piece {
     }
 
     @Override
-    BufferedImage getImg() {
-        return PieceImg.getBlackKnight();
+    public BufferedImage getImg() {
+        return PieceImg.getBlackKing();
     }
 }

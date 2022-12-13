@@ -1,6 +1,9 @@
-package Board;
+package BoardPieces;
 
-public class BoardUtils {
+/**
+ * Utils for Matrix
+ */
+public class MatrixUtils {
     public static void readMatrixBoard(Object[][] board) {
         for (int y = 8; y >= 1; y--) {
             for (int x = 'a'; x <= 'h'; x++) {
@@ -12,7 +15,7 @@ public class BoardUtils {
     }
 
     public static void readMatrixBoard(Object[][] board, char x, int y) {
-        System.out.print("" + ((char)x) + y + ":");
+        System.out.print("" + x + y + ":");
         System.out.println(board[y - 1][x - 'a'].toString() + " ");
     }
 

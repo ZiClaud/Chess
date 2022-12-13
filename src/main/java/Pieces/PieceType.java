@@ -1,5 +1,8 @@
 package Pieces;
 
+/**
+ * Types of Pieces
+ */
 public enum PieceType {
     Void("Void"),
     Pawn("Pawn"),

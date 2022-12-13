@@ -5,6 +5,9 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
+/**
+ * Get Pieces images from Resources
+ */
 public class PieceImg {
     public static BufferedImage getWhitePawn() {
         try {
