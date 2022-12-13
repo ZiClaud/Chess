@@ -41,20 +41,4 @@ public class MatrixBoard {
         matrix[7][6] = PieceType.Knight;
         matrix[7][7] = PieceType.Tower;
     }
-
-    public void readMatrixBoard() {
-        for (int y = 8; y >= 1; y--) {
-            for (int x = 'a'; x <= 'h'; x++) {
-                System.out.print("" + ((char) x) + y + ":");
-                System.out.print(matrix[y - 1][x - 'a'].getPieceName() + "\t");
-            }
-            System.out.println();
-        }
-    }
-
-    public void readMatrixBoard(char x, int y) {
-        System.out.print("" + ((char) x) + y + ":");
-        System.out.println(matrix[y - 1][x - 'a'].getPieceName() + " ");
-    }
-
 }
