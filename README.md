@@ -1,2 +1,2 @@
 # Chess
-Chess with Software Engeneering principles
+Chess made with Software Engeneering principles
