@@ -11,6 +11,7 @@ import java.util.HashSet;
 
 /**
  * Class that connects Board with Pieces
+ * Draws the Pieces into the Board
  */
 public class BoardConnectPieces {
     private final WindowBoard windowBoard;
