@@ -24,13 +24,13 @@ public abstract class Piece implements PieceInt {
         return posX;
     }
 
-    public int getPosY() {
-        return posY;
-    }
-
     public void setPosX(char posX) {
         this.posX = posX;
         isPositionAvailable();
+    }
+
+    public int getPosY() {
+        return posY;
     }
 
     public void setPosY(int posY) {
@@ -42,7 +42,7 @@ public abstract class Piece implements PieceInt {
 
     protected void isPositionAvailable() {
         if (posX < 'a' || posX > 'h' || posY < 1 || posY > 8) {
-            System.err.println("Invalid value of posXY: " + ((char) posX) + posY);
+            System.err.println("Invalid value of XY: " + posX + posY);
             throw new UnsupportedOperationException();
         }
     }

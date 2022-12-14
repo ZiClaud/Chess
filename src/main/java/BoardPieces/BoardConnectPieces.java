@@ -1,8 +1,7 @@
 package BoardPieces;
 
 import Board.WindowBoard;
-import Pieces.BlackKing;
-import Pieces.Piece;
+import Pieces.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -22,6 +21,14 @@ public class BoardConnectPieces {
         setupPieces();
     }
 
+    private static void placePieceOnPanel(Piece piece, JPanel panel) {
+        BufferedImage myPicture = piece.getImg();
+        Image scaledImage = myPicture.getScaledInstance(panel.getWidth(), panel.getHeight(), Image.SCALE_SMOOTH);
+
+        JLabel picLabel = new JLabel(new ImageIcon(scaledImage));
+        panel.add(picLabel);
+    }
+
     public WindowBoard getWindowBoard() {
         return windowBoard;
     }
@@ -30,26 +37,81 @@ public class BoardConnectPieces {
         return pieces;
     }
 
-
     // TODO: Put starting position here, with all the pieces
     private void setupPieces() {
-        Piece p1 = new BlackKing('a', 1);
-        Piece p2 = new BlackKing('b', 1);
-        Piece p3 = new BlackKing('c', 1);
-        Piece p4 = new BlackKing('d', 1);
-        Piece p5 = new BlackKing('e', 1);
-        Piece p6 = new BlackKing('f', 1);
-        Piece p7 = new BlackKing('g', 1);
-        Piece p8 = new BlackKing('h', 1);
 
-        pieces.add(p1);
-        pieces.add(p2);
-        pieces.add(p3);
-        pieces.add(p4);
-        pieces.add(p5);
-        pieces.add(p6);
-        pieces.add(p7);
-        pieces.add(p8);
+        Piece wt1 = new WhiteTower('a', 1);
+        Piece wb1 = new WhiteKnight('b', 1);
+        Piece wn1 = new WhiteBishop('c', 1);
+        Piece wq1 = new WhiteQueen('d', 1);
+        Piece wk1 = new WhiteKing('e', 1);
+        Piece wn2 = new WhiteBishop('f', 1);
+        Piece wb2 = new WhiteKnight('g', 1);
+        Piece wt2 = new WhiteTower('h', 1);
+
+        Piece wp1 = new WhitePawn('a', 2);
+        Piece wp2 = new WhitePawn('b', 2);
+        Piece wp3 = new WhitePawn('c', 2);
+        Piece wp4 = new WhitePawn('d', 2);
+        Piece wp5 = new WhitePawn('e', 2);
+        Piece wp6 = new WhitePawn('f', 2);
+        Piece wp7 = new WhitePawn('g', 2);
+        Piece wp8 = new WhitePawn('h', 2);
+
+        Piece bp1 = new BlackPawn('a', 7);
+        Piece bp2 = new BlackPawn('b', 7);
+        Piece bp3 = new BlackPawn('c', 7);
+        Piece bp4 = new BlackPawn('d', 7);
+        Piece bp5 = new BlackPawn('e', 7);
+        Piece bp6 = new BlackPawn('f', 7);
+        Piece bp7 = new BlackPawn('g', 7);
+        Piece bp8 = new BlackPawn('h', 7);
+
+        Piece bt1 = new BlackTower('a', 8);
+        Piece bb1 = new BlackKnight('b', 8);
+        Piece bn1 = new BlackBishop('c', 8);
+        Piece bq1 = new BlackQueen('d', 8);
+        Piece bk1 = new BlackKing('e', 8);
+        Piece bn2 = new BlackBishop('f', 8);
+        Piece bb2 = new BlackKnight('g', 8);
+        Piece bt2 = new BlackTower('h', 8);
+
+
+        pieces.add(wt1);
+        pieces.add(wb1);
+        pieces.add(wn1);
+        pieces.add(wq1);
+        pieces.add(wk1);
+        pieces.add(wn2);
+        pieces.add(wb2);
+        pieces.add(wt2);
+
+        pieces.add(wp1);
+        pieces.add(wp2);
+        pieces.add(wp3);
+        pieces.add(wp4);
+        pieces.add(wp5);
+        pieces.add(wp6);
+        pieces.add(wp7);
+        pieces.add(wp8);
+
+        pieces.add(bp1);
+        pieces.add(bp2);
+        pieces.add(bp3);
+        pieces.add(bp4);
+        pieces.add(bp5);
+        pieces.add(bp6);
+        pieces.add(bp7);
+        pieces.add(bp8);
+
+        pieces.add(bt1);
+        pieces.add(bb1);
+        pieces.add(bn1);
+        pieces.add(bq1);
+        pieces.add(bk1);
+        pieces.add(bn2);
+        pieces.add(bb2);
+        pieces.add(bt2);
 
         /*
         matrixPieces[0][0] = PieceType.Tower;
@@ -94,13 +156,5 @@ public class BoardConnectPieces {
         for (Piece p : pieces) {
             placePieceOnPanel(p, windowBoard.getMatrixPanels()[p.getPosY() - 1][p.getPosX() - 'a']);
         }
-    }
-
-    private static void placePieceOnPanel(Piece piece, JPanel panel) {
-        BufferedImage myPicture = piece.getImg();
-        Image scaledImage = myPicture.getScaledInstance(panel.getWidth(), panel.getHeight(), Image.SCALE_SMOOTH);
-
-        JLabel picLabel = new JLabel(new ImageIcon(scaledImage));
-        panel.add(picLabel);
     }
 }

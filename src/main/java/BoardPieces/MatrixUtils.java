@@ -1,9 +1,7 @@
 package BoardPieces;
 
-import Pieces.PieceType;
-
 /**
- * Utils for Matrix
+ * Utils for Matrix 8x8
  */
 public class MatrixUtils {
     public static void readMatrixBoard(Object[][] board) {
