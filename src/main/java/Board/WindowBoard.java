@@ -6,12 +6,12 @@ import java.awt.*;
 /**
  * Board - Graphic UI that appears with all the tiles
  */
-public class Board {
-    JFrame frame = new JFrame("Chess");
-    JPanel panel = new JPanel();
-    JPanel[][] matrixPanels = new JPanel[8][8];
+public class WindowBoard {
+    private final JFrame frame = new JFrame("Chess");
+    private final JPanel panel = new JPanel();
+    private final JPanel[][] matrixPanels = new JPanel[8][8];
 
-    public Board(int WIDTH, int HEIGHT) {
+    public WindowBoard(int WIDTH, int HEIGHT) {
         addTiles(WIDTH, HEIGHT);
         setFrame(WIDTH, HEIGHT);
     }
@@ -26,6 +26,7 @@ public class Board {
         frame.pack();
         frame.setLocationRelativeTo(null);
         frame.add(panel);
+// TODO:        frame.setResizable(false);
         frame.setVisible(true);
     }
 

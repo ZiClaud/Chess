@@ -2,9 +2,6 @@ import Pieces.PieceImg;
 import org.junit.jupiter.api.Test;
 
 public class PieceImgTest {
-    /**
-     * Test doesn't work because resources in "test" folder is different from resources from "main" folder
-     */
     @Test
     public void PieceImg() {
         assert (PieceImg.getBlackBishop() != null);

@@ -28,5 +28,22 @@ public abstract class Piece implements PieceInt {
         return posY;
     }
 
+    public void setPosX(char posX) {
+        this.posX = posX;
+        isPositionAvailable();
+    }
+
+    public void setPosY(int posY) {
+        this.posY = posY;
+        isPositionAvailable();
+    }
+
     public abstract BufferedImage getImg();
+
+    protected void isPositionAvailable() {
+        if (posX < 'a' || posX > 'h' || posY < 1 || posY > 8) {
+            System.err.println("Invalid value of posXY: " + ((char) posX) + posY);
+            throw new UnsupportedOperationException();
+        }
+    }
 }

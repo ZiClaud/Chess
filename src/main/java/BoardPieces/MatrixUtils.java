@@ -1,5 +1,7 @@
 package BoardPieces;
 
+import Pieces.PieceType;
+
 /**
  * Utils for Matrix
  */

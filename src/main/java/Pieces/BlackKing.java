@@ -11,6 +11,7 @@ public class BlackKing extends Piece {
         this.pieceColor = PieceColor.BLACK;
         this.posX = posX;
         this.posY = posY;
+        isPositionAvailable();
     }
 
     @Override
