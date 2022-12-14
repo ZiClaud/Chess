@@ -22,13 +22,14 @@ public class BoardConnectPieces {
         setupPieces();
     }
 
-    private static void placePieceOnPanel(Piece piece, JPanel panel) {
-        BufferedImage myPicture = piece.getImg();
-        Image scaledImage = myPicture.getScaledInstance(panel.getWidth(),panel.getHeight(), Image.SCALE_SMOOTH);
-
-        JLabel picLabel = new JLabel(new ImageIcon(scaledImage));
-        panel.add(picLabel);
+    public WindowBoard getWindowBoard() {
+        return windowBoard;
     }
+
+    public HashSet<Piece> getPieces() {
+        return pieces;
+    }
+
 
     // TODO: Put starting position here, with all the pieces
     private void setupPieces() {
@@ -95,11 +96,11 @@ public class BoardConnectPieces {
         }
     }
 
-    public WindowBoard getWindowBoard() {
-        return windowBoard;
-    }
+    private static void placePieceOnPanel(Piece piece, JPanel panel) {
+        BufferedImage myPicture = piece.getImg();
+        Image scaledImage = myPicture.getScaledInstance(panel.getWidth(), panel.getHeight(), Image.SCALE_SMOOTH);
 
-    public HashSet<Piece> getPieces() {
-        return pieces;
+        JLabel picLabel = new JLabel(new ImageIcon(scaledImage));
+        panel.add(picLabel);
     }
 }
