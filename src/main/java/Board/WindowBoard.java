@@ -26,8 +26,12 @@ public class WindowBoard {
         frame.pack();
         frame.setLocationRelativeTo(null);
         frame.add(panel);
-// TODO:        frame.setResizable(false);
+        frame.setResizable(false);
         frame.setVisible(true);
+    }
+
+    public void refreshFrame() {
+        frame.pack();
     }
 
     private void addTiles(int WIDTH, int HEIGHT) {

@@ -12,6 +12,7 @@ public class Main {
         BoardConnectPieces boardPieces = new BoardConnectPieces(windowBoard);
 
         boardPieces.drawPiecesOnBoard();
+//        windowBoard.refreshFrame();
 
         // Matrix board - Board v2? IDK what it is for, maybe testing, maybe I should work on this board, and what is displayed here will go in Board (aka graphfic)
 //        PieceStartingPosition pieceStartingPosition = new PieceStartingPosition();

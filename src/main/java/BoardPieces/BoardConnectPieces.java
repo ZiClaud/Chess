@@ -156,5 +156,6 @@ public class BoardConnectPieces {
         for (Piece p : pieces) {
             placePieceOnPanel(p, windowBoard.getMatrixPanels()[p.getPosY() - 1][p.getPosX() - 'a']);
         }
+        windowBoard.refreshFrame();
     }
 }
