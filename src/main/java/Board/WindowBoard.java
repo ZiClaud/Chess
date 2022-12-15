@@ -25,6 +25,7 @@ public class WindowBoard {
         frame.setPreferredSize(new Dimension(WIDTH, HEIGHT));
         frame.pack();
         frame.setLocationRelativeTo(null);
+        panel.setBackground(Color.BLACK);
         frame.add(panel);
         frame.setResizable(false);
         frame.setVisible(true);

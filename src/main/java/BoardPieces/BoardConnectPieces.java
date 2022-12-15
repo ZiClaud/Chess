@@ -21,14 +21,6 @@ public class BoardConnectPieces {
         setupPieces();
     }
 
-    private static void placePieceOnPanel(Piece piece, JPanel panel) {
-        BufferedImage myPicture = piece.getImg();
-        Image scaledImage = myPicture.getScaledInstance(panel.getWidth(), panel.getHeight(), Image.SCALE_SMOOTH);
-
-        JLabel picLabel = new JLabel(new ImageIcon(scaledImage));
-        panel.add(picLabel);
-    }
-
     public WindowBoard getWindowBoard() {
         return windowBoard;
     }
@@ -37,9 +29,54 @@ public class BoardConnectPieces {
         return pieces;
     }
 
-    // TODO: Put starting position here, with all the pieces
-    private void setupPieces() {
+    public void drawPiecesOnBoard() {
+        for (Piece p : pieces) {
+            placePieceOnPanel(p, windowBoard.getMatrixPanels()[p.getPosY() - 1][p.getPosX() - 'a']);
+        }
+    }
 
+    private void placePieceOnPanel(Piece piece, JPanel panel) {
+        BufferedImage myPicture = piece.getImg();
+        Image scaledImage = myPicture.getScaledInstance(panel.getWidth(), panel.getHeight(), Image.SCALE_SMOOTH);
+
+        JButton picLabel = new JButton(new ImageIcon(scaledImage));
+        picLabel.setOpaque(false);
+        picLabel.setContentAreaFilled(false);
+        picLabel.setBorderPainted(false);
+        picLabel.addActionListener(e -> {
+            piecePressed(piece);
+            panel.remove(picLabel);
+        });
+        panel.add(picLabel);
+        windowBoard.refreshFrame();
+    }
+
+    private void piecePressed(Piece piece) {
+        askForCoordinates(piece);
+        placePieceOnPanel(piece, windowBoard.getMatrixPanels()[piece.getPosY() - 1][piece.getPosX() - 'a']);
+    }
+
+    private void askForCoordinates(Piece piece) {
+        String input = " ";
+        while (input.charAt(0) < 'a' || input.charAt(0) > 'h') {
+            input = JOptionPane.showInputDialog(null, "Enter X coordinates for " + piece.getPieceType() + " (a-h):");
+            if (input.length() < 1){
+                input = " ";
+            }
+        }
+        piece.setPosX(input.charAt(0));
+
+        while (input.charAt(0) < '1' || input.charAt(0) > '8') {
+            input = JOptionPane.showInputDialog(null, "Enter Y coordinates for " + piece.getPieceType() + " (1-8):");
+            if (input.length() < 1){
+                input = " ";
+            }
+        }
+        piece.setPosY((input.charAt(0) - '0'));
+
+    }
+
+    private void setupPieces() {
         Piece wt1 = new WhiteTower('a', 1);
         Piece wb1 = new WhiteKnight('b', 1);
         Piece wn1 = new WhiteBishop('c', 1);
@@ -112,50 +149,5 @@ public class BoardConnectPieces {
         pieces.add(bn2);
         pieces.add(bb2);
         pieces.add(bt2);
-
-        /*
-        matrixPieces[0][0] = PieceType.Tower;
-        matrixPieces[0][1] = PieceType.Knight;
-        matrixPieces[0][2] = PieceType.Bishop;
-        matrixPieces[0][3] = PieceType.Queen;
-        matrixPieces[0][4] = PieceType.King;
-        matrixPieces[0][5] = PieceType.Bishop;
-        matrixPieces[0][6] = PieceType.Knight;
-        matrixPieces[0][7] = PieceType.Tower;
-
-        matrixPieces[7][0] = PieceType.Tower;
-        matrixPieces[7][1] = PieceType.Knight;
-        matrixPieces[7][2] = PieceType.Bishop;
-        matrixPieces[7][3] = PieceType.Queen;
-        matrixPieces[7][4] = PieceType.King;
-        matrixPieces[7][5] = PieceType.Bishop;
-        matrixPieces[7][6] = PieceType.Knight;
-        matrixPieces[7][7] = PieceType.Tower;
-
-        matrixPieces[1][0] = PieceType.Pawn;
-        matrixPieces[1][1] = PieceType.Pawn;
-        matrixPieces[1][2] = PieceType.Pawn;
-        matrixPieces[1][3] = PieceType.Pawn;
-        matrixPieces[1][4] = PieceType.Pawn;
-        matrixPieces[1][5] = PieceType.Pawn;
-        matrixPieces[1][6] = PieceType.Pawn;
-        matrixPieces[1][7] = PieceType.Pawn;
-
-        matrixPieces[6][0] = PieceType.Pawn;
-        matrixPieces[6][1] = PieceType.Pawn;
-        matrixPieces[6][2] = PieceType.Pawn;
-        matrixPieces[6][3] = PieceType.Pawn;
-        matrixPieces[6][4] = PieceType.Pawn;
-        matrixPieces[6][5] = PieceType.Pawn;
-        matrixPieces[6][6] = PieceType.Pawn;
-        matrixPieces[6][7] = PieceType.Pawn;
-        */
-    }
-
-    public void drawPiecesOnBoard() {
-        for (Piece p : pieces) {
-            placePieceOnPanel(p, windowBoard.getMatrixPanels()[p.getPosY() - 1][p.getPosX() - 'a']);
-        }
-        windowBoard.refreshFrame();
     }
 }
