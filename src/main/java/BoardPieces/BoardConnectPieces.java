@@ -57,23 +57,23 @@ public class BoardConnectPieces {
     }
 
     private void askForCoordinates(Piece piece) {
-        String input = " ";
-        while (input.charAt(0) < 'a' || input.charAt(0) > 'h') {
-            input = JOptionPane.showInputDialog(null, "Enter X coordinates for " + piece.getPieceType() + " (a-h):");
-            if (input.length() < 1){
-                input = " ";
-            }
-        }
-        piece.setPosX(input.charAt(0));
+        Character[] optionsX = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'};
+        Character x;
 
-        while (input.charAt(0) < '1' || input.charAt(0) > '8') {
-            input = JOptionPane.showInputDialog(null, "Enter Y coordinates for " + piece.getPieceType() + " (1-8):");
-            if (input.length() < 1){
-                input = " ";
-            }
-        }
-        piece.setPosY((input.charAt(0) - '0'));
+        // TODO: If X/Y == NULL it means player pressed "cancel", so undo move
+        do {
+            x = (Character) JOptionPane.showInputDialog(null, "Board size", "Choose the board size", JOptionPane.QUESTION_MESSAGE, null, optionsX, optionsX[0]);
+        } while (x == null);
 
+        Integer[] optionsY = {1, 2, 3, 4, 5, 6, 7, 8};
+        Integer y;
+        do {
+
+            y = (Integer) JOptionPane.showInputDialog(null, "Board size", "Choose the board size", JOptionPane.QUESTION_MESSAGE, null, optionsY, optionsY[0]);
+        } while (y == null);
+
+        piece.setPosX(x);
+        piece.setPosY(y);
     }
 
     private void setupPieces() {
