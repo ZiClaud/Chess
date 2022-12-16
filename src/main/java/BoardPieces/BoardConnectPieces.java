@@ -35,6 +35,12 @@ public class BoardConnectPieces {
         }
     }
 
+    private void cleanPanel(JPanel panel){
+        panel.removeAll();
+        panel.revalidate();
+        panel.repaint();
+    }
+
     private void placePieceOnPanel(Piece piece, JPanel panel) {
         BufferedImage myPicture = piece.getImg();
         Image scaledImage = myPicture.getScaledInstance(panel.getWidth(), panel.getHeight(), Image.SCALE_SMOOTH);
@@ -44,9 +50,10 @@ public class BoardConnectPieces {
         picLabel.setContentAreaFilled(false);
         picLabel.setBorderPainted(false);
         picLabel.addActionListener(e -> {
+            cleanPanel(panel);
             piecePressed(piece);
-            panel.remove(picLabel);
         });
+        cleanPanel(panel);
         panel.add(picLabel);
         windowBoard.refreshFrame();
     }
@@ -61,17 +68,19 @@ public class BoardConnectPieces {
         Character x;
 
         // TODO: If X/Y == NULL it means player pressed "cancel", so undo move
-        do {
-            x = (Character) JOptionPane.showInputDialog(null, "Board size", "Choose the board size", JOptionPane.QUESTION_MESSAGE, null, optionsX, optionsX[0]);
-        } while (x == null);
+        x = (Character) JOptionPane.showInputDialog(null, "Board size", "Choose the board size", JOptionPane.QUESTION_MESSAGE, null, optionsX, optionsX[0]);
+
+        if (x == null) {
+            return;
+        }
 
         Integer[] optionsY = {1, 2, 3, 4, 5, 6, 7, 8};
         Integer y;
-        do {
+        y = (Integer) JOptionPane.showInputDialog(null, "Board size", "Choose the board size", JOptionPane.QUESTION_MESSAGE, null, optionsY, optionsY[0]);
 
-            y = (Integer) JOptionPane.showInputDialog(null, "Board size", "Choose the board size", JOptionPane.QUESTION_MESSAGE, null, optionsY, optionsY[0]);
-        } while (y == null);
-
+        if (y == null) {
+            return;
+        }
         piece.setPosX(x);
         piece.setPosY(y);
     }
