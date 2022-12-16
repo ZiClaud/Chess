@@ -13,9 +13,4 @@ public class WhiteKnight extends Piece {
         this.posY = posY;
         isPositionAvailable();
     }
-
-    @Override
-    public BufferedImage getImg() {
-        return PieceImg.getWhiteKnight();
-    }
 }

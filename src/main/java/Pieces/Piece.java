@@ -38,7 +38,9 @@ public abstract class Piece implements PieceInt {
         isPositionAvailable();
     }
 
-    public abstract BufferedImage getImg();
+    public BufferedImage getImg(){
+        return PieceImg.getPieceImg(this);
+    }
 
     protected void isPositionAvailable() {
         if (posX < 'a' || posX > 'h' || posY < 1 || posY > 8) {
