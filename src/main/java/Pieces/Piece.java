@@ -38,7 +38,7 @@ public abstract class Piece implements PieceInt {
         isPositionAvailable();
     }
 
-    public BufferedImage getImg(){
+    public BufferedImage getImg() {
         return PieceImg.getPieceImg(this);
     }
 

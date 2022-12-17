@@ -4,7 +4,6 @@ package Pieces;
  * Types of Pieces
  */
 public enum PieceType {
-    Void("Void"),
     Pawn("Pawn"),
     Knight("Knight"),
     Bishop("Bishop"),

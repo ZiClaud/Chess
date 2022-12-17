@@ -10,13 +10,9 @@ import java.io.IOException;
  * Get Pieces images from Resources
  */
 public class PieceImg {
-    public static BufferedImage getVoid() {
-        return new BufferedImage(600, 600, BufferedImage.TYPE_INT_ARGB);
-    }
-
-    public static BufferedImage getPieceImg(Piece p){
-        if (p.getPieceColor() == Color.WHITE){
-            if (p.getPieceType() == PieceType.Pawn){
+    public static BufferedImage getPieceImg(Piece p) {
+        if (p.getPieceColor() == Color.WHITE) {
+            if (p.getPieceType() == PieceType.Pawn) {
                 return getWhitePawn();
             } else if (p.getPieceType() == PieceType.Knight) {
                 return getWhiteKnight();
@@ -30,7 +26,7 @@ public class PieceImg {
                 return getWhiteKing();
             }
         } else {
-            if (p.getPieceType() == PieceType.Pawn){
+            if (p.getPieceType() == PieceType.Pawn) {
                 return getBlackPawn();
             } else if (p.getPieceType() == PieceType.Knight) {
                 return getBlackKnight();

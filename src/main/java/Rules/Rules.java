@@ -33,68 +33,46 @@ public class Rules {
         // TODO: El Passant
         // TODO: if piece on top right and top left
         if (piece.getPieceColor() == Color.WHITE) {
-            if (piece.getPosX() == x &&
+            return piece.getPosX() == x &&
                     (piece.getPosY() == y - 1 ||
-                            piece.getPosY() == y - 2)) {
-                return true;
-            } else {
-                return false;
-            }
+                            piece.getPosY() == y - 2);
         } else {    // If pawn is black
-            if (piece.getPosX() == x &&
+            return piece.getPosX() == x &&
                     (piece.getPosY() == y + 1 ||
-                            piece.getPosY() == y + 2)) {
-                return true;
-            } else {
-                return false;
-            }
+                            piece.getPosY() == y + 2);
         }
     }
 
     private static boolean canBishopMoveHere(Piece piece, char x, int y) {
         char pX = piece.getPosX();
         int pY = piece.getPosY();
-        if ((pX + pY == x + y) ||
-                (pX - pY == x - y)) {
-            return true;
-        }
-            return false;
+        return (pX + pY == x + y) ||
+                (pX - pY == x - y);
     }
 
     private static boolean canKnightMoveHere(Piece piece, char x, int y) {
         char pX = piece.getPosX();
         int pY = piece.getPosY();
 
-        if ((x == pX + 2 && y == pY + 1) ||
+        return (x == pX + 2 && y == pY + 1) ||
                 (x == pX + 1 && y == pY + 2) ||
                 (x == pX - 2 && y == pY - 1) ||
                 (x == pX - 1 && y == pY - 2) ||
                 (x == pX + 2 && y == pY - 1) ||
                 (x == pX - 1 && y == pY + 2) ||
                 (x == pX - 2 && y == pY + 1) ||
-                (x == pX + 1 && y == pY - 2)
-        ) {
-            return true;
-        }
-
-        return false;
+                (x == pX + 1 && y == pY - 2);
     }
 
     private static boolean canTowerMoveHere(Piece piece, char x, int y) {
-        if (x == piece.getPosX() || y == piece.getPosY()) {
-            return true;
-        }
-        return false;
+        return x == piece.getPosX() || y == piece.getPosY();
     }
 
     private static boolean canKingMoveHere(Piece piece, char x, int y) {
-        if ((x + 1 == piece.getPosX() || x - 1 == piece.getPosX()) &&
+        return (x + 1 == piece.getPosX() || x - 1 == piece.getPosX()) &&
                 (y + 1 == piece.getPosY() || y - 1 == piece.getPosY()) ||
                 (x == piece.getPosX()) && (y + 1 == piece.getPosY() || y - 1 == piece.getPosY()) ||
-                (y == piece.getPosY()) && (x + 1 == piece.getPosX() || x - 1 == piece.getPosX())) {
-            return true;
-        }
-        return false;
+                (y == piece.getPosY()) && (x + 1 == piece.getPosX() || x - 1 == piece.getPosX());
     }
 
     private static boolean canQueenMoveHere(Piece piece, char x, int y) {

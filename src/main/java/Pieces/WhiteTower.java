@@ -1,6 +1,5 @@
 package Pieces;
 
-import java.awt.image.BufferedImage;
 
 /**
  * Piece: Black King

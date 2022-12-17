@@ -22,10 +22,6 @@ public class BoardConnectPieces {
         setupPieces();
     }
 
-    public WindowBoard getWindowBoard() {
-        return windowBoard;
-    }
-
     public HashSet<Piece> getPieces() {
         return pieces;
     }
@@ -36,7 +32,7 @@ public class BoardConnectPieces {
         }
     }
 
-    private void cleanPanel(JPanel panel){
+    private void cleanPanel(JPanel panel) {
         panel.removeAll();
         panel.revalidate();
         panel.repaint();
