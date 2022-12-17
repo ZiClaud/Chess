@@ -13,7 +13,7 @@ public class Rules {
     public static boolean canPieceMoveHere(Piece piece, BoardConnectPieces boardConnectPieces, char x, int y) {
         PieceType pieceType = piece.getPieceType();
         if (pieceType == PieceType.Pawn) {
-            return canPawnMoveHere(piece, x, y) && isntSameColorPieceThere(piece, boardConnectPieces, x, y);
+            return canPawnMoveHere(piece, boardConnectPieces, x, y) && isntSameColorPieceThere(piece, boardConnectPieces, x, y);
         } else if (pieceType == PieceType.Bishop) {
             return canBishopMoveHere(piece, x, y) && isntSameColorPieceThere(piece, boardConnectPieces, x, y);
         } else if (pieceType == PieceType.Knight) {
@@ -30,6 +30,15 @@ public class Rules {
         return false;
     }
 
+    private static boolean isPieceThere(Piece piece, BoardConnectPieces boardConnectPieces, char x, int y) {
+        for (Piece boardPiece : boardConnectPieces.getPieces()) {
+            if (boardPiece.getPosX() == x && boardPiece.getPosY() == y) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     private static boolean isntSameColorPieceThere(Piece piece, BoardConnectPieces boardConnectPieces, char x, int y) {
         for (Piece boardPiece : boardConnectPieces.getPieces()) {
             if (boardPiece.getPosX() == x && boardPiece.getPosY() == y) {
@@ -41,17 +50,58 @@ public class Rules {
         return true;
     }
 
-    private static boolean canPawnMoveHere(Piece piece, char x, int y) {
+    private static boolean canPawnMoveHere(Piece piece, BoardConnectPieces boardConnectPieces, char x, int y) {
         // TODO: El Passant
-        // TODO: if piece on top right and top left
         if (piece.getPieceColor() == Color.WHITE) {
-            return piece.getPosX() == x &&
-                    (piece.getPosY() == y - 1 ||
-                            piece.getPosY() == y - 2);
+            // Move top right/top left
+            if (x == piece.getPosX() + 1 && y == piece.getPosY() + 1 ||
+                    x == piece.getPosX() - 1 && y == piece.getPosY() + 1) {
+                if (isPieceThere(piece, boardConnectPieces, ((char) (piece.getPosX() + 1)), piece.getPosY() + 1) ||
+                        isPieceThere(piece, boardConnectPieces, ((char) (piece.getPosX() - 1)), piece.getPosY() + 1)) {
+                    return true;
+                }
+            }
+
+            // stops if path is blocked
+            if (x == piece.getPosX() && y == piece.getPosY() + 1) {
+                if (isPieceThere(piece, boardConnectPieces, x, y)){
+                    return false;
+                }
+            }
+
+            if (piece.getPosY() == 2) {
+                return piece.getPosX() == x &&
+                        (piece.getPosY() == y - 1 ||
+                                piece.getPosY() == y - 2);
+            } else {
+                return piece.getPosX() == x &&
+                        piece.getPosY() == y - 1;
+            }
         } else {    // If pawn is black
-            return piece.getPosX() == x &&
-                    (piece.getPosY() == y + 1 ||
-                            piece.getPosY() == y + 2);
+            // Move top right/top left
+            if (x == piece.getPosX() - 1 && y == piece.getPosY() - 1 ||
+                    x == piece.getPosX() + 1 && y == piece.getPosY() - 1) {
+                if (isPieceThere(piece, boardConnectPieces, ((char) (piece.getPosX() - 1)), piece.getPosY() - 1) ||
+                        isPieceThere(piece, boardConnectPieces, ((char) (piece.getPosX() + 1)), piece.getPosY() - 1)) {
+                    return true;
+                }
+            }
+
+            // stops if path is blocked
+            if (x == piece.getPosX() && y == piece.getPosY() - 1) {
+                if (isPieceThere(piece, boardConnectPieces, x, y)){
+                    return false;
+                }
+            }
+
+            if (piece.getPosY() == 7) {
+                return piece.getPosX() == x &&
+                        (piece.getPosY() == y + 1 ||
+                                piece.getPosY() == y + 2);
+            } else {
+                return piece.getPosX() == x &&
+                        piece.getPosY() == y + 1;
+            }
         }
     }
 
@@ -63,6 +113,8 @@ public class Rules {
     }
 
     private static boolean canKnightMoveHere(Piece piece, char x, int y) {
+        // TODO: Caslte
+
         char pX = piece.getPosX();
         int pY = piece.getPosY();
 
