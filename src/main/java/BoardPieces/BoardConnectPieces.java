@@ -66,7 +66,7 @@ public class BoardConnectPieces {
     private void showPossibleMoves(Piece piece) {
         for (int y = 8; y >= 1; y--) {
             for (char x = 'a'; x <= 'h'; x++) {
-                if (Rules.canPieceMoveHere(piece, x, y)) {
+                if (Rules.canPieceMoveHere(piece, this, x, y)) {
                     windowBoard.getMatrixPanels()[y - 1][x - 'a'].setBackground(Color.GRAY);
                 }
             }
@@ -91,8 +91,11 @@ public class BoardConnectPieces {
         if (y == null) {
             return;
         }
-        piece.setPosX(x);
-        piece.setPosY(y);
+
+        if (Rules.canPieceMoveHere(piece, this, x, y)) {
+            piece.setPosX(x);
+            piece.setPosY(y);
+        }
     }
 
     private void setupPieces() {
