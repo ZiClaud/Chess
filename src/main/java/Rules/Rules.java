@@ -78,7 +78,7 @@ public class Rules {
                         piece.getPosY() == y - 1;
             }
         } else {    // If pawn is black
-            // Move top right/top left
+            // Move bottom right/bottom left
             if (x == piece.getPosX() - 1 && y == piece.getPosY() - 1 ||
                     x == piece.getPosX() + 1 && y == piece.getPosY() - 1) {
                 if (isPieceThere(piece, boardConnectPieces, ((char) (piece.getPosX() - 1)), piece.getPosY() - 1) ||
@@ -114,7 +114,7 @@ public class Rules {
 
     private static boolean canKnightMoveHere(Piece piece, char x, int y) {
         // TODO: Caslte
-
+        // TODO: Don't let king walk in a capturable tile
         char pX = piece.getPosX();
         int pY = piece.getPosY();
 
