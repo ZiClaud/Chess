@@ -13,6 +13,7 @@ public class WindowBoard {
 
     public WindowBoard(int WIDTH, int HEIGHT) {
         addTiles(WIDTH, HEIGHT);
+        colorTiles();
         setFrame(WIDTH, HEIGHT);
     }
 
@@ -40,16 +41,26 @@ public class WindowBoard {
         for (int y = 8; y >= 1; y--) {
             for (int x = 'a'; x <= 'h'; x++) {
                 JPanel jPanel = new JPanel(new GridLayout());
-                if (val % 2 == 0) {
-                    jPanel.setBackground(Color.WHITE);
-                } else {
-                    jPanel.setBackground(Color.DARK_GRAY);
-                }
-                val++;
                 jPanel.setPreferredSize(new Dimension(WIDTH / 9, HEIGHT / 9));
 //                jPanel.add(new Label("" + ((char) x) + y));
                 matrixPanels[y - 1][x - 'a'] = jPanel;
                 panel.add(jPanel);
+                val++;
+            }
+            val++;
+        }
+    }
+
+    public void colorTiles(){
+        int val = 0;
+        for (int y = 8; y >= 1; y--) {
+            for (int x = 'a'; x <= 'h'; x++) {
+                if (val % 2 == 0) {
+                    matrixPanels[y - 1][x - 'a'].setBackground(Color.WHITE);
+                } else {
+                    matrixPanels[y - 1][x - 'a'].setBackground(Color.DARK_GRAY);
+                }
+                val++;
             }
             val++;
         }
