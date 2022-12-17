@@ -2,7 +2,7 @@ package BoardPieces;
 
 import Board.WindowBoard;
 import Pieces.*;
-import Rules.Rules;
+import Rules.PiecesRules;
 
 import javax.swing.*;
 import java.awt.*;
@@ -66,7 +66,7 @@ public class BoardConnectPieces {
     private void showPossibleMoves(Piece piece) {
         for (int y = 8; y >= 1; y--) {
             for (char x = 'a'; x <= 'h'; x++) {
-                if (Rules.canPieceMoveHere(piece, this, x, y)) {
+                if (PiecesRules.canPieceMoveHere(piece, this, x, y)) {
                     windowBoard.getMatrixPanels()[y - 1][x - 'a'].setBackground(Color.GRAY);
                 }
             }
@@ -92,7 +92,7 @@ public class BoardConnectPieces {
             return;
         }
 
-        if (Rules.canPieceMoveHere(piece, this, x, y)) {
+        if (PiecesRules.canPieceMoveHere(piece, this, x, y)) {
             piece.setPosX(x);
             piece.setPosY(y);
         }

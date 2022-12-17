@@ -31,4 +31,20 @@ public class Game {
 
         return boardSize;
     }
+
+    public Player getWhitePlayer() {
+        return white;
+    }
+
+    public Player getBlackPlayer() {
+        return black;
+    }
+
+    public WindowBoard getWindowBoard() {
+        return windowBoard;
+    }
+
+    public BoardConnectPieces getBoardPieces() {
+        return boardPieces;
+    }
 }
