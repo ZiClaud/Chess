@@ -3,6 +3,8 @@ package Rules;
 import BoardPieces.BoardConnectPieces;
 import Pieces.Piece;
 
+import java.awt.*;
+
 public class PawnRules {
     // TODO: El Passant
     protected static boolean canWhitePawnMoveHere(Piece piece, BoardConnectPieces boardConnectPieces, char x, int y) {
@@ -20,7 +22,7 @@ public class PawnRules {
         return (piece.getPosX() == x && piece.getPosY() == y - 1);
     }
 
-    public static boolean canBlackPawnMoveHere(Piece piece, BoardConnectPieces boardConnectPieces, char x, int y) {
+    protected static boolean canBlackPawnMoveHere(Piece piece, BoardConnectPieces boardConnectPieces, char x, int y) {
         if (PawnRules.canBlackPawnEat(piece, boardConnectPieces, x, y)) {
             return true;
         }

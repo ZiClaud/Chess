@@ -19,7 +19,7 @@ public class PiecesRules {
         } else if (pieceType == PieceType.Knight) {
             return canKnightMoveHere(piece, x, y) && isntSameColorPieceThere(piece, boardConnectPieces, x, y);
         } else if (pieceType == PieceType.Tower) {
-            return canTowerMoveHere(piece, x, y) && isntSameColorPieceThere(piece, boardConnectPieces, x, y);
+            return canTowerMoveHere(piece, x, y) && isntSameColorPieceThere(piece, boardConnectPieces, x, y) && ComplexRules.isThisALegalMove(piece, boardConnectPieces.getPieces(), x ,y);
         } else if (pieceType == PieceType.King) {
             return canKingMoveHere(piece, x, y) && isntSameColorPieceThere(piece, boardConnectPieces, x, y);
         } else if (pieceType == PieceType.Queen) {
@@ -53,9 +53,12 @@ public class PiecesRules {
     private static boolean canPawnMoveHere(Piece piece, BoardConnectPieces boardConnectPieces, char x, int y) {
         if (piece.getPieceColor() == Color.WHITE) {
             return PawnRules.canWhitePawnMoveHere(piece, boardConnectPieces, x, y);
-        } else {    // If pawn is black
+        }
+        if (piece.getPieceColor() == Color.BLACK) {
             return PawnRules.canBlackPawnMoveHere(piece, boardConnectPieces, x, y);
         }
+        assert (false);
+        return false;
     }
 
 
