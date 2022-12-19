@@ -16,9 +16,15 @@ public class ComplexRules {
             return true;
         } else if (pieceType == PieceType.Tower && isTowerGoingThroughPiecesToGetThere(piece, pieces, x, y)) {
             return true;
+        } else if (pieceType == PieceType.Queen && isQueenGoingThroughPiecesToGetThere(piece, pieces, x, y)) {
+            return true;
         }
 
         return false;
+    }
+
+    private static boolean isQueenGoingThroughPiecesToGetThere(Piece queen, HashSet<Piece> pieces, char x, int y) {
+        return (isBishopGoingThroughPiecesToGetThere(queen, pieces, x, y) || isTowerGoingThroughPiecesToGetThere(queen, pieces, x, y));
     }
 
     private static boolean isBishopGoingThroughPiecesToGetThere(Piece bishop, HashSet<Piece> pieces, char x, int y) {

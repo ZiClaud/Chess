@@ -23,7 +23,7 @@ public class PiecesRules {
         } else if (pieceType == PieceType.King) {
             return canKingMoveHere(piece, x, y) && isntSameColorPieceThere(piece, boardConnectPieces, x, y);
         } else if (pieceType == PieceType.Queen) {
-            return canQueenMoveHere(piece, x, y) && isntSameColorPieceThere(piece, boardConnectPieces, x, y);
+            return canQueenMoveHere(piece, x, y) && isntSameColorPieceThere(piece, boardConnectPieces, x, y) && ComplexRules.isThisALegalMove(piece, boardConnectPieces.getPieces(), x, y);
         }
 
         assert (false);
