@@ -25,9 +25,11 @@ public class Game {
     private Integer askBoardSize() {
         Integer[] options = {600, 800, 1000, 1200, 1400};
         Integer boardSize;
-        do {
-            boardSize = (Integer) JOptionPane.showInputDialog(null, "Board size", "Choose the board size", JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
-        } while (!Arrays.stream(options).toList().contains(boardSize));
+        boardSize = (Integer) JOptionPane.showInputDialog(null, "Board size", "Choose the board size", JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+
+        if (!Arrays.stream(options).toList().contains(boardSize)) {
+            boardSize = options[0];
+        }
 
         return boardSize;
     }

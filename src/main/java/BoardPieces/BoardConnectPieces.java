@@ -14,8 +14,10 @@ import java.util.HashSet;
  * Draws the Pieces into the Board
  */
 public class BoardConnectPieces {
+    // TODO IMPORTANT: Maybe refresh board every time somebody clicks anything, if a piece is clicked, first replace everything, then show available moves for the piece, on new click everything will reset
     private final WindowBoard windowBoard;
     private final HashSet<Piece> pieces = new HashSet<>();
+    private final boolean[][] possibleMovesPanels = new boolean[8][8];
 
     public BoardConnectPieces(WindowBoard windowBoard) {
         this.windowBoard = windowBoard;
@@ -57,44 +59,47 @@ public class BoardConnectPieces {
 
     private void piecePressed(Piece piece) {
         showPossibleMoves(piece);
-        askForCoordinates(piece);
-
-        windowBoard.colorTiles();
-        placePieceOnPanel(piece, windowBoard.getMatrixPanels()[piece.getPosY() - 1][piece.getPosX() - 'a']);
+//        askForCoordinates(piece);
     }
 
     private void showPossibleMoves(Piece piece) {
         for (int y = 8; y >= 1; y--) {
             for (char x = 'a'; x <= 'h'; x++) {
                 if (PiecesRules.canPieceMoveHere(piece, this, x, y)) {
+                    char finalX = x;
+                    int finalY = y;
+
                     windowBoard.getMatrixPanels()[y - 1][x - 'a'].setBackground(Color.GRAY);
+                    JButton moveHereBT = new JButton();
+                    moveHereBT.setBackground(Color.GRAY);
+                    moveHereBT.addActionListener(actionEvent -> {
+                        removeMoveToCoordinatesPanels(windowBoard);
+                        moveToCoordinates(piece, finalX, finalY);
+                    });
+                    windowBoard.getMatrixPanels()[y - 1][x - 'a'].add(moveHereBT);
+                    possibleMovesPanels[y - 1][x - 'a'] = true;
                 }
             }
         }
     }
 
-    private void askForCoordinates(Piece piece) {
-        Character[] optionsX = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'};
-        Character x;
+    private void moveToCoordinates(Piece piece, char x, int y) {
+        piece.setPosX(x);
+        piece.setPosY(y);
+        possibleMovesPanels[y - 1][x - 'a'] = false;
 
-        // TODO: If X/Y == NULL it means player pressed "cancel", so undo move
-        x = (Character) JOptionPane.showInputDialog(null, "Board size", "Choose the board size", JOptionPane.QUESTION_MESSAGE, null, optionsX, optionsX[0]);
+        windowBoard.colorTiles();
+        placePieceOnPanel(piece, windowBoard.getMatrixPanels()[piece.getPosY() - 1][piece.getPosX() - 'a']);
+        removeMoveToCoordinatesPanels(windowBoard);
+    }
 
-        if (x == null) {
-            return;
-        }
-
-        Integer[] optionsY = {1, 2, 3, 4, 5, 6, 7, 8};
-        Integer y;
-        y = (Integer) JOptionPane.showInputDialog(null, "Board size", "Choose the board size", JOptionPane.QUESTION_MESSAGE, null, optionsY, optionsY[0]);
-
-        if (y == null) {
-            return;
-        }
-
-        if (PiecesRules.canPieceMoveHere(piece, this, x, y)) {
-            piece.setPosX(x);
-            piece.setPosY(y);
+    private void removeMoveToCoordinatesPanels(WindowBoard windowBoard) {
+        for (int y = 8; y >= 1; y--) {
+            for (char x = 'a'; x <= 'h'; x++) {
+                if (possibleMovesPanels[y - 1][x - 'a']) {
+                    cleanPanel(windowBoard.getMatrixPanels()[y - 1][x - 'a']);
+                }
+            }
         }
     }
 
@@ -173,3 +178,43 @@ public class BoardConnectPieces {
         pieces.add(bt2);
     }
 }
+/*
+
+    // TODO: Remove pieces from HashSet when they get eaten
+    // TODO: Was it already done?
+    private void removeEatenPieceFromHashSet(char x, int y) {
+        for (Piece p : pieces) {
+            if (p.getPosX() == x && p.getPosY() == y){
+                pieces.remove(p);
+            }
+        }
+    }
+ */
+
+/*
+
+    private void askForCoordinates(Piece piece) {
+        Character[] optionsX = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'};
+        Character x;
+
+        // TODO: If X/Y == NULL it means player pressed "cancel", so undo move
+        x = (Character) JOptionPane.showInputDialog(null, "Board size", "Choose the board size", JOptionPane.QUESTION_MESSAGE, null, optionsX, optionsX[0]);
+
+        if (x == null) {
+            return;
+        }
+
+        Integer[] optionsY = {1, 2, 3, 4, 5, 6, 7, 8};
+        Integer y;
+        y = (Integer) JOptionPane.showInputDialog(null, "Board size", "Choose the board size", JOptionPane.QUESTION_MESSAGE, null, optionsY, optionsY[0]);
+
+        if (y == null) {
+            return;
+        }
+
+        if (PiecesRules.canPieceMoveHere(piece, this, x, y)) {
+            piece.setPosX(x);
+            piece.setPosY(y);
+        }
+    }
+ */
