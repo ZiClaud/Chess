@@ -15,11 +15,11 @@ public class PiecesRules {
         if (pieceType == PieceType.Pawn) {
             return canPawnMoveHere(piece, boardConnectPieces, x, y) && isntSameColorPieceThere(piece, boardConnectPieces, x, y);
         } else if (pieceType == PieceType.Bishop) {
-            return canBishopMoveHere(piece, x, y) && isntSameColorPieceThere(piece, boardConnectPieces, x, y);
+            return canBishopMoveHere(piece, x, y) && isntSameColorPieceThere(piece, boardConnectPieces, x, y) && ComplexRules.isThisALegalMove(piece, boardConnectPieces.getPieces(), x, y);
         } else if (pieceType == PieceType.Knight) {
             return canKnightMoveHere(piece, x, y) && isntSameColorPieceThere(piece, boardConnectPieces, x, y);
         } else if (pieceType == PieceType.Tower) {
-            return canTowerMoveHere(piece, x, y) && isntSameColorPieceThere(piece, boardConnectPieces, x, y) && ComplexRules.isThisALegalMove(piece, boardConnectPieces.getPieces(), x ,y);
+            return canTowerMoveHere(piece, x, y) && isntSameColorPieceThere(piece, boardConnectPieces, x, y) && ComplexRules.isThisALegalMove(piece, boardConnectPieces.getPieces(), x, y);
         } else if (pieceType == PieceType.King) {
             return canKingMoveHere(piece, x, y) && isntSameColorPieceThere(piece, boardConnectPieces, x, y);
         } else if (pieceType == PieceType.Queen) {

@@ -12,17 +12,105 @@ public class ComplexRules {
 
     private static boolean isGoingThroughPieceToGetThere(Piece piece, HashSet<Piece> pieces, char x, int y) {
         PieceType pieceType = piece.getPieceType();
-        if (pieceType == PieceType.Tower && isTowerGoingThroughPiecesToGetThere(piece, pieces, x, y)) {
+        if (pieceType == PieceType.Bishop && isBishopGoingThroughPiecesToGetThere(piece, pieces, x, y)) {
+            return true;
+        } else if (pieceType == PieceType.Tower && isTowerGoingThroughPiecesToGetThere(piece, pieces, x, y)) {
             return true;
         }
 
         return false;
     }
 
+    private static boolean isBishopGoingThroughPiecesToGetThere(Piece bishop, HashSet<Piece> pieces, char x, int y) {
+        if (isBishopGoingTopLeft(bishop, x, y)) {
+            return isPieceInBishopWayTopLeft(bishop, pieces, x, y);
+        } else if (isBishopGoingBottomLeft(bishop, x, y)) {
+            return isPieceInBishopWayBottomLeft(bishop, pieces, x, y);
+        } else if (isBishopGoingTopRight(bishop, x, y)) {
+            return isPieceInBishopWayTopRight(bishop, pieces, x, y);
+        } else if (isBishopGoingBottomRight(bishop, x, y)) {
+            return isPieceInBishopWayBottomRight(bishop, pieces, x, y);
+        }
+        assert (false);
+        return false;
+    }
+
+    private static boolean isBishopGoingTopLeft(Piece bishop, char x, int y) {
+        return (bishop.getPosX() > x && bishop.getPosY() < y);
+    }
+
+    private static boolean isPieceInBishopWayTopLeft(Piece bishop, HashSet<Piece> pieces, char x, int y) {
+        for (Piece piece : pieces) {
+            for (int i = 1; i < 8; i++) {
+                if (piece.getPosX() == bishop.getPosX() - i &&
+                        piece.getPosY() == bishop.getPosY() + i) {
+                    if (piece.getPosX() > x && piece.getPosY() < y) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+    private static boolean isBishopGoingBottomLeft(Piece bishop, char x, int y) {
+        return (bishop.getPosX() > x && bishop.getPosY() > y);
+    }
+
+    private static boolean isPieceInBishopWayBottomLeft(Piece bishop, HashSet<Piece> pieces, char x, int y) {
+        for (Piece piece : pieces) {
+            for (int i = 1; i < 8; i++) {
+                if (piece.getPosX() == bishop.getPosX() - i &&
+                        piece.getPosY() == bishop.getPosY() - i) {
+                    if (piece.getPosX() > x && piece.getPosY() > y) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+    private static boolean isBishopGoingTopRight(Piece bishop, char x, int y) {
+        return (bishop.getPosX() < x && bishop.getPosY() < y);
+    }
+
+    private static boolean isPieceInBishopWayTopRight(Piece bishop, HashSet<Piece> pieces, char x, int y) {
+        for (Piece piece : pieces) {
+            for (int i = 1; i < 8; i++) {
+                if (piece.getPosX() == bishop.getPosX() + i &&
+                        piece.getPosY() == bishop.getPosY() + i) {
+                    if (piece.getPosX() < x && piece.getPosY() < y) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+    private static boolean isBishopGoingBottomRight(Piece bishop, char x, int y) {
+        return (bishop.getPosX() < x && bishop.getPosY() > y);
+    }
+
+    private static boolean isPieceInBishopWayBottomRight(Piece bishop, HashSet<Piece> pieces, char x, int y) {
+        for (Piece piece : pieces) {
+            for (int i = 1; i < 8; i++) {
+                if (piece.getPosX() == bishop.getPosX() + i &&
+                        piece.getPosY() == bishop.getPosY() - i) {
+                    if (piece.getPosX() < x && piece.getPosY() > y) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
     private static boolean isTowerGoingThroughPiecesToGetThere(Piece tower, HashSet<Piece> pieces, char x, int y) {
-        if (tower.getPosX() == x){
+        if (tower.getPosX() == x) {
             return isXTowerGoingThroughPiecesToGetThere(tower, pieces, x, y);
-        } else if (tower.getPosY() == y){
+        } else if (tower.getPosY() == y) {
             return isYTowerGoingThroughPiecesToGetThere(tower, pieces, x, y);
         }
         assert (false);
