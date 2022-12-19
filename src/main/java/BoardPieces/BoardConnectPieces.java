@@ -8,16 +8,17 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.Set;
 
 /**
  * Class that connects Board with Pieces
  * Draws the Pieces into the Board
  */
 public class BoardConnectPieces {
-    // TODO IMPORTANT: Maybe refresh board every time somebody clicks anything, if a piece is clicked, first replace everything, then show available moves for the piece, on new click everything will reset
     private final WindowBoard windowBoard;
     private final HashSet<Piece> pieces = new HashSet<>();
-    private final boolean[][] possibleMovesPanels = new boolean[8][8];
+    private final LinkedList<JButton> jButtons = new LinkedList<>();
 
     public BoardConnectPieces(WindowBoard windowBoard) {
         this.windowBoard = windowBoard;
@@ -32,6 +33,16 @@ public class BoardConnectPieces {
         for (Piece p : pieces) {
             placePieceOnPanel(p, windowBoard.getMatrixPanels()[p.getPosY() - 1][p.getPosX() - 'a']);
         }
+    }
+
+    public void resetBoard() {
+        for (int y = 8; y >= 1; y--) {
+            for (char x = 'a'; x <= 'h'; x++) {
+                cleanPanel(windowBoard.getMatrixPanels()[y - 1][x - 'a']);
+            }
+        }
+        drawPiecesOnBoard();
+        windowBoard.updateFrame();
     }
 
     private void cleanPanel(JPanel panel) {
@@ -49,17 +60,31 @@ public class BoardConnectPieces {
         picLabel.setContentAreaFilled(false);
         picLabel.setBorderPainted(false);
         picLabel.addActionListener(e -> {
-            cleanPanel(panel);
-            piecePressed(piece);
+            pieceClicked(piece, panel);
         });
         cleanPanel(panel);
         panel.add(picLabel);
-        windowBoard.refreshFrame();
+        windowBoard.updateFrame();
     }
 
-    private void piecePressed(Piece piece) {
+    private void pieceClicked(Piece piece, JPanel panel) {
+        windowBoard.colorTiles();
+        resetBoard();
         showPossibleMoves(piece);
-//        askForCoordinates(piece);
+        cleanPanel(panel);
+    }
+
+    private void moveClicked(Piece piece, char x, int y) {
+        for (Piece enemyP : pieces) {
+            if (enemyP.getPosX() == x && enemyP.getPosY() == y){
+                pieces.remove(enemyP);
+                break;
+            }
+        }
+        windowBoard.colorTiles();
+        removeMoveToCoordinatesPanels(windowBoard);
+        moveToCoordinates(piece, x, y);
+        resetBoard();
     }
 
     private void showPossibleMoves(Piece piece) {
@@ -69,15 +94,13 @@ public class BoardConnectPieces {
                     char finalX = x;
                     int finalY = y;
 
-                    windowBoard.getMatrixPanels()[y - 1][x - 'a'].setBackground(Color.GRAY);
                     JButton moveHereBT = new JButton();
                     moveHereBT.setBackground(Color.GRAY);
                     moveHereBT.addActionListener(actionEvent -> {
-                        removeMoveToCoordinatesPanels(windowBoard);
-                        moveToCoordinates(piece, finalX, finalY);
+                        moveClicked(piece, finalX, finalY);
                     });
                     windowBoard.getMatrixPanels()[y - 1][x - 'a'].add(moveHereBT);
-                    possibleMovesPanels[y - 1][x - 'a'] = true;
+                    jButtons.add(moveHereBT);
                 }
             }
         }
@@ -86,135 +109,58 @@ public class BoardConnectPieces {
     private void moveToCoordinates(Piece piece, char x, int y) {
         piece.setPosX(x);
         piece.setPosY(y);
-        possibleMovesPanels[y - 1][x - 'a'] = false;
 
-        windowBoard.colorTiles();
         placePieceOnPanel(piece, windowBoard.getMatrixPanels()[piece.getPosY() - 1][piece.getPosX() - 'a']);
         removeMoveToCoordinatesPanels(windowBoard);
     }
 
     private void removeMoveToCoordinatesPanels(WindowBoard windowBoard) {
+        JPanel[][] matrixPanels = windowBoard.getMatrixPanels();
         for (int y = 8; y >= 1; y--) {
             for (char x = 'a'; x <= 'h'; x++) {
-                if (possibleMovesPanels[y - 1][x - 'a']) {
-                    cleanPanel(windowBoard.getMatrixPanels()[y - 1][x - 'a']);
+                for (JButton b : jButtons) {
+                    matrixPanels[y - 1][x - 'a'].remove(b);
                 }
             }
         }
     }
 
     private void setupPieces() {
-        Piece wt1 = new WhiteTower('a', 1);
-        Piece wb1 = new WhiteKnight('b', 1);
-        Piece wn1 = new WhiteBishop('c', 1);
-        Piece wq1 = new WhiteQueen('d', 1);
-        Piece wk1 = new WhiteKing('e', 1);
-        Piece wn2 = new WhiteBishop('f', 1);
-        Piece wb2 = new WhiteKnight('g', 1);
-        Piece wt2 = new WhiteTower('h', 1);
+        pieces.addAll(Set.of(
+                new WhiteTower('a', 1),
+                new WhiteKnight('b', 1),
+                new WhiteBishop('c', 1),
+                new WhiteQueen('d', 1),
+                new WhiteKing('e', 1),
+                new WhiteBishop('f', 1),
+                new WhiteKnight('g', 1),
+                new WhiteTower('h', 1),
 
-        Piece wp1 = new WhitePawn('a', 2);
-        Piece wp2 = new WhitePawn('b', 2);
-        Piece wp3 = new WhitePawn('c', 2);
-        Piece wp4 = new WhitePawn('d', 2);
-        Piece wp5 = new WhitePawn('e', 2);
-        Piece wp6 = new WhitePawn('f', 2);
-        Piece wp7 = new WhitePawn('g', 2);
-        Piece wp8 = new WhitePawn('h', 2);
+                new WhitePawn('a', 2),
+                new WhitePawn('b', 2),
+                new WhitePawn('c', 2),
+                new WhitePawn('d', 2),
+                new WhitePawn('e', 2),
+                new WhitePawn('f', 2),
+                new WhitePawn('g', 2),
+                new WhitePawn('h', 2),
 
-        Piece bp1 = new BlackPawn('a', 7);
-        Piece bp2 = new BlackPawn('b', 7);
-        Piece bp3 = new BlackPawn('c', 7);
-        Piece bp4 = new BlackPawn('d', 7);
-        Piece bp5 = new BlackPawn('e', 7);
-        Piece bp6 = new BlackPawn('f', 7);
-        Piece bp7 = new BlackPawn('g', 7);
-        Piece bp8 = new BlackPawn('h', 7);
+                new BlackPawn('a', 7),
+                new BlackPawn('b', 7),
+                new BlackPawn('c', 7),
+                new BlackPawn('d', 7),
+                new BlackPawn('e', 7),
+                new BlackPawn('f', 7),
+                new BlackPawn('g', 7),
+                new BlackPawn('h', 7),
 
-        Piece bt1 = new BlackTower('a', 8);
-        Piece bb1 = new BlackKnight('b', 8);
-        Piece bn1 = new BlackBishop('c', 8);
-        Piece bq1 = new BlackQueen('d', 8);
-        Piece bk1 = new BlackKing('e', 8);
-        Piece bn2 = new BlackBishop('f', 8);
-        Piece bb2 = new BlackKnight('g', 8);
-        Piece bt2 = new BlackTower('h', 8);
-
-
-        pieces.add(wt1);
-        pieces.add(wb1);
-        pieces.add(wn1);
-        pieces.add(wq1);
-        pieces.add(wk1);
-        pieces.add(wn2);
-        pieces.add(wb2);
-        pieces.add(wt2);
-
-        pieces.add(wp1);
-        pieces.add(wp2);
-        pieces.add(wp3);
-        pieces.add(wp4);
-        pieces.add(wp5);
-        pieces.add(wp6);
-        pieces.add(wp7);
-        pieces.add(wp8);
-
-        pieces.add(bp1);
-        pieces.add(bp2);
-        pieces.add(bp3);
-        pieces.add(bp4);
-        pieces.add(bp5);
-        pieces.add(bp6);
-        pieces.add(bp7);
-        pieces.add(bp8);
-
-        pieces.add(bt1);
-        pieces.add(bb1);
-        pieces.add(bn1);
-        pieces.add(bq1);
-        pieces.add(bk1);
-        pieces.add(bn2);
-        pieces.add(bb2);
-        pieces.add(bt2);
+                new BlackTower('a', 8),
+                new BlackKnight('b', 8),
+                new BlackBishop('c', 8),
+                new BlackQueen('d', 8),
+                new BlackKing('e', 8),
+                new BlackBishop('f', 8),
+                new BlackKnight('g', 8),
+                new BlackTower('h', 8)));
     }
 }
-/*
-
-    // TODO: Remove pieces from HashSet when they get eaten
-    // TODO: Was it already done?
-    private void removeEatenPieceFromHashSet(char x, int y) {
-        for (Piece p : pieces) {
-            if (p.getPosX() == x && p.getPosY() == y){
-                pieces.remove(p);
-            }
-        }
-    }
- */
-
-/*
-
-    private void askForCoordinates(Piece piece) {
-        Character[] optionsX = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'};
-        Character x;
-
-        // TODO: If X/Y == NULL it means player pressed "cancel", so undo move
-        x = (Character) JOptionPane.showInputDialog(null, "Board size", "Choose the board size", JOptionPane.QUESTION_MESSAGE, null, optionsX, optionsX[0]);
-
-        if (x == null) {
-            return;
-        }
-
-        Integer[] optionsY = {1, 2, 3, 4, 5, 6, 7, 8};
-        Integer y;
-        y = (Integer) JOptionPane.showInputDialog(null, "Board size", "Choose the board size", JOptionPane.QUESTION_MESSAGE, null, optionsY, optionsY[0]);
-
-        if (y == null) {
-            return;
-        }
-
-        if (PiecesRules.canPieceMoveHere(piece, this, x, y)) {
-            piece.setPosX(x);
-            piece.setPosY(y);
-        }
-    }
- */

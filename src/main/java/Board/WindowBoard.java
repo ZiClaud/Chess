@@ -32,7 +32,7 @@ public class WindowBoard {
         frame.setVisible(true);
     }
 
-    public void refreshFrame() {
+    public void updateFrame() {
         frame.pack();
     }
 
