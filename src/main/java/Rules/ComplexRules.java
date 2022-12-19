@@ -7,7 +7,6 @@ import java.util.HashSet;
 
 public class ComplexRules {
     public static boolean isThisALegalMove(Piece piece, HashSet<Piece> pieces, char x, int y) {
-
         return !isGoingThroughPieceToGetThere(piece, pieces, x, y);
     }
 
@@ -64,7 +63,7 @@ public class ComplexRules {
                 if (x > towerX && x > pieceX && towerX < pieceX) {
                     return true;
                 }
-                if (x < towerX && y < pieceX && towerX > pieceX) {
+                if (x < towerX && x < pieceX && towerX > pieceX) {
                     return true;
                 }
             }
