@@ -71,7 +71,6 @@ public class BoardConnectPieces {
         windowBoard.colorTiles();
         resetBoard();
         showPossibleMoves(piece);
-        cleanPanel(panel);
     }
 
     private void moveClicked(Piece piece, char x, int y) {
