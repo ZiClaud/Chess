@@ -1,14 +1,17 @@
-package Player;
+package Game;
 
 import Board.WindowBoard;
 import BoardPieces.BoardConnectPieces;
+import Player.Player;
+import Player.PlayerBlack;
+import Player.PlayerWhite;
 
 import javax.swing.*;
 import java.util.Arrays;
 
 public class Game {
-    public static final Player white = new PlayerWhite();
-    public static final Player black = new PlayerBlack();
+    public static final Player whitePlayer = new PlayerWhite();
+    public static final Player blackPlayer = new PlayerBlack();
     private final WindowBoard windowBoard;
     private final BoardConnectPieces boardPieces;
 

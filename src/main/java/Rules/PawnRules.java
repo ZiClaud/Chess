@@ -5,7 +5,6 @@ import Pieces.Piece;
 
 public class PawnRules {
     // TODO: El Passant
-    // TODO: Upgrade pawn when he reaches the top row
     protected static boolean canWhitePawnMoveHere(Piece piece, BoardConnectPieces boardConnectPieces, char x, int y) {
         if (PawnRules.canWhitePawnEat(piece, boardConnectPieces, x, y)) {
             return true;
@@ -84,13 +83,5 @@ public class PawnRules {
             }
         }
         return false;
-    }
-
-    public static boolean isWhitePawnInTopRow(Piece piece, BoardConnectPieces boardConnectPieces, char x, int y) {
-        return piece.getPosX() == 'h';
-    }
-
-    public static boolean isBlackPawnInTopRow(Piece piece, BoardConnectPieces boardConnectPieces, char x, int y) {
-        return piece.getPosX() == 'a';
     }
 }

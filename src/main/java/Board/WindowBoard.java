@@ -17,10 +17,6 @@ public class WindowBoard {
         setFrame(WIDTH, HEIGHT);
     }
 
-    public JPanel[][] getMatrixPanels() {
-        return matrixPanels;
-    }
-
     private void setFrame(int WIDTH, int HEIGHT) {
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setPreferredSize(new Dimension(WIDTH, HEIGHT));
@@ -30,10 +26,6 @@ public class WindowBoard {
         frame.add(panel);
         frame.setResizable(false);
         frame.setVisible(true);
-    }
-
-    public void updateFrame() {
-        frame.pack();
     }
 
     private void addTiles(int WIDTH, int HEIGHT) {
@@ -49,6 +41,15 @@ public class WindowBoard {
             }
             val++;
         }
+    }
+
+    public JPanel[][] getMatrixPanels() {
+        return matrixPanels;
+    }
+
+
+    public void updateFrame() {
+        frame.pack();
     }
 
     public void colorTiles() {
