@@ -89,7 +89,7 @@ public class PiecesRules {
 
     private static boolean canKingMoveHere(Piece piece, char x, int y) {
         // TODO: Caslte
-        // TODO: Don't let king walk in a capturable tile
+        // TODO: Don't let king walk in a capturable tile -> In ComplexRules
         return (x + 1 == piece.getPosX() || x - 1 == piece.getPosX()) &&
                 (y + 1 == piece.getPosY() || y - 1 == piece.getPosY()) ||
                 (x == piece.getPosX()) && (y + 1 == piece.getPosY() || y - 1 == piece.getPosY()) ||

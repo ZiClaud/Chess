@@ -75,7 +75,7 @@ public class BoardConnectPieces {
 
     private void moveClicked(Piece piece, char x, int y) {
         for (Piece enemyP : pieces) {
-            if (enemyP.getPosX() == x && enemyP.getPosY() == y){
+            if (enemyP.getPosX() == x && enemyP.getPosY() == y) {
                 pieces.remove(enemyP);
                 break;
             }
@@ -98,6 +98,7 @@ public class BoardConnectPieces {
                     moveHereBT.addActionListener(actionEvent -> {
                         moveClicked(piece, finalX, finalY);
                     });
+                    windowBoard.getMatrixPanels()[y - 1][x - 'a'].setBackground(Color.GRAY);
                     windowBoard.getMatrixPanels()[y - 1][x - 'a'].add(moveHereBT);
                     jButtons.add(moveHereBT);
                 }
@@ -111,6 +112,54 @@ public class BoardConnectPieces {
 
         placePieceOnPanel(piece, windowBoard.getMatrixPanels()[piece.getPosY() - 1][piece.getPosX() - 'a']);
         removeMoveToCoordinatesPanels(windowBoard);
+
+        if (piece.getPieceType() == PieceType.Pawn && (piece.getPosY() == 1 || piece.getPosY() == 8)) {
+            if (piece.getPieceColor() == Color.WHITE) {
+                upgradeWhitePawn(piece, x, y);
+            }
+            if (piece.getPieceColor() == Color.BLACK) {
+                upgradeBlackPawn(piece, x, y);
+            }
+        }
+    }
+
+    private void upgradeWhitePawn(Piece piece, char x, int y) {
+        PieceType pieceType = chooseUpgradePiece();
+        pieces.remove(piece);
+        if (pieceType == PieceType.Queen) {
+            piece = new WhiteQueen(x, y);
+        } else if (pieceType == PieceType.Knight) {
+            piece = new WhiteKnight(x, y);
+        } else if (pieceType == PieceType.Bishop) {
+            piece = new WhiteBishop(x, y);
+        } else if (pieceType == PieceType.Tower) {
+            piece = new WhiteTower(x, y);
+        }
+        pieces.add(piece);
+    }
+
+    private void upgradeBlackPawn(Piece piece, char x, int y) {
+        PieceType pieceType = chooseUpgradePiece();
+        pieces.remove(piece);
+        if (pieceType == PieceType.Queen) {
+            piece = new BlackQueen(x, y);
+        } else if (pieceType == PieceType.Knight) {
+            piece = new BlackKnight(x, y);
+        } else if (pieceType == PieceType.Bishop) {
+            piece = new BlackBishop(x, y);
+        } else if (pieceType == PieceType.Tower) {
+            piece = new BlackTower(x, y);
+        }
+        pieces.add(piece);
+    }
+
+    private PieceType chooseUpgradePiece() {
+        PieceType options[] = {PieceType.Queen, PieceType.Knight, PieceType.Bishop, PieceType.Tower};
+        PieceType selectedPiece;
+        do {
+            selectedPiece = (PieceType) JOptionPane.showInputDialog(null, "Board size", "Choose the board size", JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+        } while (selectedPiece == null);
+        return selectedPiece;
     }
 
     private void removeMoveToCoordinatesPanels(WindowBoard windowBoard) {
