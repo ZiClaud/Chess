@@ -9,7 +9,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.HashSet;
-import java.util.LinkedList;
 import java.util.Set;
 
 /**
@@ -19,7 +18,7 @@ import java.util.Set;
 public class BoardConnectPieces {
     private final WindowBoard windowBoard;
     private final HashSet<Piece> pieces = new HashSet<>();
-    private final LinkedList<JButton> jButtons = new LinkedList<>();
+    private final HashSet<JButton> jMovesButtons = new HashSet<>();
 
     public BoardConnectPieces(WindowBoard windowBoard) {
         this.windowBoard = windowBoard;
@@ -44,7 +43,6 @@ public class BoardConnectPieces {
             }
         }
         drawPiecesOnBoard();
-        windowBoard.updateFrame();
     }
 
     private void cleanPanel(JPanel panel) {
@@ -68,7 +66,20 @@ public class BoardConnectPieces {
         }
         cleanPanel(panel);
         panel.add(picLabel);
-        windowBoard.updateFrame();
+    }
+
+    private void placeMoveOnPanel(Piece piece, JPanel panel, char x, int y) {
+        JButton moveHereBT = new JButton();
+        moveHereBT.setOpaque(true);
+        moveHereBT.setContentAreaFilled(false);
+        moveHereBT.setBorderPainted(false);
+        moveHereBT.addActionListener(actionEvent -> {
+            moveClicked(piece, x, y);
+        });
+
+        windowBoard.getMatrixPanels()[y - 1][x - 'a'].setBackground(Color.GRAY);
+        windowBoard.getMatrixPanels()[y - 1][x - 'a'].add(moveHereBT);
+        jMovesButtons.add(moveHereBT);
     }
 
     private void pieceClicked(Piece piece, JPanel panel) {
@@ -99,15 +110,7 @@ public class BoardConnectPieces {
                 if (PiecesRules.canPieceMoveHere(piece, this, x, y)) {
                     char finalX = x;
                     int finalY = y;
-
-                    JButton moveHereBT = new JButton();
-                    moveHereBT.setBackground(Color.GRAY);   // TODO: Probably remove this
-                    moveHereBT.addActionListener(actionEvent -> {
-                        moveClicked(piece, finalX, finalY);
-                    });
-                    windowBoard.getMatrixPanels()[y - 1][x - 'a'].setBackground(Color.GRAY);
-                    windowBoard.getMatrixPanels()[y - 1][x - 'a'].add(moveHereBT);
-                    jButtons.add(moveHereBT);
+                    placeMoveOnPanel(piece, windowBoard.getMatrixPanels()[y - 1][x - 'a'], x, y);
                 }
             }
         }
@@ -161,7 +164,7 @@ public class BoardConnectPieces {
     }
 
     private PieceType chooseUpgradePiece() {
-        PieceType options[] = {PieceType.Queen, PieceType.Knight, PieceType.Bishop, PieceType.Tower};
+        PieceType[] options = {PieceType.Queen, PieceType.Knight, PieceType.Bishop, PieceType.Tower};
         PieceType selectedPiece;
         do {
             selectedPiece = (PieceType) JOptionPane.showInputDialog(null, "Board size", "Choose the board size", JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
@@ -173,7 +176,7 @@ public class BoardConnectPieces {
         JPanel[][] matrixPanels = windowBoard.getMatrixPanels();
         for (int y = 8; y >= 1; y--) {
             for (char x = 'a'; x <= 'h'; x++) {
-                for (JButton b : jButtons) {
+                for (JButton b : jMovesButtons) {
                     matrixPanels[y - 1][x - 'a'].remove(b);
                 }
             }
