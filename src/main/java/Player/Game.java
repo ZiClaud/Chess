@@ -7,8 +7,8 @@ import javax.swing.*;
 import java.util.Arrays;
 
 public class Game {
-    private final Player white = new PlayerWhite();
-    private final Player black = new PlayerBlack();
+    public static final Player white = new PlayerWhite();
+    public static final Player black = new PlayerBlack();
     private final WindowBoard windowBoard;
     private final BoardConnectPieces boardPieces;
 
@@ -32,14 +32,6 @@ public class Game {
         }
 
         return boardSize;
-    }
-
-    public Player getWhitePlayer() {
-        return white;
-    }
-
-    public Player getBlackPlayer() {
-        return black;
     }
 
     public WindowBoard getWindowBoard() {

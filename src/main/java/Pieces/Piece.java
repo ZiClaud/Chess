@@ -11,6 +11,7 @@ public abstract class Piece implements PieceInt {
     protected PieceColor pieceColor;
     protected char posX;
     protected int posY;
+    protected boolean isTurn;
 
     public PieceType getPieceType() {
         return pieceType;
@@ -36,6 +37,14 @@ public abstract class Piece implements PieceInt {
     public void setPosY(int posY) {
         this.posY = posY;
         isPositionAvailable();
+    }
+
+    public boolean isTurn() {
+        return isTurn;
+    }
+
+    public void setTurn(boolean turn) {
+        isTurn = turn;
     }
 
     public BufferedImage getImg() {

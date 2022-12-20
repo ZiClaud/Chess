@@ -3,6 +3,7 @@ package BoardPieces;
 import Board.WindowBoard;
 import Pieces.*;
 import Rules.PiecesRules;
+import Rules.TurnRules;
 
 import javax.swing.*;
 import java.awt.*;
@@ -30,6 +31,7 @@ public class BoardConnectPieces {
     }
 
     public void drawPiecesOnBoard() {
+        TurnRules.getTurn(this);
         for (Piece p : pieces) {
             placePieceOnPanel(p, windowBoard.getMatrixPanels()[p.getPosY() - 1][p.getPosX() - 'a']);
         }
@@ -59,9 +61,11 @@ public class BoardConnectPieces {
         picLabel.setOpaque(false);
         picLabel.setContentAreaFilled(false);
         picLabel.setBorderPainted(false);
-        picLabel.addActionListener(e -> {
-            pieceClicked(piece, panel);
-        });
+        if (piece.isTurn()) {
+            picLabel.addActionListener(e -> {
+                pieceClicked(piece, panel);
+            });
+        }
         cleanPanel(panel);
         panel.add(picLabel);
         windowBoard.updateFrame();
@@ -83,6 +87,9 @@ public class BoardConnectPieces {
         windowBoard.colorTiles();
         removeMoveToCoordinatesPanels(windowBoard);
         moveToCoordinates(piece, x, y);
+
+        TurnRules.switchTurn();
+
         resetBoard();
     }
 
@@ -94,7 +101,7 @@ public class BoardConnectPieces {
                     int finalY = y;
 
                     JButton moveHereBT = new JButton();
-                    moveHereBT.setBackground(Color.GRAY);
+                    moveHereBT.setBackground(Color.GRAY);   // TODO: Probably remove this
                     moveHereBT.addActionListener(actionEvent -> {
                         moveClicked(piece, finalX, finalY);
                     });

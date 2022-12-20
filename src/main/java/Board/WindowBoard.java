@@ -41,8 +41,8 @@ public class WindowBoard {
         for (int y = 8; y >= 1; y--) {
             for (int x = 'a'; x <= 'h'; x++) {
                 JPanel jPanel = new JPanel(new GridLayout());
+// TODO:                 JPanel jPanel = new JPanel(new CardLayout());
                 jPanel.setPreferredSize(new Dimension(WIDTH / 9, HEIGHT / 9));
-//                jPanel.add(new Label("" + ((char) x) + y));
                 matrixPanels[y - 1][x - 'a'] = jPanel;
                 panel.add(jPanel);
                 val++;
@@ -51,7 +51,7 @@ public class WindowBoard {
         }
     }
 
-    public void colorTiles(){
+    public void colorTiles() {
         int val = 0;
         for (int y = 8; y >= 1; y--) {
             for (int x = 'a'; x <= 'h'; x++) {
