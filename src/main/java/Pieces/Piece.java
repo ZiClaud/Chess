@@ -17,8 +17,8 @@ public abstract class Piece implements PieceInt {
         return pieceType;
     }
 
-    public Color getPieceColor() {
-        return (pieceColor == PieceColor.WHITE) ? Color.WHITE : Color.BLACK;
+    public PieceColor getPieceColor() {
+        return pieceColor;
     }
 
     public char getPosX() {

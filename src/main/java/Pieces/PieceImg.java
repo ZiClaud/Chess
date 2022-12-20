@@ -11,7 +11,7 @@ import java.io.IOException;
  */
 public class PieceImg {
     public static BufferedImage getPieceImg(Piece p) {
-        if (p.getPieceColor() == Color.WHITE) {
+        if (p.getPieceColor() == PieceColor.WHITE) {
             if (p.getPieceType() == PieceType.Pawn) {
                 return getWhitePawn();
             } else if (p.getPieceType() == PieceType.Knight) {

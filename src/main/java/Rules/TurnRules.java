@@ -2,6 +2,7 @@ package Rules;
 
 import BoardPieces.BoardConnectPieces;
 import Pieces.Piece;
+import Pieces.PieceColor;
 import Player.Game;
 import Player.Player;
 
@@ -14,11 +15,11 @@ public class TurnRules {
 
         if (whitePlayer.isTurn()) {
             for (Piece piece : boardConnectPieces.getPieces()) {
-                piece.setTurn(piece.getPieceColor() == Color.WHITE);
+                piece.setTurn(piece.getPieceColor() == PieceColor.WHITE);
             }
         } else if (blackPlayer.isTurn()) {
             for (Piece piece : boardConnectPieces.getPieces()) {
-                piece.setTurn(piece.getPieceColor() == Color.BLACK);
+                piece.setTurn(piece.getPieceColor() == PieceColor.BLACK);
             }
         }
     }

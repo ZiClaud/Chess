@@ -2,6 +2,7 @@ package Rules;
 
 import BoardPieces.BoardConnectPieces;
 import Pieces.Piece;
+import Pieces.PieceColor;
 import Pieces.PieceType;
 
 import java.awt.*;
@@ -51,10 +52,10 @@ public class PiecesRules {
     }
 
     private static boolean canPawnMoveHere(Piece piece, BoardConnectPieces boardConnectPieces, char x, int y) {
-        if (piece.getPieceColor() == Color.WHITE) {
+        if (piece.getPieceColor() == PieceColor.WHITE) {
             return PawnRules.canWhitePawnMoveHere(piece, boardConnectPieces, x, y);
         }
-        if (piece.getPieceColor() == Color.BLACK) {
+        if (piece.getPieceColor() == PieceColor.BLACK) {
             return PawnRules.canBlackPawnMoveHere(piece, boardConnectPieces, x, y);
         }
         assert (false);

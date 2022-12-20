@@ -121,10 +121,10 @@ public class BoardConnectPieces {
         removeMoveToCoordinatesPanels(windowBoard);
 
         if (piece.getPieceType() == PieceType.Pawn && (piece.getPosY() == 1 || piece.getPosY() == 8)) {
-            if (piece.getPieceColor() == Color.WHITE) {
+            if (piece.getPieceColor() == PieceColor.WHITE) {
                 upgradeWhitePawn(piece, x, y);
             }
-            if (piece.getPieceColor() == Color.BLACK) {
+            if (piece.getPieceColor() == PieceColor.BLACK) {
                 upgradeBlackPawn(piece, x, y);
             }
         }
