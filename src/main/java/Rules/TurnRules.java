@@ -14,10 +14,12 @@ public class TurnRules {
         if (whitePlayer.isTurn()) {
             for (Piece piece : boardConnectPieces.getPieces()) {
                 piece.setTurn(piece.getPieceColor() == PieceColor.WHITE);
+                PawnRules.updateWhitePawnsPreviousPosition(boardConnectPieces);
             }
         } else if (blackPlayer.isTurn()) {
             for (Piece piece : boardConnectPieces.getPieces()) {
                 piece.setTurn(piece.getPieceColor() == PieceColor.BLACK);
+                PawnRules.updateBlackPawnsPreviousPosition(boardConnectPieces);
             }
         }
     }

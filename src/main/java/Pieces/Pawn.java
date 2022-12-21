@@ -4,7 +4,8 @@ package Pieces;
  * Piece: Black King
  */
 public class Pawn extends PieceDecorator {
-    private boolean theMove = false;
+    private char previousX = posX;
+    private int previousY = posY;
 
     public Pawn(Piece piece, char posX, int posY) {
         this.piece = piece;
@@ -18,11 +19,12 @@ public class Pawn extends PieceDecorator {
         return piece.getPieceName() + ", Pawn";
     }
 
-    public boolean didTheMove() {
-        return theMove;
+    public boolean allowElPassant() {
+        return (posY == previousY + 2 || posY == previousY - 2);
     }
 
-    public void setTheMove(boolean theMove) {
-        this.theMove = theMove;
+    public void updatePreviousPos() {
+        previousX = posX;
+        previousY = posY;
     }
 }
