@@ -80,6 +80,13 @@ public class BoardConnectPieces {
         windowBoard.getMatrixPanels()[y - 1][x - 'a'].setBackground(Color.GRAY);
         windowBoard.getMatrixPanels()[y - 1][x - 'a'].add(moveHereBT);
         jMovesButtons.add(moveHereBT);
+
+        // TODO: Fix this code -> Makes picLabel button do same thing of moveHereBT
+        if (windowBoard.getMatrixPanels()[y - 1][x - 'a'].getComponentCount() > 1) {
+            ((JButton) windowBoard.getMatrixPanels()[y - 1][x - 'a'].getComponents()[0]).addActionListener(actionEvent -> {
+                moveClicked(piece, x, y);
+            });
+        }
     }
 
     private void pieceClicked(Piece piece) {

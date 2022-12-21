@@ -32,10 +32,7 @@ public class WindowBoard {
         int val = 0;
         for (int y = 8; y >= 1; y--) {
             for (int x = 'a'; x <= 'h'; x++) {
-                JPanel jPanel = new JPanel(new GridLayout());
-///                LayoutManager overlay = new OverlayLayout(jPanel);
-///                jPanel.setLayout(overlay);
-// TODO:                 JPanel jPanel = new JPanel(new CardLayout()); - Maybe not, I figured it just doesn't work
+                JPanel jPanel = new JPanel(new CardLayout());
                 jPanel.setPreferredSize(new Dimension(WIDTH / 9, HEIGHT / 9));
                 matrixPanels[y - 1][x - 'a'] = jPanel;
                 panel.add(jPanel);
