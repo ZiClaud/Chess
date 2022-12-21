@@ -5,8 +5,6 @@ import Pieces.Piece;
 import Pieces.PieceColor;
 import Pieces.PieceType;
 
-import java.awt.*;
-
 public class PiecesRules {
     /**
      * Can this piece move to that coordinate?
@@ -54,8 +52,7 @@ public class PiecesRules {
     private static boolean canPawnMoveHere(Piece piece, BoardConnectPieces boardConnectPieces, char x, int y) {
         if (piece.getPieceColor() == PieceColor.WHITE) {
             return PawnRules.canWhitePawnMoveHere(piece, boardConnectPieces, x, y);
-        }
-        if (piece.getPieceColor() == PieceColor.BLACK) {
+        } else if (piece.getPieceColor() == PieceColor.BLACK) {
             return PawnRules.canBlackPawnMoveHere(piece, boardConnectPieces, x, y);
         }
         assert (false);
