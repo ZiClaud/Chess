@@ -3,12 +3,9 @@ package Player;
 import Pieces.PieceColor;
 
 public abstract class Player {
-    protected PieceColor color;
     protected boolean turn;
 
-    public PieceColor getColor() {
-        return color;
-    }
+    public abstract PieceColor getColor();
 
     public boolean isTurn() {
         return turn;

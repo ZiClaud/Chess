@@ -10,4 +10,4 @@ Implemented:
 2. BoardPieces ->
 3. Pieces      -> Strategy (getImg), Decorator, Factory
 4. Rules       ->
-5. Player      ->
+5. Player      -> Strategy
