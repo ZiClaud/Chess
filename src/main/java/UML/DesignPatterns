@@ -1,13 +1,13 @@
 To implement:
 1. Board       -> Facade
 2. BoardPieces -> Facade (?)
-3. Pieces      -> Decortor (Black/White -> Bishop, Knight, ...), Factory
+3. Pieces
 4. Rules       -> Facade, State(?)
 5. Player      -> Factory (?), Observer (?)
 
 Implemented:
 1. Board       ->
 2. BoardPieces ->
-3. Pieces      -> Strategy (getImg)
+3. Pieces      -> Strategy (getImg), Decorator, Factory
 4. Rules       ->
 5. Player      ->

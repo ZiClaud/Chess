@@ -8,25 +8,25 @@ import java.util.Set;
 public class PieceTest {
     @Test
     public void PieceImg() {
-        assert (PieceImg.getPieceImg(new BlackBishop('a', 1)) != null);
-        assert (PieceImg.getPieceImg(new WhiteBishop('a', 1)) != null);
-        assert (PieceImg.getPieceImg(new BlackKing('a', 1)) != null);
-        assert (PieceImg.getPieceImg(new WhiteKing('a', 1)) != null);
-        assert (PieceImg.getPieceImg(new BlackKnight('a', 1)) != null);
-        assert (PieceImg.getPieceImg(new WhiteKnight('a', 1)) != null);
-        assert (PieceImg.getPieceImg(new BlackQueen('a', 1)) != null);
-        assert (PieceImg.getPieceImg(new WhiteQueen('a', 1)) != null);
-        assert (PieceImg.getPieceImg(new BlackPawn('a', 1)) != null);
-        assert (PieceImg.getPieceImg(new WhitePawn('a', 1)) != null);
-        assert (PieceImg.getPieceImg(new BlackTower('a', 1)) != null);
-        assert (PieceImg.getPieceImg(new WhiteTower('a', 1)) != null);
+        assert (PieceImg.getPieceImg(new Bishop(new BlackPiece(), 'a', 1)) != null);
+        assert (PieceImg.getPieceImg(new Bishop(new WhitePiece(), 'a', 1)) != null);
+        assert (PieceImg.getPieceImg(new King(new BlackPiece(), 'a', 1)) != null);
+        assert (PieceImg.getPieceImg(new King(new WhitePiece(), 'a', 1)) != null);
+        assert (PieceImg.getPieceImg(new Knight(new BlackPiece(), 'a', 1)) != null);
+        assert (PieceImg.getPieceImg(new Knight(new WhitePiece(), 'a', 1)) != null);
+        assert (PieceImg.getPieceImg(new Queen(new BlackPiece(), 'a', 1)) != null);
+        assert (PieceImg.getPieceImg(new Queen(new WhitePiece(), 'a', 1)) != null);
+        assert (PieceImg.getPieceImg(new Pawn(new BlackPiece(), 'a', 1)) != null);
+        assert (PieceImg.getPieceImg(new Pawn(new WhitePiece(), 'a', 1)) != null);
+        assert (PieceImg.getPieceImg(new Tower(new BlackPiece(), 'a', 1)) != null);
+        assert (PieceImg.getPieceImg(new Tower(new WhitePiece(), 'a', 1)) != null);
     }
 
     @Test
     public void isGoingThroughPieceToGetThere() {
-        Piece tower = new WhiteTower('a', 3);
-        Piece pawn = new BlackPawn('a', 5);
-        Piece pawn2 = new BlackPawn('a', 2);
+        Piece tower = new Tower(new WhitePiece(), 'a', 3);
+        Piece pawn = new Pawn(new BlackPiece(), 'a', 5);
+        Piece pawn2 = new Pawn(new BlackPiece(), 'a', 2);
 
         HashSet<Piece> pieces = new HashSet<>(Set.of(tower, pawn, pawn2));
 

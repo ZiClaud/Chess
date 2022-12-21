@@ -1,7 +1,6 @@
 package Pieces;
 
 import javax.imageio.ImageIO;
-import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -10,33 +9,33 @@ import java.io.IOException;
  * Get Pieces images from Resources
  */
 public class PieceImg {
-    public static BufferedImage getPieceImg(Piece p) {
-        if (p.getPieceColor() == PieceColor.WHITE) {
-            if (p.getPieceType() == PieceType.Pawn) {
+    public static BufferedImage getPieceImg(Piece piece) {
+        if (piece.getPieceName().startsWith("White")) {
+            if (piece.getPieceName().endsWith("Pawn")) {
                 return getWhitePawn();
-            } else if (p.getPieceType() == PieceType.Knight) {
+            } else if (piece.getPieceName().endsWith("Knight")) {
                 return getWhiteKnight();
-            } else if (p.getPieceType() == PieceType.Bishop) {
+            } else if (piece.getPieceName().endsWith("Bishop")) {
                 return getWhiteBishop();
-            } else if (p.getPieceType() == PieceType.Tower) {
+            } else if (piece.getPieceName().endsWith("Tower")) {
                 return getWhiteTower();
-            } else if (p.getPieceType() == PieceType.Queen) {
+            } else if (piece.getPieceName().endsWith("Queen")) {
                 return getWhiteQueen();
-            } else if (p.getPieceType() == PieceType.King) {
+            } else if (piece.getPieceName().endsWith("King")) {
                 return getWhiteKing();
             }
-        } else {
-            if (p.getPieceType() == PieceType.Pawn) {
+        } else if (piece.getPieceName().startsWith("Black")) {
+            if (piece.getPieceName().endsWith("Pawn")) {
                 return getBlackPawn();
-            } else if (p.getPieceType() == PieceType.Knight) {
+            } else if (piece.getPieceName().endsWith("Knight")) {
                 return getBlackKnight();
-            } else if (p.getPieceType() == PieceType.Bishop) {
+            } else if (piece.getPieceName().endsWith("Bishop")) {
                 return getBlackBishop();
-            } else if (p.getPieceType() == PieceType.Tower) {
+            } else if (piece.getPieceName().endsWith("Tower")) {
                 return getBlackTower();
-            } else if (p.getPieceType() == PieceType.Queen) {
+            } else if (piece.getPieceName().endsWith("Queen")) {
                 return getBlackQueen();
-            } else if (p.getPieceType() == PieceType.King) {
+            } else if (piece.getPieceName().endsWith("King")) {
                 return getBlackKing();
             }
         }

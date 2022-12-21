@@ -61,14 +61,14 @@ public class BoardConnectPieces {
         picLabel.setBorderPainted(false);
         if (piece.isTurn()) {
             picLabel.addActionListener(e -> {
-                pieceClicked(piece, panel);
+                pieceClicked(piece);
             });
         }
         cleanPanel(panel);
         panel.add(picLabel);
     }
 
-    private void placeMoveOnPanel(Piece piece, JPanel panel, char x, int y) {
+    private void placeMoveOnPanel(Piece piece, char x, int y) {
         JButton moveHereBT = new JButton();
         moveHereBT.setOpaque(true);
         moveHereBT.setContentAreaFilled(false);
@@ -82,7 +82,7 @@ public class BoardConnectPieces {
         jMovesButtons.add(moveHereBT);
     }
 
-    private void pieceClicked(Piece piece, JPanel panel) {
+    private void pieceClicked(Piece piece) {
         windowBoard.colorTiles();
         resetBoard();
         showPossibleMoves(piece);
@@ -108,9 +108,7 @@ public class BoardConnectPieces {
         for (int y = 8; y >= 1; y--) {
             for (char x = 'a'; x <= 'h'; x++) {
                 if (PiecesRules.canPieceMoveHere(piece, this, x, y)) {
-                    char finalX = x;
-                    int finalY = y;
-                    placeMoveOnPanel(piece, windowBoard.getMatrixPanels()[y - 1][x - 'a'], x, y);
+                    placeMoveOnPanel(piece, x, y);
                 }
             }
         }
@@ -123,12 +121,13 @@ public class BoardConnectPieces {
         placePieceOnPanel(piece, windowBoard.getMatrixPanels()[piece.getPosY() - 1][piece.getPosX() - 'a']);
         removeMoveToCoordinatesPanels(windowBoard);
 
-        if (piece.getPieceType() == PieceType.Pawn && (piece.getPosY() == 1 || piece.getPosY() == 8)) {
-            if (piece.getPieceColor() == PieceColor.WHITE) {
+        if (piece.getPieceName().endsWith("Pawn") && (piece.getPosY() == 1 || piece.getPosY() == 8)) {
+            if (piece.getPieceName().startsWith("White")) {
                 upgradeWhitePawn(piece, x, y);
-            }
-            if (piece.getPieceColor() == PieceColor.BLACK) {
+            } else if (piece.getPieceName().startsWith("Black")) {
                 upgradeBlackPawn(piece, x, y);
+            } else {
+                assert (false);
             }
         }
     }
@@ -136,30 +135,14 @@ public class BoardConnectPieces {
     private void upgradeWhitePawn(Piece piece, char x, int y) {
         PieceType pieceType = chooseUpgradePiece();
         pieces.remove(piece);
-        if (pieceType == PieceType.Queen) {
-            piece = new WhiteQueen(x, y);
-        } else if (pieceType == PieceType.Knight) {
-            piece = new WhiteKnight(x, y);
-        } else if (pieceType == PieceType.Bishop) {
-            piece = new WhiteBishop(x, y);
-        } else if (pieceType == PieceType.Tower) {
-            piece = new WhiteTower(x, y);
-        }
+        piece = PieceFactory.newPiece(PieceColor.WHITE, pieceType, x, y);
         pieces.add(piece);
     }
 
     private void upgradeBlackPawn(Piece piece, char x, int y) {
         PieceType pieceType = chooseUpgradePiece();
         pieces.remove(piece);
-        if (pieceType == PieceType.Queen) {
-            piece = new BlackQueen(x, y);
-        } else if (pieceType == PieceType.Knight) {
-            piece = new BlackKnight(x, y);
-        } else if (pieceType == PieceType.Bishop) {
-            piece = new BlackBishop(x, y);
-        } else if (pieceType == PieceType.Tower) {
-            piece = new BlackTower(x, y);
-        }
+        piece = PieceFactory.newPiece(PieceColor.BLACK, pieceType, x, y);
         pieces.add(piece);
     }
 
@@ -182,43 +165,43 @@ public class BoardConnectPieces {
             }
         }
     }
-
+// TODO: Use factory
     private void setupPieces() {
         pieces.addAll(Set.of(
-                new WhiteTower('a', 1),
-                new WhiteKnight('b', 1),
-                new WhiteBishop('c', 1),
-                new WhiteQueen('d', 1),
-                new WhiteKing('e', 1),
-                new WhiteBishop('f', 1),
-                new WhiteKnight('g', 1),
-                new WhiteTower('h', 1),
+                new Tower(new WhitePiece(), 'a', 1),
+                new Knight(new WhitePiece(), 'b', 1),
+                new Bishop(new WhitePiece(), 'c', 1),
+                new Queen(new WhitePiece(), 'd', 1),
+                new King(new WhitePiece(), 'e', 1),
+                new Bishop(new WhitePiece(), 'f', 1),
+                new Knight(new WhitePiece(), 'g', 1),
+                new Tower(new WhitePiece(), 'h', 1),
 
-                new WhitePawn('a', 2),
-                new WhitePawn('b', 2),
-                new WhitePawn('c', 2),
-                new WhitePawn('d', 2),
-                new WhitePawn('e', 2),
-                new WhitePawn('f', 2),
-                new WhitePawn('g', 2),
-                new WhitePawn('h', 2),
+                new Pawn(new WhitePiece(), 'a', 2),
+                new Pawn(new WhitePiece(), 'b', 2),
+                new Pawn(new WhitePiece(), 'c', 2),
+                new Pawn(new WhitePiece(), 'd', 2),
+                new Pawn(new WhitePiece(), 'e', 2),
+                new Pawn(new WhitePiece(), 'f', 2),
+                new Pawn(new WhitePiece(), 'g', 2),
+                new Pawn(new WhitePiece(), 'h', 2),
 
-                new BlackPawn('a', 7),
-                new BlackPawn('b', 7),
-                new BlackPawn('c', 7),
-                new BlackPawn('d', 7),
-                new BlackPawn('e', 7),
-                new BlackPawn('f', 7),
-                new BlackPawn('g', 7),
-                new BlackPawn('h', 7),
+                new Pawn(new BlackPiece(), 'a', 7),
+                new Pawn(new BlackPiece(), 'b', 7),
+                new Pawn(new BlackPiece(), 'c', 7),
+                new Pawn(new BlackPiece(), 'd', 7),
+                new Pawn(new BlackPiece(), 'e', 7),
+                new Pawn(new BlackPiece(), 'f', 7),
+                new Pawn(new BlackPiece(), 'g', 7),
+                new Pawn(new BlackPiece(), 'h', 7),
 
-                new BlackTower('a', 8),
-                new BlackKnight('b', 8),
-                new BlackBishop('c', 8),
-                new BlackQueen('d', 8),
-                new BlackKing('e', 8),
-                new BlackBishop('f', 8),
-                new BlackKnight('g', 8),
-                new BlackTower('h', 8)));
+                new Tower(new BlackPiece(), 'a', 8),
+                new Knight(new BlackPiece(), 'b', 8),
+                new Bishop(new BlackPiece(), 'c', 8),
+                new Queen(new BlackPiece(), 'd', 8),
+                new King(new BlackPiece(), 'e', 8),
+                new Bishop(new BlackPiece(), 'f', 8),
+                new Knight(new BlackPiece(), 'g', 8),
+                new Tower(new BlackPiece(), 'h', 8)));
     }
 }
