@@ -121,28 +121,15 @@ public class BoardConnectPieces {
         placePieceOnPanel(piece, windowBoard.getMatrixPanels()[piece.getPosY() - 1][piece.getPosX() - 'a']);
         removeMoveToCoordinatesPanels(windowBoard);
 
-        if (piece.getPieceName().endsWith("Pawn") && (piece.getPosY() == 1 || piece.getPosY() == 8)) {
-            if (piece.getPieceName().startsWith("White")) {
-                upgradeWhitePawn(piece, x, y);
-            } else if (piece.getPieceName().startsWith("Black")) {
-                upgradeBlackPawn(piece, x, y);
-            } else {
-                assert (false);
-            }
+        if (piece.getPieceType() == PieceType.Pawn && (piece.getPosY() == 1 || piece.getPosY() == 8)) {
+            upgradePawn(piece, x, y);
         }
     }
 
-    private void upgradeWhitePawn(Piece piece, char x, int y) {
+    private void upgradePawn(Piece piece, char x, int y) {
         PieceType pieceType = chooseUpgradePiece();
         pieces.remove(piece);
-        piece = PieceFactory.newPiece(PieceColor.WHITE, pieceType, x, y);
-        pieces.add(piece);
-    }
-
-    private void upgradeBlackPawn(Piece piece, char x, int y) {
-        PieceType pieceType = chooseUpgradePiece();
-        pieces.remove(piece);
-        piece = PieceFactory.newPiece(PieceColor.BLACK, pieceType, x, y);
+        piece = PieceFactory.newPiece(piece.getPieceColor(), pieceType, x, y);
         pieces.add(piece);
     }
 
@@ -165,7 +152,8 @@ public class BoardConnectPieces {
             }
         }
     }
-// TODO: Use factory
+
+    // TODO: Use factory
     private void setupPieces() {
         pieces.addAll(Set.of(
                 new Tower(new WhitePiece(), 'a', 1),

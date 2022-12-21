@@ -10,32 +10,32 @@ import java.io.IOException;
  */
 public class PieceImg {
     public static BufferedImage getPieceImg(Piece piece) {
-        if (piece.getPieceName().startsWith("White")) {
-            if (piece.getPieceName().endsWith("Pawn")) {
+        if (piece.getPieceColor() == PieceColor.WHITE) {
+            if (piece.getPieceType() == PieceType.Pawn) {
                 return getWhitePawn();
-            } else if (piece.getPieceName().endsWith("Knight")) {
+            } else if (piece.getPieceType() == PieceType.Knight) {
                 return getWhiteKnight();
-            } else if (piece.getPieceName().endsWith("Bishop")) {
+            } else if (piece.getPieceType() == PieceType.Bishop) {
                 return getWhiteBishop();
-            } else if (piece.getPieceName().endsWith("Tower")) {
+            } else if (piece.getPieceType() == PieceType.Tower) {
                 return getWhiteTower();
-            } else if (piece.getPieceName().endsWith("Queen")) {
+            } else if (piece.getPieceType() == PieceType.Queen) {
                 return getWhiteQueen();
-            } else if (piece.getPieceName().endsWith("King")) {
+            } else if (piece.getPieceType() == PieceType.King) {
                 return getWhiteKing();
             }
-        } else if (piece.getPieceName().startsWith("Black")) {
-            if (piece.getPieceName().endsWith("Pawn")) {
+        } else if (piece.getPieceColor() == PieceColor.BLACK) {
+            if (piece.getPieceType() == PieceType.Pawn) {
                 return getBlackPawn();
-            } else if (piece.getPieceName().endsWith("Knight")) {
+            } else if (piece.getPieceType() == PieceType.Knight) {
                 return getBlackKnight();
-            } else if (piece.getPieceName().endsWith("Bishop")) {
+            } else if (piece.getPieceType() == PieceType.Bishop) {
                 return getBlackBishop();
-            } else if (piece.getPieceName().endsWith("Tower")) {
+            } else if (piece.getPieceType() == PieceType.Tower) {
                 return getBlackTower();
-            } else if (piece.getPieceName().endsWith("Queen")) {
+            } else if (piece.getPieceType() == PieceType.Queen) {
                 return getBlackQueen();
-            } else if (piece.getPieceName().endsWith("King")) {
+            } else if (piece.getPieceType() == PieceType.King) {
                 return getBlackKing();
             }
         }
