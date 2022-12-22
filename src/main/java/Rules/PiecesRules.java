@@ -12,7 +12,7 @@ public class PiecesRules {
     public static boolean canPieceMoveHere(Piece piece, BoardConnectPieces boardConnectPieces, char x, int y) {
         PieceType pieceType = piece.getPieceType();
         if (pieceType == PieceType.Pawn) {
-            return canPawnMoveHere(piece, boardConnectPieces, x, y) && isntSameColorPieceThere(piece, boardConnectPieces, x, y);
+            return canPawnMoveHere(piece, boardConnectPieces, x, y) && isntSameColorPieceThere(piece, boardConnectPieces, x, y) && ComplexRules.isThisALegalMove(piece, boardConnectPieces.getPieces(), x, y);
         } else if (pieceType == PieceType.Bishop) {
             return canBishopMoveHere(piece, x, y) && isntSameColorPieceThere(piece, boardConnectPieces, x, y) && ComplexRules.isThisALegalMove(piece, boardConnectPieces.getPieces(), x, y);
         } else if (pieceType == PieceType.Knight) {

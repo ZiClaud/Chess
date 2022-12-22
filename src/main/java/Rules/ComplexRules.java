@@ -1,6 +1,7 @@
 package Rules;
 
 import Pieces.Piece;
+import Pieces.PieceColor;
 import Pieces.PieceType;
 
 import java.util.HashSet;
@@ -12,7 +13,10 @@ public class ComplexRules {
 
     private static boolean isGoingThroughPieceToGetThere(Piece piece, HashSet<Piece> pieces, char x, int y) {
         PieceType pieceType = piece.getPieceType();
-        if (pieceType == PieceType.Bishop && isBishopGoingThroughPiecesToGetThere(piece, pieces, x, y)) {
+
+        if (pieceType == PieceType.Pawn && isTowerGoingThroughPiecesToGetThere(piece, pieces, x, y)) {
+            return true;
+        } else if (pieceType == PieceType.Bishop && isBishopGoingThroughPiecesToGetThere(piece, pieces, x, y)) {
             return true;
         } else if (pieceType == PieceType.Tower && isTowerGoingThroughPiecesToGetThere(piece, pieces, x, y)) {
             return true;
