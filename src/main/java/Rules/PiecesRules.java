@@ -11,22 +11,22 @@ public class PiecesRules {
      */
     public static boolean canPieceMoveHere(Piece piece, BoardConnectPieces boardConnectPieces, char x, int y) {
         PieceType pieceType = piece.getPieceType();
+        boolean ris = false;
         if (pieceType == PieceType.Pawn) {
-            return canPawnMoveHere(piece, boardConnectPieces, x, y) && isntSameColorPieceThere(piece, boardConnectPieces, x, y) && ComplexRules.isThisALegalMove(piece, boardConnectPieces.getPieces(), x, y);
+            ris = canPawnMoveHere(piece, boardConnectPieces, x, y);
         } else if (pieceType == PieceType.Bishop) {
-            return canBishopMoveHere(piece, x, y) && isntSameColorPieceThere(piece, boardConnectPieces, x, y) && ComplexRules.isThisALegalMove(piece, boardConnectPieces.getPieces(), x, y);
+            ris = canBishopMoveHere(piece, x, y);
         } else if (pieceType == PieceType.Knight) {
-            return canKnightMoveHere(piece, x, y) && isntSameColorPieceThere(piece, boardConnectPieces, x, y);
+            ris = canKnightMoveHere(piece, x, y);
         } else if (pieceType == PieceType.Tower) {
-            return canTowerMoveHere(piece, x, y) && isntSameColorPieceThere(piece, boardConnectPieces, x, y) && ComplexRules.isThisALegalMove(piece, boardConnectPieces.getPieces(), x, y);
+            ris = canTowerMoveHere(piece, x, y);
         } else if (pieceType == PieceType.King) {
-            return canKingMoveHere(piece, x, y) && isntSameColorPieceThere(piece, boardConnectPieces, x, y);
+            ris = canKingMoveHere(piece, x, y);
         } else if (pieceType == PieceType.Queen) {
-            return canQueenMoveHere(piece, x, y) && isntSameColorPieceThere(piece, boardConnectPieces, x, y) && ComplexRules.isThisALegalMove(piece, boardConnectPieces.getPieces(), x, y);
+            ris = canQueenMoveHere(piece, x, y);
         }
 
-        assert (false);
-        return false;
+        return (ris && isntSameColorPieceThere(piece, boardConnectPieces, x, y) && ComplexRules.isThisALegalMove(piece, boardConnectPieces.getPieces(), x, y));
     }
 
     protected static boolean isPieceThere(BoardConnectPieces boardConnectPieces, char x, int y) {
