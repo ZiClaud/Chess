@@ -128,7 +128,7 @@ public class BoardConnectPieces {
     private void showPossibleMoves(Piece piece) {
         for (int y = 8; y >= 1; y--) {
             for (char x = 'a'; x <= 'h'; x++) {
-                if (PiecesRules.canPieceMoveHere(piece, this, x, y)) {
+                if (PiecesRules.isThisAPossibleMove(piece, this, x, y)) {
                     placeMoveOnPanel(piece, x, y);
                 }
             }

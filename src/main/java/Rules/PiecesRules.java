@@ -9,6 +9,18 @@ public class PiecesRules {
     /**
      * Can this piece move to that coordinate?
      */
+    public static boolean isThisAPossibleMove(Piece piece, BoardConnectPieces boardConnectPieces, char x, int y) {
+
+        if (ThreatRules.isCheckWhiteK(boardConnectPieces)) {
+            System.out.println("CheckWhiteKing");
+        }
+        if (ThreatRules.isCheckBlackK(boardConnectPieces)) {
+            System.out.println("CheckBlackKing");
+        }
+
+        return canPieceMoveHere(piece, boardConnectPieces, x, y) && isntSameColorPieceThere(piece, boardConnectPieces, x, y) && ComplexRules.isThisALegalMove(piece, boardConnectPieces.getPieces(), x, y);
+    }
+
     public static boolean canPieceMoveHere(Piece piece, BoardConnectPieces boardConnectPieces, char x, int y) {
         PieceType pieceType = piece.getPieceType();
         boolean ris = false;
@@ -26,7 +38,7 @@ public class PiecesRules {
             ris = canQueenMoveHere(piece, x, y);
         }
 
-        return (ris && isntSameColorPieceThere(piece, boardConnectPieces, x, y) && ComplexRules.isThisALegalMove(piece, boardConnectPieces.getPieces(), x, y));
+        return ris;
     }
 
     protected static boolean isPieceThere(BoardConnectPieces boardConnectPieces, char x, int y) {
@@ -87,7 +99,6 @@ public class PiecesRules {
 
     private static boolean canKingMoveHere(Piece piece, char x, int y) {
         // TODO: Caslte
-        // TODO: Don't let king walk in a capturable tile -> In ComplexRules
         return (x + 1 == piece.getPosX() || x - 1 == piece.getPosX()) &&
                 (y + 1 == piece.getPosY() || y - 1 == piece.getPosY()) ||
                 (x == piece.getPosX()) && (y + 1 == piece.getPosY() || y - 1 == piece.getPosY()) ||
