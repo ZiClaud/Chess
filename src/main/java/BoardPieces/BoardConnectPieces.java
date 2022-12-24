@@ -101,6 +101,20 @@ public class BoardConnectPieces {
                 pieces.remove(enemyP);
                 break;
             }
+            //--EL PASSANT--\\ todo test
+            if (piece.getPieceType() == PieceType.Pawn && piece.getPieceColor() == PieceColor.WHITE){
+                if (enemyP.getPosX() == x && enemyP.getPosY() == y-1 && enemyP.getPieceColor() == PieceColor.BLACK && enemyP.getPieceType() == PieceType.Pawn) {
+                    pieces.remove(enemyP);
+                    break;
+                }
+            }
+            if (piece.getPieceType() == PieceType.Pawn && piece.getPieceColor() == PieceColor.BLACK){
+                if (enemyP.getPosX() == x && enemyP.getPosY() == y+1 && enemyP.getPieceColor() == PieceColor.WHITE && enemyP.getPieceType() == PieceType.Pawn) {
+                    pieces.remove(enemyP);
+                    break;
+                }
+            }
+            //--\\
         }
         windowBoard.colorTiles();
         removeMoveToCoordinatesPanels(windowBoard);

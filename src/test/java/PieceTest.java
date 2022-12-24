@@ -5,6 +5,8 @@ import org.junit.jupiter.api.Test;
 import java.util.HashSet;
 import java.util.Set;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
+
 public class PieceTest {
     @Test
     public void PieceImg() {
@@ -26,13 +28,13 @@ public class PieceTest {
     public void isGoingThroughPieceToGetThere() {
         Piece tower = new Tower(new WhitePiece(), 'a', 3);
         Piece pawn = new Pawn(new BlackPiece(), 'a', 5);
-        Piece pawn2 = new Pawn(new BlackPiece(), 'a', 2);
+        Piece pawn2 = new Pawn(new WhitePiece(), 'a', 2);
 
         HashSet<Piece> pieces = new HashSet<>(Set.of(tower, pawn, pawn2));
 
         assert (ComplexRules.isThisALegalMove(tower, pieces, 'a', 4));
-        assert (!ComplexRules.isThisALegalMove(tower, pieces, 'a', 6));
+        assertFalse (ComplexRules.isThisALegalMove(tower, pieces, 'a', 6));
         assert (ComplexRules.isThisALegalMove(tower, pieces, 'a', 5));
-        assert (!ComplexRules.isThisALegalMove(tower, pieces, 'a', 1));
+        assertFalse (ComplexRules.isThisALegalMove(tower, pieces, 'a', 1));
     }
 }
