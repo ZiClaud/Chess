@@ -5,20 +5,26 @@ import Pieces.Piece;
 import Pieces.PieceColor;
 import Pieces.PieceType;
 
+import java.util.HashMap;
+
 public class PiecesRules {
     /**
      * Can this piece move to that coordinate?
      */
     public static boolean isThisAPossibleMove(Piece piece, BoardConnectPieces boardConnectPieces, char x, int y) {
-
-        if (ThreatRules.isCheckWhiteK(boardConnectPieces)) {
-            System.out.println("CheckWhiteKing");
-        }
-        if (ThreatRules.isCheckBlackK(boardConnectPieces)) {
-            System.out.println("CheckBlackKing");
-        }
-
         return canPieceMoveHere(piece, boardConnectPieces, x, y) && isntSameColorPieceThere(piece, boardConnectPieces, x, y) && ComplexRules.isThisALegalMove(piece, boardConnectPieces.getPieces(), x, y);
+    }
+
+    public static HashMap<Integer, String> getPossibleMoves(Piece piece, BoardConnectPieces boardConnectPieces) {
+        HashMap<Integer, String> ris = new HashMap<>();
+        for (Character x = 'a'; x <= 'h'; x++) {
+            for (Integer y = 1; y <= 8; y++) {
+                if (isThisAPossibleMove(piece, boardConnectPieces, x, y)) {
+                    ris.put(x+y, x.toString() + y.toString());
+                }
+            }
+        }
+        return ris;
     }
 
     public static boolean canPieceMoveHere(Piece piece, BoardConnectPieces boardConnectPieces, char x, int y) {

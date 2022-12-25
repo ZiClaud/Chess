@@ -3,6 +3,7 @@ package BoardPieces;
 import Board.WindowBoard;
 import Pieces.*;
 import Rules.PiecesRules;
+import Rules.ThreatRules;
 import Rules.TurnRules;
 
 import javax.swing.*;
@@ -81,7 +82,7 @@ public class BoardConnectPieces {
         windowBoard.getMatrixPanels()[y - 1][x - 'a'].add(moveHereBT);
         jMovesButtons.add(moveHereBT);
 
-        // TODO: Fix this code -> It makes picLabel button do the same thing of moveHereBT
+        // TODO: Clean this code -> It makes picLabel button do the same thing of moveHereBT
         if (windowBoard.getMatrixPanels()[y - 1][x - 'a'].getComponentCount() > 1) {
             ((JButton) windowBoard.getMatrixPanels()[y - 1][x - 'a'].getComponents()[0]).addActionListener(actionEvent -> {
                 moveClicked(piece, x, y);
@@ -102,14 +103,14 @@ public class BoardConnectPieces {
                 break;
             }
             //--EL PASSANT--\\ todo test
-            if (piece.getPieceType() == PieceType.Pawn && piece.getPieceColor() == PieceColor.WHITE){
-                if (enemyP.getPosX() == x && enemyP.getPosY() == y-1 && enemyP.getPieceColor() == PieceColor.BLACK && enemyP.getPieceType() == PieceType.Pawn) {
+            if (piece.getPieceType() == PieceType.Pawn && piece.getPieceColor() == PieceColor.WHITE) {
+                if (enemyP.getPosX() == x && enemyP.getPosY() == y - 1 && enemyP.getPieceColor() == PieceColor.BLACK && enemyP.getPieceType() == PieceType.Pawn) {
                     pieces.remove(enemyP);
                     break;
                 }
             }
-            if (piece.getPieceType() == PieceType.Pawn && piece.getPieceColor() == PieceColor.BLACK){
-                if (enemyP.getPosX() == x && enemyP.getPosY() == y+1 && enemyP.getPieceColor() == PieceColor.WHITE && enemyP.getPieceType() == PieceType.Pawn) {
+            if (piece.getPieceType() == PieceType.Pawn && piece.getPieceColor() == PieceColor.BLACK) {
+                if (enemyP.getPosX() == x && enemyP.getPosY() == y + 1 && enemyP.getPieceColor() == PieceColor.WHITE && enemyP.getPieceType() == PieceType.Pawn) {
                     pieces.remove(enemyP);
                     break;
                 }
@@ -126,6 +127,13 @@ public class BoardConnectPieces {
     }
 
     private void showPossibleMoves(Piece piece) {
+        System.out.println(PiecesRules.getPossibleMoves(piece, this));
+        if (ThreatRules.isCheckWhiteK(this)) {
+            System.out.println("CheckWhiteKing");
+        }
+        if (ThreatRules.isCheckBlackK(this)) {
+            System.out.println("CheckBlackKing");
+        }
         for (int y = 8; y >= 1; y--) {
             for (char x = 'a'; x <= 'h'; x++) {
                 if (PiecesRules.isThisAPossibleMove(piece, this, x, y)) {
