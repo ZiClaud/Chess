@@ -1,7 +1,7 @@
 package Rules;
 
+import Pieces.King;
 import Pieces.Piece;
-import Pieces.PieceColor;
 import Pieces.PieceType;
 
 import java.util.HashSet;
@@ -165,6 +165,13 @@ public class ComplexRules {
                     return true;
                 }
             }
+        }
+        return false;
+    }
+
+    public static boolean canThisKingCastle(Piece piece) {
+        if (piece.getPieceType() == PieceType.King) {
+            return ((King) piece).canCastle();
         }
         return false;
     }

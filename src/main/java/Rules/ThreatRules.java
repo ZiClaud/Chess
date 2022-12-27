@@ -5,6 +5,8 @@ import Pieces.Piece;
 import Pieces.PieceColor;
 import Pieces.PieceType;
 
+import java.util.Collection;
+
 public class ThreatRules {
     // TODO: King rules - Castle and Move/Be protected if there's a check
     public static boolean isCheckWhiteK(BoardConnectPieces boardConnectPieces) {
@@ -46,12 +48,20 @@ public class ThreatRules {
         return false;
     }
 
-    protected static boolean doesThisMoveStopWhiteCheck(BoardConnectPieces boardConnectPieces, char x, int y) {
+    protected static boolean doesStopWhiteCheck(BoardConnectPieces boardConnectPieces) {
+        Collection<String> moves;
+        char x = 0;
+        int y = 0;
         for (Piece piece : boardConnectPieces.getPieces()) {
             if (piece.getPieceColor() == PieceColor.WHITE) {
-                if (PiecesRules.isThisAPossibleMove(piece, boardConnectPieces, x, y)) {
-                    //TODO: Maybe instead of isThisAPossibleMove -> getPossibleMoves(piece, boardConnectPieces)
+                moves = PiecesRules.getPossibleMoves(piece, boardConnectPieces).values();
+
+                for (String s : moves) {
+                    x = s.charAt(0);
+                    y = s.charAt(1) - '0';
                 }
+
+
             }
         }
 

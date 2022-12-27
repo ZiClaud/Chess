@@ -1,6 +1,7 @@
 package Rules;
 
 import BoardPieces.BoardConnectPieces;
+import Game.Game;
 import Pieces.Piece;
 import Pieces.PieceColor;
 import Pieces.PieceType;
@@ -9,25 +10,28 @@ import java.util.HashMap;
 
 public class PiecesRules {
     /**
-     * Can this piece move to that coordinate?
+     * Get all possible moves
      */
-    public static boolean isThisAPossibleMove(Piece piece, BoardConnectPieces boardConnectPieces, char x, int y) {
-        return canPieceMoveHere(piece, boardConnectPieces, x, y) && isntSameColorPieceThere(piece, boardConnectPieces, x, y) && ComplexRules.isThisALegalMove(piece, boardConnectPieces.getPieces(), x, y);
-    }
-
     public static HashMap<Integer, String> getPossibleMoves(Piece piece, BoardConnectPieces boardConnectPieces) {
         HashMap<Integer, String> ris = new HashMap<>();
         for (Character x = 'a'; x <= 'h'; x++) {
             for (Integer y = 1; y <= 8; y++) {
                 if (isThisAPossibleMove(piece, boardConnectPieces, x, y)) {
-                    ris.put(x+y, x.toString() + y.toString());
+                    ris.put(x + y, x.toString() + y.toString());
                 }
             }
         }
         return ris;
     }
 
-    public static boolean canPieceMoveHere(Piece piece, BoardConnectPieces boardConnectPieces, char x, int y) {
+    /**
+     * Can this piece move to that coordinate?
+     */
+    public static boolean isThisAPossibleMove(Piece piece, BoardConnectPieces boardConnectPieces, char x, int y) {
+        return canPieceMoveHere(piece, boardConnectPieces, x, y) && isntSameColorPieceThere(piece, boardConnectPieces, x, y) && ComplexRules.isThisALegalMove(piece, boardConnectPieces.getPieces(), x, y);
+    }
+
+    protected static boolean canPieceMoveHere(Piece piece, BoardConnectPieces boardConnectPieces, char x, int y) {
         PieceType pieceType = piece.getPieceType();
         boolean ris = false;
         if (pieceType == PieceType.Pawn) {
@@ -104,7 +108,6 @@ public class PiecesRules {
     }
 
     private static boolean canKingMoveHere(Piece piece, char x, int y) {
-        // TODO: Caslte
         return (x + 1 == piece.getPosX() || x - 1 == piece.getPosX()) &&
                 (y + 1 == piece.getPosY() || y - 1 == piece.getPosY()) ||
                 (x == piece.getPosX()) && (y + 1 == piece.getPosY() || y - 1 == piece.getPosY()) ||

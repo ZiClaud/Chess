@@ -2,6 +2,7 @@ package BoardPieces;
 
 import Board.WindowBoard;
 import Pieces.*;
+import Rules.ComplexRules;
 import Rules.PiecesRules;
 import Rules.ThreatRules;
 import Rules.TurnRules;
@@ -90,6 +91,24 @@ public class BoardConnectPieces {
         }
     }
 
+    private void placeCaslteMoveOnPanel(Piece king, Piece rook) {   // TODO: Maybe remove, it's pretty much equal to the other one
+        JButton moveHereBT = new JButton();
+        moveHereBT.setOpaque(true);
+        moveHereBT.setContentAreaFilled(false);
+        moveHereBT.setBorderPainted(false);
+
+        char x = 'g';
+        int y = 1;
+
+        moveHereBT.addActionListener(actionEvent -> {
+            moveClicked(king, x, y);
+        });
+
+        windowBoard.getMatrixPanels()[y - 1][x - 'a'].setBackground(Color.GRAY);
+        windowBoard.getMatrixPanels()[y - 1][x - 'a'].add(moveHereBT);
+        jMovesButtons.add(moveHereBT);
+    }
+
     private void pieceClicked(Piece piece) {
         windowBoard.colorTiles();
         resetBoard();
@@ -102,7 +121,7 @@ public class BoardConnectPieces {
                 pieces.remove(enemyP);
                 break;
             }
-            //--EL PASSANT--\\ todo test
+            //--EL PASSANT--
             if (piece.getPieceType() == PieceType.Pawn && piece.getPieceColor() == PieceColor.WHITE) {
                 if (enemyP.getPosX() == x && enemyP.getPosY() == y - 1 && enemyP.getPieceColor() == PieceColor.BLACK && enemyP.getPieceType() == PieceType.Pawn) {
                     pieces.remove(enemyP);
@@ -115,8 +134,24 @@ public class BoardConnectPieces {
                     break;
                 }
             }
-            //--\\
+            //--
         }
+        //-- Castling
+        if (piece.getPieceType() == PieceType.King && piece.getPieceColor() == PieceColor.WHITE) {
+            if (x == 'g') {
+                for (Piece rook : pieces) {
+                    if (rook.getPieceType() == PieceType.Tower && rook.getPieceColor() == PieceColor.WHITE && rook.getPosX() == 'h') {
+                        rook.setPosX('f');
+                        piece.setPosX('g');
+                        break;
+                    }
+                }
+            }
+        }
+        //...
+
+        //--
+
         windowBoard.colorTiles();
         removeMoveToCoordinatesPanels(windowBoard);
         moveToCoordinates(piece, x, y);
@@ -134,6 +169,7 @@ public class BoardConnectPieces {
         if (ThreatRules.isCheckBlackK(this)) {
             System.out.println("CheckBlackKing");
         }
+// TODO: Change with PiecesRules.getPossibleMoves(piece, this); ?
         for (int y = 8; y >= 1; y--) {
             for (char x = 'a'; x <= 'h'; x++) {
                 if (PiecesRules.isThisAPossibleMove(piece, this, x, y)) {
@@ -141,6 +177,22 @@ public class BoardConnectPieces {
                 }
             }
         }
+
+
+        // TODO: Move this somewhere else -->
+        if (piece.getPieceType() == PieceType.King && ComplexRules.canThisKingCastle(piece)) {
+            Piece king = piece;
+            for (Piece rook : pieces) {
+                if (rook.getPieceType() == PieceType.Tower) {
+                    // Right rook
+                    if (((Tower) rook).allowsCastling() && rook.getPosX() == 'h') {
+                        castleWhite(king, rook);
+                        placeCaslteMoveOnPanel(king, rook);
+                    }
+                }
+            }
+        }
+        // <--
     }
 
     private void moveToCoordinates(Piece piece, char x, int y) {
@@ -164,6 +216,12 @@ public class BoardConnectPieces {
         pieces.remove(piece);
         piece = PieceFactory.newPiece(piece.getPieceColor(), pieceType, x, y);
         pieces.add(piece);
+    }
+
+    private void castleWhite(Piece king, Piece rook) {
+        if (ComplexRules.canThisKingCastle(king)) {
+
+        }
     }
 
     private PieceType chooseUpgradePiece() {

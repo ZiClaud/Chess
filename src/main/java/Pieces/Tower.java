@@ -18,7 +18,7 @@ public class Tower extends PieceDecorator {
         return piece.getPieceName() + ", Tower";
     }
 
-    public boolean isAllowCastle() {
+    public boolean allowsCastling() {
         return allowCastle;
     }
 
