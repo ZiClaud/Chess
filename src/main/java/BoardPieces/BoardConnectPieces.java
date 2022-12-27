@@ -98,17 +98,17 @@ public class BoardConnectPieces {
         moveHereBT.setBorderPainted(false);
 
         char x = 0;
-
-        if (rook.getPosX() == 'h'){
-            x = 'g';
-        }
-        if (rook.getPosX() == 'a'){
-            x = 'c';
-        }
-
         int y = king.getPosY();
 
+        if (rook.getPosX() == 'h') {
+            x = 'g';
+        } else if (rook.getPosX() == 'a') {
+            x = 'c';
+        }
         char finalX = x;
+
+        assert (x != 0);
+
         moveHereBT.addActionListener(actionEvent -> {
             moveClicked(king, finalX, y);
         });
@@ -130,45 +130,12 @@ public class BoardConnectPieces {
                 pieces.remove(enemyP);
                 break;
             }
-            //--EL PASSANT--
-            if (piece.getPieceType() == PieceType.Pawn && piece.getPieceColor() == PieceColor.WHITE) {
-                if (enemyP.getPosX() == x && enemyP.getPosY() == y - 1 && enemyP.getPieceColor() == PieceColor.BLACK && enemyP.getPieceType() == PieceType.Pawn) {
-                    pieces.remove(enemyP);
-                    break;
-                }
-            }
-            if (piece.getPieceType() == PieceType.Pawn && piece.getPieceColor() == PieceColor.BLACK) {
-                if (enemyP.getPosX() == x && enemyP.getPosY() == y + 1 && enemyP.getPieceColor() == PieceColor.WHITE && enemyP.getPieceType() == PieceType.Pawn) {
-                    pieces.remove(enemyP);
-                    break;
-                }
-            }
-            //--
-        }
-        //-- Castling
-        if (piece.getPieceType() == PieceType.King) {
-            if (x == 'g') {
-                for (Piece rook : pieces) {
-                    if (rook.getPieceType() == PieceType.Tower && rook.getPieceColor() == piece.getPieceColor() && rook.getPosX() == 'h') {
-                        rook.setPosX('f');
-                        piece.setPosX('g');
-                        break;
-                    }
-                }
-            }
-            if (x == 'c') {
-                for (Piece rook : pieces) {
-                    if (rook.getPieceType() == PieceType.Tower && rook.getPieceColor() == piece.getPieceColor() && rook.getPosX() == 'a') {
-                        rook.setPosX('d');
-                        piece.setPosX('c');
-                        break;
-                    }
-                }
-            }
-        }
-        //...
 
-        //--
+            if (elPassant(piece, enemyP, x, y)) {
+                break;
+            }
+        }
+        castle(piece, x);
 
         windowBoard.colorTiles();
         removeMoveToCoordinatesPanels(windowBoard);
@@ -177,6 +144,49 @@ public class BoardConnectPieces {
         TurnRules.switchTurn();
 
         resetBoard();
+    }
+
+    private boolean elPassant(Piece piece, Piece enemyP, char x, int y) {
+        if (piece.getPieceType() == PieceType.Pawn && piece.getPieceColor() == PieceColor.WHITE) {
+            if (enemyP.getPosX() == x && enemyP.getPosY() == y - 1 && enemyP.getPieceColor() == PieceColor.BLACK && enemyP.getPieceType() == PieceType.Pawn) {
+                pieces.remove(enemyP);
+                return true;
+            }
+        }
+        if (piece.getPieceType() == PieceType.Pawn && piece.getPieceColor() == PieceColor.BLACK) {
+            if (enemyP.getPosX() == x && enemyP.getPosY() == y + 1 && enemyP.getPieceColor() == PieceColor.WHITE && enemyP.getPieceType() == PieceType.Pawn) {
+                pieces.remove(enemyP);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private void castle(Piece king, char x) {
+        if (king.getPieceType() == PieceType.King && ((King) king).canCastle()) {
+            if (x == 'g') {
+                for (Piece rook : pieces) {
+                    if (rook.getPieceType() == PieceType.Tower && rook.getPieceColor() == king.getPieceColor() && rook.getPosX() == 'h') {
+                        rook.setPosX('f');
+                        king.setPosX('g');
+                        ((King) king).setCastle(false);
+                        ((Tower) rook).setAllowCastle(false);
+                        break;
+                    }
+                }
+            }
+            if (x == 'c') {
+                for (Piece rook : pieces) {
+                    if (rook.getPieceType() == PieceType.Tower && rook.getPieceColor() == king.getPieceColor() && rook.getPosX() == 'a') {
+                        rook.setPosX('d');
+                        king.setPosX('c');
+                        ((King) king).setCastle(false);
+                        ((Tower) rook).setAllowCastle(false);
+                        break;
+                    }
+                }
+            }
+        }
     }
 
     private void showPossibleMoves(Piece piece) {
@@ -218,6 +228,12 @@ public class BoardConnectPieces {
     private void moveToCoordinates(Piece piece, char x, int y) {
         if (piece.getPieceType() == PieceType.Pawn) {
             ((Pawn) piece).updatePreviousPos();
+        }
+        if (piece.getPieceType() == PieceType.King) {
+            ((King) piece).setCastle(false);
+        }
+        if (piece.getPieceType() == PieceType.Tower) {
+            ((Tower) piece).setAllowCastle(false);
         }
 
         piece.setPosX(x);
