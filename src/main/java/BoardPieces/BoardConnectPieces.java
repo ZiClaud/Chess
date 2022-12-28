@@ -208,15 +208,15 @@ public class BoardConnectPieces {
 
 
         // TODO: Move this somewhere else -->
-        if (piece.getPieceType() == PieceType.King && ComplexRules.canThisKingCastle(piece)) {
+        if (piece.getPieceType() == PieceType.King) {
             Piece king = piece;
             for (Piece rook : pieces) {
                 if (rook.getPieceType() == PieceType.Tower) {
                     // Right rook
-                    if (((Tower) rook).allowsCastling() && rook.getPosX() == 'h') {
+                    if (((Tower) rook).allowsCastling() && rook.getPosX() == 'h' && ComplexRules.canThisKingCastleRight(king, this)) {
                         placeCaslteMoveOnPanel(king, rook);
                     }
-                    if (((Tower) rook).allowsCastling() && rook.getPosX() == 'a') {
+                    if (((Tower) rook).allowsCastling() && rook.getPosX() == 'a' && ComplexRules.canThisKingCastleLeft(king, this)) {
                         placeCaslteMoveOnPanel(king, rook);
                     }
                 }

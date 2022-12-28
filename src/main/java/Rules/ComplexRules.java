@@ -1,5 +1,6 @@
 package Rules;
 
+import BoardPieces.BoardConnectPieces;
 import Pieces.King;
 import Pieces.Piece;
 import Pieces.PieceType;
@@ -169,10 +170,29 @@ public class ComplexRules {
         return false;
     }
 
-    public static boolean canThisKingCastle(Piece piece) {
-        if (piece.getPieceType() == PieceType.King) {
-            return ((King) piece).canCastle();
+    public static boolean canThisKingCastleRight(Piece king, BoardConnectPieces boardConnectPieces) {
+        if (king.getPieceType() == PieceType.King && ((King) king).canCastle()) {
+            for (Piece piece : boardConnectPieces.getPieces()) {
+                if (piece.getPosY() == king.getPosY() && (piece.getPosX() == king.getPosX() + 1 || piece.getPosX() == king.getPosX() + 2)) {
+                    return false;
+                }
+            }
+            return true;
         }
+        assert false;
+        return false;
+    }
+
+    public static boolean canThisKingCastleLeft(Piece king, BoardConnectPieces boardConnectPieces) {
+        if (king.getPieceType() == PieceType.King && ((King) king).canCastle()) {
+            for (Piece piece : boardConnectPieces.getPieces()) {
+                if (piece.getPosY() == king.getPosY() && (piece.getPosX() == king.getPosX() - 1 || piece.getPosX() == king.getPosX() - 2 || piece.getPosX() == king.getPosX() - 3)) {
+                    return false;
+                }
+            }
+            return true;
+        }
+        assert false;
         return false;
     }
 }
