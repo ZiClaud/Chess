@@ -173,9 +173,16 @@ public class ComplexRules {
     public static boolean canThisKingCastleRight(Piece king, BoardConnectPieces boardConnectPieces) {
         if (king.getPieceType() == PieceType.King && ((King) king).canCastle()) {
             for (Piece piece : boardConnectPieces.getPieces()) {
-                if (piece.getPosY() == king.getPosY() && (piece.getPosX() == king.getPosX() + 1 || piece.getPosX() == king.getPosX() + 2)) {
+                if (piece.getPosY() == king.getPosY()
+                        && (piece.getPosX() == king.getPosX() + 1
+                        || piece.getPosX() == king.getPosX() + 2)) {
                     return false;
                 }
+            }
+            if (ThreatRules.isThisPositionThreatened(boardConnectPieces, king.getPosX(), king.getPosY())
+                    || ThreatRules.isThisPositionThreatened(boardConnectPieces, (char) (king.getPosX() + 1), king.getPosY())
+                    || ThreatRules.isThisPositionThreatened(boardConnectPieces, (char) (king.getPosX() + 2), king.getPosY())) {
+                return false;
             }
             return true;
         }
@@ -186,9 +193,17 @@ public class ComplexRules {
     public static boolean canThisKingCastleLeft(Piece king, BoardConnectPieces boardConnectPieces) {
         if (king.getPieceType() == PieceType.King && ((King) king).canCastle()) {
             for (Piece piece : boardConnectPieces.getPieces()) {
-                if (piece.getPosY() == king.getPosY() && (piece.getPosX() == king.getPosX() - 1 || piece.getPosX() == king.getPosX() - 2 || piece.getPosX() == king.getPosX() - 3)) {
+                if (piece.getPosY() == king.getPosY()
+                        && (piece.getPosX() == king.getPosX() - 1
+                        || piece.getPosX() == king.getPosX() - 2
+                        || piece.getPosX() == king.getPosX() - 3)) {
                     return false;
                 }
+            }
+            if (ThreatRules.isThisPositionThreatened(boardConnectPieces, king.getPosX(), king.getPosY())
+                    || ThreatRules.isThisPositionThreatened(boardConnectPieces, (char) (king.getPosX() - 1), king.getPosY())
+                    || ThreatRules.isThisPositionThreatened(boardConnectPieces, (char) (king.getPosX() - 2), king.getPosY())) {
+                return false;
             }
             return true;
         }

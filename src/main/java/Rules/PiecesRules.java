@@ -1,7 +1,6 @@
 package Rules;
 
 import BoardPieces.BoardConnectPieces;
-import Game.Game;
 import Pieces.Piece;
 import Pieces.PieceColor;
 import Pieces.PieceType;
@@ -17,7 +16,7 @@ public class PiecesRules {
         for (Character x = 'a'; x <= 'h'; x++) {
             for (Integer y = 1; y <= 8; y++) {
                 if (isThisAPossibleMove(piece, boardConnectPieces, x, y)) {
-                    ris.put(x + y, x.toString() + y.toString());
+                    ris.put((x * 10) + y, x.toString() + y.toString());
                 }
             }
         }
