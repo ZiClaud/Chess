@@ -30,7 +30,7 @@ public class PiecesRules {
         return canPieceMoveHere(piece, boardConnectPieces, x, y) && isntSameColorPieceThere(piece, boardConnectPieces, x, y) && ComplexRules.isThisALegalMove(piece, boardConnectPieces.getPieces(), x, y);
     }
 
-    protected static boolean canPieceMoveHere(Piece piece, BoardConnectPieces boardConnectPieces, char x, int y) {
+    private static boolean canPieceMoveHere(Piece piece, BoardConnectPieces boardConnectPieces, char x, int y) {
         PieceType pieceType = piece.getPieceType();
         boolean ris = false;
         if (pieceType == PieceType.Pawn) {

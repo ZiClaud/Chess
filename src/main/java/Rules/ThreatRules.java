@@ -4,9 +4,8 @@ import BoardPieces.BoardConnectPieces;
 import Game.Game;
 import Pieces.Piece;
 import Pieces.PieceColor;
+import Pieces.PieceFactory;
 import Pieces.PieceType;
-
-import java.util.Collection;
 
 public class ThreatRules {
     // TODO: King rules - Castle and Move/Be protected if there's a check
@@ -22,7 +21,7 @@ public class ThreatRules {
         assert king != null;
 
         for (Piece piece : boardConnectPieces.getPieces()) {
-            if (piece.getPieceColor() == PieceColor.BLACK && PiecesRules.canPieceMoveHere(piece, boardConnectPieces, king.getPosX(), king.getPosY())) {
+            if (piece.getPieceColor() == PieceColor.BLACK && PiecesRules.isThisAPossibleMove(piece, boardConnectPieces, king.getPosX(), king.getPosY())) {
                 return true;
             }
         }
@@ -41,7 +40,7 @@ public class ThreatRules {
         assert king != null;
 
         for (Piece piece : boardConnectPieces.getPieces()) {
-            if (piece.getPieceColor() == PieceColor.WHITE && PiecesRules.canPieceMoveHere(piece, boardConnectPieces, king.getPosX(), king.getPosY())) {
+            if (piece.getPieceColor() == PieceColor.WHITE && PiecesRules.isThisAPossibleMove(piece, boardConnectPieces, king.getPosX(), king.getPosY())) {
                 return true;
             }
         }
@@ -49,19 +48,21 @@ public class ThreatRules {
         return false;
     }
 
-    protected static boolean doesStopWhiteCheck(BoardConnectPieces boardConnectPieces) {
-        Collection<String> moves;
-        char x = 0;
-        int y = 0;
-        for (Piece piece : boardConnectPieces.getPieces()) {
-            if (piece.getPieceColor() == PieceColor.WHITE) {
-                moves = PiecesRules.getPossibleMoves(piece, boardConnectPieces).values();
-                for (String s : moves) {
-                    x = s.charAt(0);
-                    y = s.charAt(1) - '0';
-                }
-            }
+    public static boolean doesStopWhiteCheck(BoardConnectPieces boardConnectPieces, Piece piece, char x, int y) {
+        if (piece.getPieceType() == PieceType.King){
+            // TODO
         }
+
+        Piece newPiecePos = PieceFactory.newPiece(piece.getPieceColor(), piece.getPieceType(), x, y);
+
+        boardConnectPieces.getPieces().add(newPiecePos);
+
+        if (!isCheckWhiteK(boardConnectPieces)) {
+            boardConnectPieces.getPieces().remove(newPiecePos);
+            return true;
+        }
+
+        boardConnectPieces.getPieces().remove(newPiecePos);
         return false;
     }
 

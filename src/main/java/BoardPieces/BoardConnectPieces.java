@@ -191,9 +191,6 @@ public class BoardConnectPieces {
 
     private void showPossibleMoves(Piece piece) {
         System.out.println(PiecesRules.getPossibleMoves(piece, this));
-        if (ThreatRules.isCheckWhiteK(this)) {
-            System.out.println("CheckWhiteKing");
-        }
         if (ThreatRules.isCheckBlackK(this)) {
             System.out.println("CheckBlackKing");
         }
@@ -201,18 +198,27 @@ public class BoardConnectPieces {
         for (int y = 8; y >= 1; y--) {
             for (char x = 'a'; x <= 'h'; x++) {
                 if (PiecesRules.isThisAPossibleMove(piece, this, x, y)) {
-                    placeMoveOnPanel(piece, x, y);
+                    if (ThreatRules.isCheckWhiteK(this)) {
+                        System.out.println("Check!");
+                        if (ThreatRules.doesStopWhiteCheck(this, piece, x, y)) {
+                            placeMoveOnPanel(piece, x, y);
+                        }
+                    } else {
+                        placeMoveOnPanel(piece, x, y);
+                    }
                 }
             }
         }
 
-
-        // TODO: Move this somewhere else -->
         if (piece.getPieceType() == PieceType.King) {
-            Piece king = piece;
+            showCastleMove(piece);
+        }
+    }
+
+    private void showCastleMove(Piece king) {
+        if (king.getPieceType() == PieceType.King) {
             for (Piece rook : pieces) {
                 if (rook.getPieceType() == PieceType.Tower) {
-                    // Right rook
                     if (((Tower) rook).allowsCastling() && rook.getPosX() == 'h' && ComplexRules.canThisKingCastleRight(king, this)) {
                         placeCaslteMoveOnPanel(king, rook);
                     }
@@ -222,7 +228,6 @@ public class BoardConnectPieces {
                 }
             }
         }
-        // <--
     }
 
     private void moveToCoordinates(Piece piece, char x, int y) {
