@@ -1,25 +1,26 @@
 package Rules;
 
-import BoardPieces.BoardConnectPieces;
 import Pieces.Piece;
 import Pieces.PieceColor;
 import Player.Player;
 import Game.Game;
 
+import java.util.HashSet;
+
 public class TurnRules {
-    public static void getTurn(BoardConnectPieces boardConnectPieces) {
+    public static void getTurn(HashSet<Piece> pieces) {
         Player whitePlayer = Game.whitePlayer;
         Player blackPlayer = Game.blackPlayer;
 
         if (whitePlayer.isTurn()) {
-            for (Piece piece : boardConnectPieces.getPieces()) {
+            for (Piece piece : pieces) {
                 piece.setTurn(piece.getPieceColor() == PieceColor.WHITE);
-                PawnRules.updateWhitePawnsPreviousPosition(boardConnectPieces);
+                PawnRules.updateWhitePawnsPreviousPosition(pieces);
             }
         } else if (blackPlayer.isTurn()) {
-            for (Piece piece : boardConnectPieces.getPieces()) {
+            for (Piece piece : pieces) {
                 piece.setTurn(piece.getPieceColor() == PieceColor.BLACK);
-                PawnRules.updateBlackPawnsPreviousPosition(boardConnectPieces);
+                PawnRules.updateBlackPawnsPreviousPosition(pieces);
             }
         }
     }

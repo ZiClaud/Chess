@@ -1,6 +1,5 @@
 package Rules;
 
-import BoardPieces.BoardConnectPieces;
 import Pieces.King;
 import Pieces.Piece;
 import Pieces.PieceType;
@@ -170,18 +169,18 @@ public class ComplexRules {
         return false;
     }
 
-    public static boolean canThisKingCastleRight(Piece king, BoardConnectPieces boardConnectPieces) {
+    public static boolean canThisKingCastleRight(Piece king, HashSet<Piece> pieces) {
         if (king.getPieceType() == PieceType.King && ((King) king).canCastle()) {
-            for (Piece piece : boardConnectPieces.getPieces()) {
+            for (Piece piece : pieces) {
                 if (piece.getPosY() == king.getPosY()
                         && (piece.getPosX() == king.getPosX() + 1
                         || piece.getPosX() == king.getPosX() + 2)) {
                     return false;
                 }
             }
-            if (ThreatRules.isThisPositionThreatened(boardConnectPieces, king.getPosX(), king.getPosY())
-                    || ThreatRules.isThisPositionThreatened(boardConnectPieces, (char) (king.getPosX() + 1), king.getPosY())
-                    || ThreatRules.isThisPositionThreatened(boardConnectPieces, (char) (king.getPosX() + 2), king.getPosY())) {
+            if (ThreatRules.isThisPositionThreatened(pieces, king.getPosX(), king.getPosY())
+                    || ThreatRules.isThisPositionThreatened(pieces, (char) (king.getPosX() + 1), king.getPosY())
+                    || ThreatRules.isThisPositionThreatened(pieces, (char) (king.getPosX() + 2), king.getPosY())) {
                 return false;
             }
             return true;
@@ -190,9 +189,9 @@ public class ComplexRules {
         return false;
     }
 
-    public static boolean canThisKingCastleLeft(Piece king, BoardConnectPieces boardConnectPieces) {
+    public static boolean canThisKingCastleLeft(Piece king, HashSet<Piece> pieces) {
         if (king.getPieceType() == PieceType.King && ((King) king).canCastle()) {
-            for (Piece piece : boardConnectPieces.getPieces()) {
+            for (Piece piece : pieces) {
                 if (piece.getPosY() == king.getPosY()
                         && (piece.getPosX() == king.getPosX() - 1
                         || piece.getPosX() == king.getPosX() - 2
@@ -200,9 +199,9 @@ public class ComplexRules {
                     return false;
                 }
             }
-            if (ThreatRules.isThisPositionThreatened(boardConnectPieces, king.getPosX(), king.getPosY())
-                    || ThreatRules.isThisPositionThreatened(boardConnectPieces, (char) (king.getPosX() - 1), king.getPosY())
-                    || ThreatRules.isThisPositionThreatened(boardConnectPieces, (char) (king.getPosX() - 2), king.getPosY())) {
+            if (ThreatRules.isThisPositionThreatened(pieces, king.getPosX(), king.getPosY())
+                    || ThreatRules.isThisPositionThreatened(pieces, (char) (king.getPosX() - 1), king.getPosY())
+                    || ThreatRules.isThisPositionThreatened(pieces, (char) (king.getPosX() - 2), king.getPosY())) {
                 return false;
             }
             return true;

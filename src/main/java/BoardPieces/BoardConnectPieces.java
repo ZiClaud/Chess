@@ -32,7 +32,7 @@ public class BoardConnectPieces {
     }
 
     public void drawPiecesOnBoard() {
-        TurnRules.getTurn(this);
+        TurnRules.getTurn(getPieces());
         for (Piece p : pieces) {
             placePieceOnPanel(p, windowBoard.getMatrixPanels()[p.getPosY() - 1][p.getPosX() - 'a']);
         }
@@ -190,17 +190,16 @@ public class BoardConnectPieces {
     }
 
     private void showPossibleMoves(Piece piece) {
-        System.out.println(PiecesRules.getPossibleMoves(piece, this));
-        if (ThreatRules.isCheckBlackK(this)) {
+        System.out.println(PiecesRules.getPossibleMoves(piece, getPieces()));
+        if (ThreatRules.isCheckBlackK(getPieces())) {
             System.out.println("CheckBlackKing");
         }
-// TODO: Change with PiecesRules.getPossibleMoves(piece, this); ?
+// TODO: Change with PiecesRules.getPossibleMoves(piece, getPieces()); ?
         for (int y = 8; y >= 1; y--) {
             for (char x = 'a'; x <= 'h'; x++) {
-                if (PiecesRules.isThisAPossibleMove(piece, this, x, y)) {
-                    if (ThreatRules.isCheckWhiteK(this)) {
-                        System.out.println("Check!");
-                        if (ThreatRules.doesStopWhiteCheck(this, piece, x, y)) {
+                if (PiecesRules.isThisAPossibleMove(piece, getPieces(), x, y)) {
+                    if (ThreatRules.isCheckWhiteK(getPieces())) {
+                        if (ThreatRules.doesStopWhiteCheck(getPieces(), piece, x, y)) {
                             placeMoveOnPanel(piece, x, y);
                         }
                     } else {
@@ -219,10 +218,10 @@ public class BoardConnectPieces {
         if (king.getPieceType() == PieceType.King) {
             for (Piece rook : pieces) {
                 if (rook.getPieceType() == PieceType.Tower) {
-                    if (((Tower) rook).allowsCastling() && rook.getPosX() == 'h' && ComplexRules.canThisKingCastleRight(king, this)) {
+                    if (((Tower) rook).allowsCastling() && rook.getPosX() == 'h' && ComplexRules.canThisKingCastleRight(king, getPieces())) {
                         placeCaslteMoveOnPanel(king, rook);
                     }
-                    if (((Tower) rook).allowsCastling() && rook.getPosX() == 'a' && ComplexRules.canThisKingCastleLeft(king, this)) {
+                    if (((Tower) rook).allowsCastling() && rook.getPosX() == 'a' && ComplexRules.canThisKingCastleLeft(king, getPieces())) {
                         placeCaslteMoveOnPanel(king, rook);
                     }
                 }

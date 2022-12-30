@@ -1,17 +1,17 @@
 package Rules;
 
-import BoardPieces.BoardConnectPieces;
 import Game.Game;
 import Pieces.Piece;
 import Pieces.PieceColor;
 import Pieces.PieceFactory;
 import Pieces.PieceType;
 
+import java.util.HashSet;
+
 public class ThreatRules {
-    // TODO: King rules - Castle and Move/Be protected if there's a check
-    public static boolean isCheckWhiteK(BoardConnectPieces boardConnectPieces) {
+    public static boolean isCheckWhiteK(HashSet<Piece> pieces) {
         Piece king = null;
-        for (Piece piece : boardConnectPieces.getPieces()) {
+        for (Piece piece : pieces) {
             if (piece.getPieceColor() == PieceColor.WHITE && piece.getPieceType() == PieceType.King) {
                 king = piece;
                 break;
@@ -20,8 +20,8 @@ public class ThreatRules {
 
         assert king != null;
 
-        for (Piece piece : boardConnectPieces.getPieces()) {
-            if (piece.getPieceColor() == PieceColor.BLACK && PiecesRules.isThisAPossibleMove(piece, boardConnectPieces, king.getPosX(), king.getPosY())) {
+        for (Piece piece : pieces) {
+            if (piece.getPieceColor() == PieceColor.BLACK && PiecesRules.isThisAPossibleMove(piece, pieces, king.getPosX(), king.getPosY())) {
                 return true;
             }
         }
@@ -29,9 +29,9 @@ public class ThreatRules {
         return false;
     }
 
-    public static boolean isCheckBlackK(BoardConnectPieces boardConnectPieces) {
+    public static boolean isCheckBlackK(HashSet<Piece> pieces) {
         Piece king = null;
-        for (Piece piece : boardConnectPieces.getPieces()) {
+        for (Piece piece : pieces) {
             if (piece.getPieceColor() == PieceColor.BLACK && piece.getPieceType() == PieceType.King) {
                 king = piece;
             }
@@ -39,8 +39,9 @@ public class ThreatRules {
 
         assert king != null;
 
-        for (Piece piece : boardConnectPieces.getPieces()) {
-            if (piece.getPieceColor() == PieceColor.WHITE && PiecesRules.isThisAPossibleMove(piece, boardConnectPieces, king.getPosX(), king.getPosY())) {
+        for (Piece piece : pieces) {
+            if (piece.getPieceColor() == PieceColor.WHITE &&
+                    PiecesRules.isThisAPossibleMove(piece, pieces, king.getPosX(), king.getPosY())) {
                 return true;
             }
         }
@@ -48,34 +49,53 @@ public class ThreatRules {
         return false;
     }
 
-    public static boolean doesStopWhiteCheck(BoardConnectPieces boardConnectPieces, Piece piece, char x, int y) {
-        if (piece.getPieceType() == PieceType.King){
-            // TODO
+    public static boolean doesStopWhiteCheck(HashSet<Piece> pieces, Piece piece, char x, int y) {
+        if (piece.getPieceType() == PieceType.King) {
+            return !isThisPositionThreatened(pieces, x, y);
+        }
+
+        HashSet<Piece> futurePieces = new HashSet<>(pieces);
+
+        for (Piece enemyP : pieces) {
+            if (enemyP.getPosX() == x && enemyP.getPosY() == y) {
+                futurePieces.remove(enemyP);
+                break;
+            }
         }
 
         Piece newPiecePos = PieceFactory.newPiece(piece.getPieceColor(), piece.getPieceType(), x, y);
+        futurePieces.add(newPiecePos);
 
-        boardConnectPieces.getPieces().add(newPiecePos);
-
-        if (!isCheckWhiteK(boardConnectPieces)) {
-            boardConnectPieces.getPieces().remove(newPiecePos);
-            return true;
-        }
-
-        boardConnectPieces.getPieces().remove(newPiecePos);
-        return false;
+        return !isCheckWhiteK(futurePieces);
     }
 
-    protected static boolean isThisPositionThreatened(BoardConnectPieces boardConnectPieces, Character x, Integer y) {
+    protected static boolean isThisPositionThreatened(HashSet<Piece> pieces, Character x, Integer y) {
         String xy = x.toString() + y.toString();
-        for (Piece piece : boardConnectPieces.getPieces()) {
+        for (Piece piece : pieces) {
             if ((Game.whitePlayer.isTurn() && piece.getPieceColor() == PieceColor.BLACK) ||
                     (Game.blackPlayer.isTurn() && piece.getPieceColor() == PieceColor.WHITE)) {
-                if (PiecesRules.getPossibleMoves(piece, boardConnectPieces).containsValue(xy)) {
+                if (PiecesRules.getPossibleMoves(piece, pieces).containsValue(xy)) {
                     return true;
                 }
             }
         }
         return false;
+    }
+
+    public static boolean willThisMoveCauseCheck(Piece piece, HashSet<Piece> pieces, Character x, Integer y) {
+        boolean ris = false;
+
+        HashSet<Piece> futurePieces = new HashSet<>(pieces);
+        Piece newPiecePos = PieceFactory.newPiece(piece.getPieceColor(), piece.getPieceType(), x, y);
+        futurePieces.remove(piece);
+        futurePieces.add(newPiecePos);
+
+
+        if (isCheckWhiteK(futurePieces) && Game.whitePlayer.isTurn() ||
+                isCheckBlackK(futurePieces) && Game.blackPlayer.isTurn()) {
+            ris = true;
+        }
+
+        return ris;
     }
 }

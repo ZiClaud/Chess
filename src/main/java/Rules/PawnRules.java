@@ -1,21 +1,25 @@
 package Rules;
 
-import BoardPieces.BoardConnectPieces;
 import Pieces.Pawn;
 import Pieces.Piece;
 import Pieces.PieceColor;
 import Pieces.PieceType;
 
+import java.util.HashSet;
+
 public class PawnRules {
     // TODO: Remove pawn when pawns does El Passant
-    protected static boolean canWhitePawnMoveHere(Piece piece, BoardConnectPieces boardConnectPieces, char x, int y) {
-        if (canWhitePawnDoElPassant(piece, boardConnectPieces, x, y)) {
+    protected static boolean canWhitePawnMoveHere(Piece piece, HashSet<Piece> pieces, char x, int y) {
+        if (canWhitePawnDoElPassant(piece, pieces
+                , x, y)) {
             return true;
         }
-        if (PawnRules.canWhitePawnEat(piece, boardConnectPieces, x, y)) {
+        if (PawnRules.canWhitePawnEat(piece, pieces
+                , x, y)) {
             return true;
         }
-        if (PawnRules.isWhitePathBlocked(piece, boardConnectPieces, x, y)) {
+        if (PawnRules.isWhitePathBlocked(piece, pieces
+                , x, y)) {
             return false;
         }
         if (PawnRules.isWhitePawnInStartingPosition(piece)) {
@@ -26,8 +30,8 @@ public class PawnRules {
         return (piece.getPosX() == x && piece.getPosY() == y - 1);
     }
 
-    private static boolean canWhitePawnDoElPassant(Piece whitePawn, BoardConnectPieces boardConnectPieces, char x, int y) {
-        for (Piece blackPawn : boardConnectPieces.getPieces()) {
+    private static boolean canWhitePawnDoElPassant(Piece whitePawn, HashSet<Piece> pieces, char x, int y) {
+        for (Piece blackPawn : pieces) {
             if (blackPawn.getPieceType() == PieceType.Pawn && blackPawn.getPieceColor() == PieceColor.BLACK) {
                 if (((Pawn) blackPawn).allowElPassant()) {
                     if (y == blackPawn.getPosY() + 1 && x == blackPawn.getPosX()) {
@@ -44,8 +48,8 @@ public class PawnRules {
         return false;
     }
 
-    private static boolean canBlackPawnDoElPassant(Piece blackPawn, BoardConnectPieces boardConnectPieces, char x, int y) {
-        for (Piece whitePawn : boardConnectPieces.getPieces()) {
+    private static boolean canBlackPawnDoElPassant(Piece blackPawn, HashSet<Piece> pieces, char x, int y) {
+        for (Piece whitePawn : pieces) {
             if (whitePawn.getPieceType() == PieceType.Pawn && whitePawn.getPieceColor() == PieceColor.WHITE) {
                 if (((Pawn) whitePawn).allowElPassant()) {
                     if (y == whitePawn.getPosY() - 1 && x == whitePawn.getPosX()) {
@@ -62,30 +66,33 @@ public class PawnRules {
         return false;
     }
 
-    protected static void updateWhitePawnsPreviousPosition(BoardConnectPieces boardConnectPieces) {
-        for (Piece piece : boardConnectPieces.getPieces()) {
+    protected static void updateWhitePawnsPreviousPosition(HashSet<Piece> pieces) {
+        for (Piece piece : pieces) {
             if (piece.getPieceColor() == PieceColor.WHITE && piece.getPieceType() == PieceType.Pawn) {
                 ((Pawn) piece).updatePreviousPos();
             }
         }
     }
 
-    protected static void updateBlackPawnsPreviousPosition(BoardConnectPieces boardConnectPieces) {
-        for (Piece piece : boardConnectPieces.getPieces()) {
+    protected static void updateBlackPawnsPreviousPosition(HashSet<Piece> pieces) {
+        for (Piece piece : pieces) {
             if (piece.getPieceColor() == PieceColor.BLACK && piece.getPieceType() == PieceType.Pawn) {
                 ((Pawn) piece).updatePreviousPos();
             }
         }
     }
 
-    protected static boolean canBlackPawnMoveHere(Piece piece, BoardConnectPieces boardConnectPieces, char x, int y) {
-        if (canBlackPawnDoElPassant(piece, boardConnectPieces, x, y)) {
+    protected static boolean canBlackPawnMoveHere(Piece piece, HashSet<Piece> pieces, char x, int y) {
+        if (canBlackPawnDoElPassant(piece, pieces
+                , x, y)) {
             return true;
         }
-        if (PawnRules.canBlackPawnEat(piece, boardConnectPieces, x, y)) {
+        if (PawnRules.canBlackPawnEat(piece, pieces
+                , x, y)) {
             return true;
         }
-        if (PawnRules.isBlackPathBlocked(piece, boardConnectPieces, x, y)) {
+        if (PawnRules.isBlackPathBlocked(piece, pieces
+                , x, y)) {
             return false;
         }
         if (PawnRules.isBlackPawnInStartingPosition(piece)) {
@@ -104,42 +111,46 @@ public class PawnRules {
         return (piece.getPosY() == 2);
     }
 
-    private static boolean canBlackPawnEat(Piece piece, BoardConnectPieces boardConnectPieces, char x, int y) {
+    private static boolean canBlackPawnEat(Piece piece, HashSet<Piece> pieces, char x, int y) {
         // Move bottom right/bottom left
         if (x == piece.getPosX() - 1 && y == piece.getPosY() - 1 ||
                 x == piece.getPosX() + 1 && y == piece.getPosY() - 1) {
-            if (PiecesRules.isPieceThere(boardConnectPieces, x, y)) {
+            if (PiecesRules.isPieceThere(pieces
+                    , x, y)) {
                 return true;
             }
         }
         return false;
     }
 
-    private static boolean canWhitePawnEat(Piece piece, BoardConnectPieces boardConnectPieces, char x, int y) {
+    private static boolean canWhitePawnEat(Piece piece, HashSet<Piece> pieces, char x, int y) {
         // Move top right/top left
         if (x == piece.getPosX() + 1 && y == piece.getPosY() + 1 ||
                 x == piece.getPosX() - 1 && y == piece.getPosY() + 1) {
-            if (PiecesRules.isPieceThere(boardConnectPieces, x, y)) {
+            if (PiecesRules.isPieceThere(pieces
+                    , x, y)) {
                 return true;
             }
         }
         return false;
     }
 
-    private static boolean isWhitePathBlocked(Piece piece, BoardConnectPieces boardConnectPieces, char x, int y) {
+    private static boolean isWhitePathBlocked(Piece piece, HashSet<Piece> pieces, char x, int y) {
         // stops if path is blocked
         if (x == piece.getPosX() && y == piece.getPosY() + 1) {
-            if (PiecesRules.isPieceThere(boardConnectPieces, x, y)) {
+            if (PiecesRules.isPieceThere(pieces
+                    , x, y)) {
                 return true;
             }
         }
         return false;
     }
 
-    private static boolean isBlackPathBlocked(Piece piece, BoardConnectPieces boardConnectPieces, char x, int y) {
+    private static boolean isBlackPathBlocked(Piece piece, HashSet<Piece> pieces, char x, int y) {
         // stops if path is blocked
         if (x == piece.getPosX() && y == piece.getPosY() - 1) {
-            if (PiecesRules.isPieceThere(boardConnectPieces, x, y)) {
+            if (PiecesRules.isPieceThere(pieces
+                    , x, y)) {
                 return true;
             }
         }
