@@ -8,18 +8,14 @@ import Pieces.PieceType;
 import java.util.HashSet;
 
 public class PawnRules {
-    // TODO: Remove pawn when pawns does El Passant
     protected static boolean canWhitePawnMoveHere(Piece piece, HashSet<Piece> pieces, char x, int y) {
-        if (canWhitePawnDoElPassant(piece, pieces
-                , x, y)) {
+        if (canWhitePawnDoElPassant(piece, pieces, x, y)) {
             return true;
         }
-        if (PawnRules.canWhitePawnEat(piece, pieces
-                , x, y)) {
+        if (PawnRules.canWhitePawnEat(piece, pieces, x, y)) {
             return true;
         }
-        if (PawnRules.isWhitePathBlocked(piece, pieces
-                , x, y)) {
+        if (PawnRules.isWhitePathBlocked(piece, pieces, x, y)) {
             return false;
         }
         if (PawnRules.isWhitePawnInStartingPosition(piece)) {
@@ -83,16 +79,13 @@ public class PawnRules {
     }
 
     protected static boolean canBlackPawnMoveHere(Piece piece, HashSet<Piece> pieces, char x, int y) {
-        if (canBlackPawnDoElPassant(piece, pieces
-                , x, y)) {
+        if (canBlackPawnDoElPassant(piece, pieces, x, y)) {
             return true;
         }
-        if (PawnRules.canBlackPawnEat(piece, pieces
-                , x, y)) {
+        if (PawnRules.canBlackPawnEat(piece, pieces, x, y)) {
             return true;
         }
-        if (PawnRules.isBlackPathBlocked(piece, pieces
-                , x, y)) {
+        if (PawnRules.isBlackPathBlocked(piece, pieces, x, y)) {
             return false;
         }
         if (PawnRules.isBlackPawnInStartingPosition(piece)) {
@@ -115,8 +108,7 @@ public class PawnRules {
         // Move bottom right/bottom left
         if (x == piece.getPosX() - 1 && y == piece.getPosY() - 1 ||
                 x == piece.getPosX() + 1 && y == piece.getPosY() - 1) {
-            if (PiecesRules.isPieceThere(pieces
-                    , x, y)) {
+            if (PiecesRules.isPieceThere(pieces, x, y)) {
                 return true;
             }
         }
@@ -127,8 +119,7 @@ public class PawnRules {
         // Move top right/top left
         if (x == piece.getPosX() + 1 && y == piece.getPosY() + 1 ||
                 x == piece.getPosX() - 1 && y == piece.getPosY() + 1) {
-            if (PiecesRules.isPieceThere(pieces
-                    , x, y)) {
+            if (PiecesRules.isPieceThere(pieces, x, y)) {
                 return true;
             }
         }
@@ -138,8 +129,7 @@ public class PawnRules {
     private static boolean isWhitePathBlocked(Piece piece, HashSet<Piece> pieces, char x, int y) {
         // stops if path is blocked
         if (x == piece.getPosX() && y == piece.getPosY() + 1) {
-            if (PiecesRules.isPieceThere(pieces
-                    , x, y)) {
+            if (PiecesRules.isPieceThere(pieces, x, y)) {
                 return true;
             }
         }
@@ -149,8 +139,7 @@ public class PawnRules {
     private static boolean isBlackPathBlocked(Piece piece, HashSet<Piece> pieces, char x, int y) {
         // stops if path is blocked
         if (x == piece.getPosX() && y == piece.getPosY() - 1) {
-            if (PiecesRules.isPieceThere(pieces
-                    , x, y)) {
+            if (PiecesRules.isPieceThere(pieces, x, y)) {
                 return true;
             }
         }
