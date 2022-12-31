@@ -198,8 +198,8 @@ public class BoardConnectPieces {
         for (int y = 8; y >= 1; y--) {
             for (char x = 'a'; x <= 'h'; x++) {
                 if (PiecesRules.isThisAPossibleMove(piece, getPieces(), x, y)) {
-                    if (ThreatRules.isCheckWhiteK(getPieces())) {
-                        if (ThreatRules.doesStopWhiteCheck(getPieces(), piece, x, y)) {
+                    if (ThreatRules.isCheckWhiteK(getPieces()) || ThreatRules.isCheckBlackK(getPieces())) {
+                        if (ThreatRules.doesStopCheck(getPieces(), piece, x, y)) {
                             placeMoveOnPanel(piece, x, y);
                         }
                     } else {

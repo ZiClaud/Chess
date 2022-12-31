@@ -49,26 +49,6 @@ public class ThreatRules {
         return false;
     }
 
-    public static boolean doesStopWhiteCheck(HashSet<Piece> pieces, Piece piece, char x, int y) {
-        if (piece.getPieceType() == PieceType.King) {
-            return !isThisPositionThreatened(pieces, x, y);
-        }
-
-        HashSet<Piece> futurePieces = new HashSet<>(pieces);
-
-        for (Piece enemyP : pieces) {
-            if (enemyP.getPosX() == x && enemyP.getPosY() == y) {
-                futurePieces.remove(enemyP);
-                break;
-            }
-        }
-
-        Piece newPiecePos = PieceFactory.newPiece(piece.getPieceColor(), piece.getPieceType(), x, y);
-        futurePieces.add(newPiecePos);
-
-        return !isCheckWhiteK(futurePieces);
-    }
-
     protected static boolean isThisPositionThreatened(HashSet<Piece> pieces, Character x, Integer y) {
         String xy = x.toString() + y.toString();
         for (Piece piece : pieces) {
@@ -82,14 +62,40 @@ public class ThreatRules {
         return false;
     }
 
+    public static boolean doesStopCheck(HashSet<Piece> pieces, Piece piece, char x, int y) {
+        if (piece.getPieceType() == PieceType.King) {
+            return !isThisPositionThreatened(pieces, x, y);
+        }
+
+        HashSet<Piece> futurePieces = new HashSet<>(pieces);
+
+        for (Piece enemyP : pieces) {
+            if (enemyP.getPosX() == x && enemyP.getPosY() == y && enemyP.getPieceType() != PieceType.King) {
+                futurePieces.remove(enemyP);
+            }
+        }
+
+        futurePieces.add(PieceFactory.newPiece(piece.getPieceColor(), piece.getPieceType(), x, y));
+
+        if (piece.getPieceColor() == PieceColor.WHITE) {
+            return !isCheckWhiteK(futurePieces);
+        }
+        else {
+            return !isCheckBlackK(futurePieces);
+        }
+    }
+
     public static boolean willThisMoveCauseCheck(Piece piece, HashSet<Piece> pieces, Character x, Integer y) {
         boolean ris = false;
 
         HashSet<Piece> futurePieces = new HashSet<>(pieces);
-        Piece newPiecePos = PieceFactory.newPiece(piece.getPieceColor(), piece.getPieceType(), x, y);
         futurePieces.remove(piece);
-        futurePieces.add(newPiecePos);
-
+        for (Piece enemyP : pieces) {
+            if (enemyP.getPosX() == x && enemyP.getPosY() == y && enemyP.getPieceType() != PieceType.King) {
+                futurePieces.remove(enemyP);
+            }
+        }
+        futurePieces.add(PieceFactory.newPiece(piece.getPieceColor(), piece.getPieceType(), x, y));
 
         if (isCheckWhiteK(futurePieces) && Game.whitePlayer.isTurn() ||
                 isCheckBlackK(futurePieces) && Game.blackPlayer.isTurn()) {
