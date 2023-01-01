@@ -2,10 +2,7 @@ package BoardPieces;
 
 import Board.WindowBoard;
 import Pieces.*;
-import Rules.ComplexRules;
-import Rules.PiecesRules;
-import Rules.ThreatRules;
-import Rules.TurnRules;
+import Rules.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -144,6 +141,8 @@ public class BoardConnectPieces {
         TurnRules.switchTurn();
 
         resetBoard();
+
+        WinRules.win(getPieces());
     }
 
     private boolean elPassant(Piece piece, Piece enemyP, char x, int y) {

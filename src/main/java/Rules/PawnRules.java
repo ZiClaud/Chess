@@ -138,7 +138,7 @@ public class PawnRules {
 
     private static boolean isBlackPathBlocked(Piece piece, HashSet<Piece> pieces, char x, int y) {
         // stops if path is blocked
-        if (x == piece.getPosX() && (y == piece.getPosY() + 1 || y == piece.getPosY() + 2)) {
+        if (x == piece.getPosX() && (y == piece.getPosY() - 1 || y == piece.getPosY() - 2)) {
             if (PiecesRules.isPieceThere(pieces, x, y)) {
                 return true;
             }
