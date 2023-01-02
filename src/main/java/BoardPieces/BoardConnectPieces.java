@@ -189,10 +189,6 @@ public class BoardConnectPieces {
     }
 
     private void showPossibleMoves(Piece piece) {
-        System.out.println(PiecesRules.getPossibleMoves(piece, getPieces()));
-        if (ThreatRules.isCheckBlackK(getPieces())) {
-            System.out.println("CheckBlackKing");
-        }
 // TODO: Change with PiecesRules.getPossibleMoves(piece, getPieces()); ?
         for (int y = 8; y >= 1; y--) {
             for (char x = 'a'; x <= 'h'; x++) {
