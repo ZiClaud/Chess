@@ -5,6 +5,7 @@ import BoardPieces.BoardConnectPieces;
 import Player.Player;
 import Player.PlayerBlack;
 import Player.PlayerWhite;
+import Rules.TurnRules;
 
 import javax.swing.*;
 import java.util.Arrays;
@@ -12,7 +13,7 @@ import java.util.Arrays;
 public class Game {
     public static final Player whitePlayer = new PlayerWhite();
     public static final Player blackPlayer = new PlayerBlack();
-    private final WindowBoard windowBoard;
+    private static WindowBoard windowBoard;
     private final BoardConnectPieces boardPieces;
 
     public Game() {
@@ -37,8 +38,11 @@ public class Game {
         return boardSize;
     }
 
-    public WindowBoard getWindowBoard() {
-        return windowBoard;
+    public static void restartGame(){
+        if (blackPlayer.isTurn()){
+            TurnRules.switchTurn();
+        }
+        windowBoard.removeWindow();
     }
 
     public BoardConnectPieces getBoardPieces() {

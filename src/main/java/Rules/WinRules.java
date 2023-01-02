@@ -11,10 +11,17 @@ public class WinRules {
     public static void win(HashSet<Piece> pieces) {
         if (Game.whitePlayer.isTurn() && didWin(pieces, PieceColor.WHITE)) {
             JOptionPane.showMessageDialog(null, "Black won!");
+            restart();
         }
         if (Game.blackPlayer.isTurn() && didWin(pieces, PieceColor.BLACK)) {
             JOptionPane.showMessageDialog(null, "White won!");
+            restart();
         }
+    }
+
+    private static void restart() {
+        Game.restartGame();
+        new Game();
     }
 
     private static boolean didWin(HashSet<Piece> pieces, PieceColor pieceColor) {

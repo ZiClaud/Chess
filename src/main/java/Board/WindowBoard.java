@@ -60,4 +60,8 @@ public class WindowBoard {
             val++;
         }
     }
+
+    public void removeWindow(){
+        frame.setVisible(false);
+    }
 }
