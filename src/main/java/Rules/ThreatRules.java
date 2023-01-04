@@ -55,7 +55,11 @@ public class ThreatRules {
             if ((Game.whitePlayer.isTurn() && piece.getPieceColor() == PieceColor.BLACK) ||
                     (Game.blackPlayer.isTurn() && piece.getPieceColor() == PieceColor.WHITE)) {
                 if (PiecesRules.getPossibleMoves(piece, pieces).containsValue(xy)) {
-                    return true;
+                    if (piece.getPieceType() == PieceType.Pawn) {
+                        continue;
+                    } else {
+                        return true;
+                    }
                 }
             }
         }
@@ -79,8 +83,7 @@ public class ThreatRules {
 
         if (piece.getPieceColor() == PieceColor.WHITE) {
             return !isCheckWhiteK(futurePieces);
-        }
-        else {
+        } else {
             return !isCheckBlackK(futurePieces);
         }
     }
