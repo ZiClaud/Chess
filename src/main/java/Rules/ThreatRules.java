@@ -56,6 +56,9 @@ public class ThreatRules {
                     (Game.blackPlayer.isTurn() && piece.getPieceColor() == PieceColor.WHITE)) {
                 if (PiecesRules.getPossibleMoves(piece, pieces).containsValue(xy)) {
                     if (piece.getPieceType() == PieceType.Pawn) {
+                        if (PawnRules.isThisPawnThreateningCastling(piece, pieces, x, y)){
+                            return true;
+                        }
                         continue;
                     } else {
                         return true;
