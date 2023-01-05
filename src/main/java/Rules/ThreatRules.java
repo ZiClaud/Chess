@@ -53,16 +53,12 @@ public class ThreatRules {
         String xy = x.toString() + y.toString();
         for (Piece piece : pieces) {
             if ((Game.whitePlayer.isTurn() && piece.getPieceColor() == PieceColor.BLACK) ||
-                    (Game.blackPlayer.isTurn() && piece.getPieceColor() == PieceColor.WHITE)) {
-                if (PiecesRules.getPossibleMoves(piece, pieces).containsValue(xy)) {
-                    if (piece.getPieceType() == PieceType.Pawn) {
-                        if (PawnRules.isThisPawnThreateningCastling(piece, pieces, x, y)){
-                            return true;
-                        }
-                        continue;
-                    } else {
-                        return true;
-                    }
+                    (Game.blackPlayer.isTurn() && piece.getPieceColor() == PieceColor.WHITE) &&
+                            PiecesRules.getPossibleMoves(piece, pieces).containsValue(xy)) {
+                if (piece.getPieceType() == PieceType.Pawn && PawnRules.canThisPawnThreaten(piece, x, y)) {
+                    return true;
+                } else {
+                    return true;
                 }
             }
         }
