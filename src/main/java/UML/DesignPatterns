@@ -11,3 +11,19 @@ Implemented:
 3. Pieces      -> Strategy (getImg), Decorator, Factory
 4. Rules       ->
 5. Player      -> Strategy
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+TODO BUG FIX: Black knight on f3 won't let bongcloud the white king
+-> e3, Nc6, Nf3, Ne5, a3, Nxf3, *Ke5*
