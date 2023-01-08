@@ -119,43 +119,28 @@ public class PawnRules {
     }
 
     private static boolean canWhitePawnThreaten(Piece piece, char x, int y) {
-        // Move top right/top left
-        if (y == piece.getPosY() + 1 && (x == piece.getPosX() + 1 || x == piece.getPosX() - 1)) {
-            return true;
-        }
-        return false;
+        return y == piece.getPosY() + 1 && (x == piece.getPosX() + 1 || x == piece.getPosX() - 1);
     }
 
     private static boolean canBlackPawnThreaten(Piece piece, char x, int y) {
-        // Move bottom right/bottom left
-        if (y == piece.getPosY() - 1 && (x == piece.getPosX() - 1 || x == piece.getPosX() + 1)) {
-            return true;
-        }
-        return false;
+        return y == piece.getPosY() - 1 && (x == piece.getPosX() - 1 || x == piece.getPosX() + 1);
     }
 
     private static boolean canWhitePawnEat(Piece piece, HashSet<Piece> pieces, char x, int y) {
-        // Move top right/top left
-        if (y == piece.getPosY() + 1 && (x == piece.getPosX() + 1 || x == piece.getPosX() - 1)) {
-            if (PiecesRules.isPieceThere(pieces, x, y)) {
-                return true;
-            }
+        if (canWhitePawnThreaten(piece, x, y)) {
+            return PiecesRules.isPieceThere(pieces, x, y);
         }
         return false;
     }
 
     private static boolean canBlackPawnEat(Piece piece, HashSet<Piece> pieces, char x, int y) {
-        // Move bottom right/bottom left
-        if (y == piece.getPosY() - 1 && (x == piece.getPosX() - 1 || x == piece.getPosX() + 1)) {
-            if (PiecesRules.isPieceThere(pieces, x, y)) {
-                return true;
-            }
+        if (canBlackPawnThreaten(piece, x, y)) {
+            return PiecesRules.isPieceThere(pieces, x, y);
         }
         return false;
     }
 
     private static boolean isWhitePathBlocked(Piece piece, HashSet<Piece> pieces, char x, int y) {
-        // stops if path is blocked
         if (x == piece.getPosX() && (y == piece.getPosY() + 1 || y == piece.getPosY() + 2)) {
             return PiecesRules.isPieceThere(pieces, x, y);
         }
@@ -163,11 +148,8 @@ public class PawnRules {
     }
 
     private static boolean isBlackPathBlocked(Piece piece, HashSet<Piece> pieces, char x, int y) {
-        // stops if path is blocked
         if (x == piece.getPosX() && (y == piece.getPosY() - 1 || y == piece.getPosY() - 2)) {
-            if (PiecesRules.isPieceThere(pieces, x, y)) {
-                return true;
-            }
+            return PiecesRules.isPieceThere(pieces, x, y);
         }
         return false;
     }

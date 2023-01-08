@@ -51,14 +51,19 @@ public class ThreatRules {
 
     protected static boolean isThisPositionThreatened(HashSet<Piece> pieces, Character x, Integer y) {
         String xy = x.toString() + y.toString();
-        for (Piece piece : pieces) {
-            if ((Game.whitePlayer.isTurn() && piece.getPieceColor() == PieceColor.BLACK) ||
-                    (Game.blackPlayer.isTurn() && piece.getPieceColor() == PieceColor.WHITE) &&
-                            PiecesRules.getPossibleMoves(piece, pieces).containsValue(xy)) {
-                if (piece.getPieceType() == PieceType.Pawn && PawnRules.canThisPawnThreaten(piece, x, y)) {
+        for (Piece enemyPiece : pieces) {
+            if (((Game.whitePlayer.isTurn() && enemyPiece.getPieceColor() == PieceColor.BLACK) ||
+                    (Game.blackPlayer.isTurn() && enemyPiece.getPieceColor() == PieceColor.WHITE)) &&
+                    PiecesRules.getPossibleMoves(enemyPiece, pieces).containsValue(xy)) {
+                if (enemyPiece.getPieceType() != PieceType.Pawn) {
+                    System.out.println("mhm2 " + enemyPiece + " " + x + y);
+                    return true;
+                } else if (PawnRules.canThisPawnThreaten(enemyPiece, x, y)) {
+                    System.out.println("mhm " + enemyPiece + " " + x + y);
                     return true;
                 } else {
-                    return true;
+                    System.out.println("ok " + enemyPiece + " " + x + y);
+                    // TODO ??
                 }
             }
         }

@@ -199,9 +199,10 @@ public class ComplexRules {
                     return false;
                 }
             }
-            if (ThreatRules.isThisPositionThreatened(pieces, king.getPosX(), king.getPosY())
-                    || ThreatRules.isThisPositionThreatened(pieces, (char) (king.getPosX() - 1), king.getPosY())
-                    || ThreatRules.isThisPositionThreatened(pieces, (char) (king.getPosX() - 2), king.getPosY())) {
+            if (ThreatRules.isThisPositionThreatened(pieces, king.getPosX(), king.getPosY()) ||
+                    ThreatRules.isThisPositionThreatened(pieces, (char) (king.getPosX() - 1), king.getPosY()) ||
+                    ThreatRules.isThisPositionThreatened(pieces, (char) (king.getPosX() - 2), king.getPosY()) ||
+                    ThreatRules.isThisPositionThreatened(pieces, (char) (king.getPosX() - 3), king.getPosY())) {
                 return false;
             }
             return true;

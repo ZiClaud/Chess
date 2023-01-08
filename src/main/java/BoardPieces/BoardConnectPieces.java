@@ -212,7 +212,7 @@ public class BoardConnectPieces {
     private void showCastleMove(Piece king) {
         if (king.getPieceType() == PieceType.King) {
             for (Piece rook : pieces) {
-                if (rook.getPieceType() == PieceType.Tower) {
+                if (rook.getPieceType() == PieceType.Tower && rook.getPosY() == king.getPosY()) {
                     if (((Tower) rook).allowsCastling() && rook.getPosX() == 'h' && ComplexRules.canThisKingCastleRight(king, getPieces())) {
                         placeCaslteMoveOnPanel(king, rook);
                     }
