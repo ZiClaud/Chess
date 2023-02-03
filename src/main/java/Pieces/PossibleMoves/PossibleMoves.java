@@ -7,12 +7,12 @@ import Pieces.Position;
 
 import java.util.ArrayList;
 
-// TODO: Template?
 public abstract class PossibleMoves {
     public ArrayList<Position> getPossibleMovesOnBoard(Piece piece, BoardConnectPieces board) {
         ArrayList<Position> positions = getPossibleMovesPerPiece(piece, board.getWindowBoard().getBoardSize());
         positions = extraMoves(positions, piece, board);
         positions = removeIllegalMoves(positions, piece, board);
+        positions = removeOutOfBoardIllegalMoves(positions, board);
 
         return positions;
     }
@@ -20,6 +20,26 @@ public abstract class PossibleMoves {
     protected ArrayList<Position> removeIllegalMoves(ArrayList<Position> positions, Piece piece, BoardConnectPieces board) {
         positions = removeTroughPiecesIllegalMove(positions, piece, board);
         positions = removeCheckIllegalMove(positions, piece, board);
+        return positions;
+    }
+
+    private ArrayList<Position> removeOutOfBoardIllegalMoves(ArrayList<Position> positions, BoardConnectPieces board) {
+        int i = 0;
+//        System.out.println(positions);
+//        System.out.println("Removing...");
+        while (i < positions.size()) {
+            Position position = positions.get(i);
+
+            if (position.getX() >= 'a' && position.getX() <= board.getWindowBoard().getBoardSize().getX() &&
+                    position.getY() >= 1 && position.getY() <= board.getWindowBoard().getBoardSize().getY()) {
+                i++;
+                continue;
+            }
+            positions.remove(position);
+            i = 0;
+        }
+//        System.out.println("...Removed");
+//        System.out.println(positions);
         return positions;
     }
 
