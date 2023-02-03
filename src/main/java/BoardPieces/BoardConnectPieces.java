@@ -2,17 +2,19 @@ package BoardPieces;
 
 import Board.WindowBoard;
 import Pieces.*;
-import Rules.*;
+import Rules.TurnRules;
+import Rules.WinRules;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
 /**
- * Class that connects Board with Pieces
- * Draws the Pieces into the Board
+ * Class that connects Board with PiecesOld
+ * Draws the PiecesOld into the Board
  */
 public class BoardConnectPieces {
     private final WindowBoard windowBoard;
@@ -24,6 +26,10 @@ public class BoardConnectPieces {
         setupPieces();
     }
 
+    public WindowBoard getWindowBoard() {
+        return windowBoard;
+    }
+
     public HashSet<Piece> getPieces() {
         return pieces;
     }
@@ -31,7 +37,7 @@ public class BoardConnectPieces {
     public void drawPiecesOnBoard() {
         TurnRules.getTurn(getPieces());
         for (Piece p : pieces) {
-            placePieceOnPanel(p, windowBoard.getMatrixPanels()[p.getPosY() - 1][p.getPosX() - 'a']);
+            placePieceOnPanel(p, windowBoard.getMatrixPanels()[p.getPosition().getY() - 1][p.getPosition().getX() - 'a']);
         }
     }
 
@@ -87,7 +93,7 @@ public class BoardConnectPieces {
             });
         }
     }
-
+/*
     private void placeCaslteMoveOnPanel(Piece king, Piece rook) {   // TODO: It's pretty much equal to the other one
         JButton moveHereBT = new JButton();
         moveHereBT.setOpaque(true);
@@ -115,24 +121,33 @@ public class BoardConnectPieces {
         jMovesButtons.add(moveHereBT);
     }
 
+*/
     private void pieceClicked(Piece piece) {
         windowBoard.colorTiles();
         resetBoard();
         showPossibleMoves(piece);
     }
 
+    private void showPossibleMoves(Piece piece) {
+        System.out.println(piece);
+        ArrayList<Position> positions = piece.getPossibleMoves().getPossibleMovesOnBoard(piece, this);
+
+        System.out.println(positions);
+
+        for (Position position : positions) {
+            placeMoveOnPanel(piece, position.getX(), position.getY());
+        }
+    }
+
     private void moveClicked(Piece piece, char x, int y) {
+        /*
         for (Piece enemyP : pieces) {
             if (enemyP.getPosX() == x && enemyP.getPosY() == y) {
                 pieces.remove(enemyP);
                 break;
             }
-
-            if (elPassant(piece, enemyP, x, y)) {
-                break;
-            }
         }
-        castle(piece, x);
+        */
 
         windowBoard.colorTiles();
         removeMoveToCoordinatesPanels(windowBoard);
@@ -144,7 +159,7 @@ public class BoardConnectPieces {
 
         WinRules.win(getPieces());
     }
-
+/*
     private boolean elPassant(Piece piece, Piece enemyP, char x, int y) {
         if (piece.getPieceType() == PieceType.Pawn && piece.getPieceColor() == PieceColor.WHITE) {
             if (enemyP.getPosX() == x && enemyP.getPosY() == y - 1 && enemyP.getPieceColor() == PieceColor.BLACK && enemyP.getPieceType() == PieceType.Pawn) {
@@ -160,16 +175,17 @@ public class BoardConnectPieces {
         }
         return false;
     }
-
+ */
+/*
     private void castle(Piece king, char x) {
-        if (king.getPieceType() == PieceType.King && ((King) king).canCastle()) {
+        if (king.getPieceType() == PieceType.King && ((KingOld) king).canCastle()) {
             if (x == 'g') {
                 for (Piece rook : pieces) {
                     if (rook.getPieceType() == PieceType.Tower && rook.getPieceColor() == king.getPieceColor() && rook.getPosX() == 'h') {
                         rook.setPosX('f');
                         king.setPosX('g');
-                        ((King) king).setCastle(false);
-                        ((Tower) rook).setAllowCastle(false);
+                        ((KingOld) king).setCastle(false);
+                        ((TowerOld) rook).setAllowCastle(false);
                         break;
                     }
                 }
@@ -179,8 +195,8 @@ public class BoardConnectPieces {
                     if (rook.getPieceType() == PieceType.Tower && rook.getPieceColor() == king.getPieceColor() && rook.getPosX() == 'a') {
                         rook.setPosX('d');
                         king.setPosX('c');
-                        ((King) king).setCastle(false);
-                        ((Tower) rook).setAllowCastle(false);
+                        ((KingOld) king).setCastle(false);
+                        ((TowerOld) rook).setAllowCastle(false);
                         break;
                     }
                 }
@@ -188,8 +204,12 @@ public class BoardConnectPieces {
         }
     }
 
+         */
+
+/*
     private void showPossibleMoves(Piece piece) {
 // TODO: Change with PiecesRules.getPossibleMoves(piece, getPieces()); ?
+
         for (int y = 8; y >= 1; y--) {
             for (char x = 'a'; x <= 'h'; x++) {
                 if (PiecesRules.isThisAPossibleMove(piece, getPieces(), x, y)) {
@@ -207,51 +227,44 @@ public class BoardConnectPieces {
         if (piece.getPieceType() == PieceType.King) {
             showCastleMove(piece);
         }
-    }
+    }     */
 
+/*
     private void showCastleMove(Piece king) {
         if (king.getPieceType() == PieceType.King) {
             for (Piece rook : pieces) {
                 if (rook.getPieceType() == PieceType.Tower && rook.getPosY() == king.getPosY()) {
-                    if (((Tower) rook).allowsCastling() && rook.getPosX() == 'h' && ComplexRules.canThisKingCastleRight(king, getPieces())) {
+                    if (((TowerOld) rook).allowsCastling() && rook.getPosX() == 'h' && ComplexRules.canThisKingCastleRight(king, getPieces())) {
                         placeCaslteMoveOnPanel(king, rook);
                     }
-                    if (((Tower) rook).allowsCastling() && rook.getPosX() == 'a' && ComplexRules.canThisKingCastleLeft(king, getPieces())) {
+                    if (((TowerOld) rook).allowsCastling() && rook.getPosX() == 'a' && ComplexRules.canThisKingCastleLeft(king, getPieces())) {
                         placeCaslteMoveOnPanel(king, rook);
                     }
                 }
             }
         }
     }
+     */
 
     private void moveToCoordinates(Piece piece, char x, int y) {
-        if (piece.getPieceType() == PieceType.Pawn) {
-            ((Pawn) piece).updatePreviousPos();
-        }
-        if (piece.getPieceType() == PieceType.King) {
-            ((King) piece).setCastle(false);
-        }
-        if (piece.getPieceType() == PieceType.Tower) {
-            ((Tower) piece).setAllowCastle(false);
-        }
+        piece.move(new Position(x, y));
 
-        piece.setPosX(x);
-        piece.setPosY(y);
-
-        placePieceOnPanel(piece, windowBoard.getMatrixPanels()[piece.getPosY() - 1][piece.getPosX() - 'a']);
+        placePieceOnPanel(piece, windowBoard.getMatrixPanels()[piece.getPosition().getY() - 1][piece.getPosition().getX() - 'a']);
         removeMoveToCoordinatesPanels(windowBoard);
 
-        if (piece.getPieceType() == PieceType.Pawn && (piece.getPosY() == 1 || piece.getPosY() == 8)) {
-            upgradePawn(piece, x, y);
+        if (piece.getPieceType() == PieceType.Pawn && (piece.getPosition().getY() == 1 || piece.getPosition().getY() == 8)) {
+//            upgradePawn(piece, x, y);
         }
     }
 
+    /*
     private void upgradePawn(Piece piece, char x, int y) {
         PieceType pieceType = chooseUpgradePiece();
         pieces.remove(piece);
         piece = PieceFactory.newPiece(piece.getPieceColor(), pieceType, x, y);
         pieces.add(piece);
     }
+    */
 
     private PieceType chooseUpgradePiece() {
         PieceType[] options = {PieceType.Queen, PieceType.Knight, PieceType.Bishop, PieceType.Tower};
@@ -274,6 +287,14 @@ public class BoardConnectPieces {
     }
 
     private void setupPieces() {
+
+        pieces.addAll(Set.of(
+                new PieceImpl(PieceType.Tower, PieceColor.WHITE, new Position('a', 1)),
+                new PieceImpl(PieceType.Tower, PieceColor.WHITE, new Position('b', 1)),
+                new PieceImpl(PieceType.Tower, PieceColor.BLACK, new Position('c', 1)),
+                new PieceImpl(PieceType.Tower, PieceColor.BLACK, new Position('d', 1))
+        ));
+        /*
         pieces.addAll(Set.of(
                 PieceFactory.newPiece(PieceColor.WHITE, PieceType.Tower, 'a', 1),
                 PieceFactory.newPiece(PieceColor.WHITE, PieceType.Knight, 'b', 1),
@@ -310,5 +331,6 @@ public class BoardConnectPieces {
                 PieceFactory.newPiece(PieceColor.BLACK, PieceType.Bishop, 'f', 8),
                 PieceFactory.newPiece(PieceColor.BLACK, PieceType.Knight, 'g', 8),
                 PieceFactory.newPiece(PieceColor.BLACK, PieceType.Tower, 'h', 8)));
+        */
     }
 }

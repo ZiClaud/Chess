@@ -1,16 +1,10 @@
 package Rules;
 
-import Pieces.Piece;
-import Pieces.PieceColor;
-import Pieces.PieceType;
-
-import java.util.HashMap;
-import java.util.HashSet;
-
+/*
 public class PiecesRules {
     /**
      * Get all possible moves
-     */
+     *
     public static HashMap<Integer, String> getPossibleMoves(Piece piece, HashSet<Piece> pieces) {
         HashMap<Integer, String> ris = new HashMap<>();
         for (Character x = 'a'; x <= 'h'; x++) {
@@ -25,7 +19,7 @@ public class PiecesRules {
 
     /**
      * Can this piece move to that coordinate?
-     */
+     *
     public static boolean isThisAPossibleMove(Piece piece, HashSet<Piece> pieces, char x, int y) {
         return canPieceMoveHere(piece, pieces, x, y) && isntSameColorPieceThere(piece, pieces, x, y)
                 && ComplexRules.isThisALegalMove(piece, pieces, x, y)
@@ -84,8 +78,8 @@ public class PiecesRules {
 
 
     private static boolean canBishopMoveHere(Piece piece, char x, int y) {
-        char pX = piece.getPosX();
-        int pY = piece.getPosY();
+        char pX = piece.getPosition().getX();
+        int pY = piece.getPosition().getY();
         return (pX + pY == x + y) ||
                 (pX - pY == x - y);
     }
@@ -119,3 +113,4 @@ public class PiecesRules {
         return canTowerMoveHere(piece, x, y) || canBishopMoveHere(piece, x, y);
     }
 }
+*/

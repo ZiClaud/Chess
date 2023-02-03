@@ -1,10 +1,10 @@
-package Pieces;
+package PiecesOld;
 
 /**
  * Piece: Black King
- */
-public class Queen extends PieceDecorator {
-    public Queen(Piece piece, char posX, int posY) {
+ *
+public class QueenOld extends PieceDecoratorOld {
+    public QueenOld(PieceImpl piece, char posX, int posY) {
         this.piece = piece;
         this.posX = posX;
         this.posY = posY;
@@ -16,3 +16,4 @@ public class Queen extends PieceDecorator {
         return piece.getPieceName() + ", Queen";
     }
 }
+*/

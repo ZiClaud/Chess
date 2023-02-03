@@ -1,12 +1,12 @@
-package Pieces;
+package PiecesOld;
 
 /**
  * Piece: King
  * Decorator
- */
-public class King extends PieceDecorator {
+ *
+public class KingOld extends PieceDecoratorOld {
     private boolean castle = true;
-    public King(Piece piece, char posX, int posY) {
+    public KingOld(PieceImpl piece, char posX, int posY) {
         this.piece = piece;
         this.posX = posX;
         this.posY = posY;
@@ -26,3 +26,4 @@ public class King extends PieceDecorator {
         this.castle = canCastle;
     }
 }
+ */

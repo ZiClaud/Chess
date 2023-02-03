@@ -1,7 +1,7 @@
 package Pieces;
 
 /**
- * Color of Pieces
+ * Color of PiecesOld
  */
 public enum PieceColor {
     WHITE(),

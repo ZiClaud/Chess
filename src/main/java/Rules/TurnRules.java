@@ -14,13 +14,13 @@ public class TurnRules {
 
         if (whitePlayer.isTurn()) {
             for (Piece piece : pieces) {
-                piece.setTurn(piece.getPieceColor() == PieceColor.WHITE);
-                PawnRules.updateWhitePawnsPreviousPosition(pieces);
+//                piece.setTurn(piece.getPieceColor() == PieceColor.WHITE);
+//                PawnRules.updateWhitePawnsPreviousPosition(pieces);
             }
         } else if (blackPlayer.isTurn()) {
             for (Piece piece : pieces) {
-                piece.setTurn(piece.getPieceColor() == PieceColor.BLACK);
-                PawnRules.updateBlackPawnsPreviousPosition(pieces);
+//                piece.setTurn(piece.getPieceColor() == PieceColor.BLACK);
+//                PawnRules.updateBlackPawnsPreviousPosition(pieces);
             }
         }
     }

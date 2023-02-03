@@ -1,82 +1,24 @@
 package Pieces;
 
+import Pieces.PossibleMoves.PossibleMoves;
+
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 
-/**
- * Piece abstract class
- * Component
- */
-public abstract class Piece {
-    protected char posX;
-    protected int posY;
-    protected boolean isTurn;
+public interface Piece {
+    PossibleMoves getPossibleMoves();
 
-    public boolean isTurn() {
-        return isTurn;
-    }
+    Position getPosition();
 
-    public void setTurn(boolean turn) {
-        isTurn = turn;
-    }
+    boolean hasMoved();
 
-    public char getPosX() {
-        return posX;
-    }
+    void move(Position position);
 
-    public void setPosX(char posX) {
-        this.posX = posX;
-        isValidPosition();
-    }
+    boolean isTurn();
 
-    public int getPosY() {
-        return posY;
-    }
+    PieceColor getPieceColor();
 
-    public void setPosY(int posY) {
-        this.posY = posY;
-        isValidPosition();
-    }
+    PieceType getPieceType();
 
-    public BufferedImage getImg() {
-        return PieceImg.getPieceImg(this);
-    }
-
-    protected void isValidPosition() {
-        if (posX < 'a' || posX > 'h' || posY < 1 || posY > 8) {
-            System.err.println("Invalid value of XY: " + posX + posY);
-            throw new UnsupportedOperationException();
-        }
-    }
-
-    public abstract String getPieceName();
-
-    public PieceColor getPieceColor() {
-        if (getPieceName().startsWith("White")) {
-            return PieceColor.WHITE;
-        } else if (getPieceName().startsWith("Black")) {
-            return PieceColor.BLACK;
-        } else {
-            assert (false);
-            return null;
-        }
-    }
-
-    public PieceType getPieceType() {
-        if (getPieceName().endsWith("Pawn")) {
-            return PieceType.Pawn;
-        } else if (getPieceName().endsWith("Bishop")) {
-            return PieceType.Bishop;
-        } else if (getPieceName().endsWith("Knight")) {
-            return PieceType.Knight;
-        } else if (getPieceName().endsWith("Tower")) {
-            return PieceType.Tower;
-        } else if (getPieceName().endsWith("Queen")) {
-            return PieceType.Queen;
-        } else if (getPieceName().endsWith("King")) {
-            return PieceType.King;
-        } else {
-            assert (false);
-            return null;
-        }
-    }
+    BufferedImage getImg();
 }

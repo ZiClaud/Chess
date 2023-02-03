@@ -1,12 +1,12 @@
-package Pieces;
+package PiecesOld;
 
 
 /**
  * Piece: Black King
- */
-public class Tower extends PieceDecorator {
+ *
+public class TowerOld extends PieceDecoratorOld {
     private boolean allowCastle = true;
-    public Tower(Piece piece, char posX, int posY) {
+    public TowerOld(PieceImpl piece, char posX, int posY) {
         this.piece = piece;
         this.posX = posX;
         this.posY = posY;
@@ -26,3 +26,5 @@ public class Tower extends PieceDecorator {
         this.allowCastle = allowCastle;
     }
 }
+
+ */

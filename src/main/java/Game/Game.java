@@ -21,7 +21,7 @@ public class Game {
 
         // Board
         windowBoard = new WindowBoard(boardSize, boardSize);
-        // Pieces in board
+        // PiecesOld in board
         boardPieces = new BoardConnectPieces(windowBoard);
         boardPieces.drawPiecesOnBoard();
     }

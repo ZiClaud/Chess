@@ -7,6 +7,7 @@ import java.awt.*;
  * Board - Graphic UI that appears with all the tiles
  */
 public class WindowBoard {
+    private final BoardSize boardSize = new BoardSize('h', 8);
     private final JFrame frame = new JFrame("Chess");
     private final JPanel panel = new JPanel();
     private final JPanel[][] matrixPanels = new JPanel[8][8];
@@ -16,6 +17,11 @@ public class WindowBoard {
         colorTiles();
         setFrame(WIDTH, HEIGHT);
     }
+
+    public BoardSize getBoardSize() {
+        return boardSize;
+    }
+
 
     private void setFrame(int WIDTH, int HEIGHT) {
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -61,7 +67,7 @@ public class WindowBoard {
         }
     }
 
-    public void removeWindow(){
+    public void removeWindow() {
         frame.setVisible(false);
     }
 }

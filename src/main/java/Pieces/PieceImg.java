@@ -6,7 +6,7 @@ import java.io.File;
 import java.io.IOException;
 
 /**
- * Get Pieces images from Resources
+ * Get PiecesOld images from Resources
  */
 public class PieceImg {
     public static BufferedImage getPieceImg(Piece piece) {

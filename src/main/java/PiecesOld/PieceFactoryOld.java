@@ -1,9 +1,9 @@
-package Pieces;
+package PiecesOld;
+
 /*
-public class PieceFactory {
+public class PieceFactoryOld {
     public static PieceImpl newPiece(PieceColor color, PieceType type, char x, int y) {
-        Position startingPositon = new Position(x, y);
-        PieceImpl piece = new PieceImpl(type, color, startingPositon);
+        PieceImpl piece = null;
         if (color == PieceColor.WHITE) {
             piece = new WhitePieceOld();
         } else if (color == PieceColor.BLACK) {
@@ -31,4 +31,5 @@ public class PieceFactory {
         return piece;
     }
 }
+
 */

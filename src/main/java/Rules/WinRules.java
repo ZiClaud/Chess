@@ -25,7 +25,7 @@ import java.util.HashSet;
 public class WinRules {
     public static void win(HashSet<Piece> pieces) {
         if (Game.whitePlayer.isTurn() && didWin(pieces, PieceColor.WHITE)) {
-            if (ThreatRules.isCheckWhiteK(pieces)) {
+            if (true) {// (ThreatRules.isCheckWhiteK(pieces)) {
                 JOptionPane.showMessageDialog(null, "Black won!");
             } else {
                 JOptionPane.showMessageDialog(null, "Draw by stalemate!");
@@ -33,14 +33,14 @@ public class WinRules {
             restart();
         }
         if (Game.blackPlayer.isTurn() && didWin(pieces, PieceColor.BLACK)) {
-            if (ThreatRules.isCheckBlackK(pieces)) {
+            if (true) {//(ThreatRules.isCheckBlackK(pieces)) {
                 JOptionPane.showMessageDialog(null, "White won!");
             } else {
                 JOptionPane.showMessageDialog(null, "Draw by stalemate!");
             }
             restart();
         }
-        if (insufficientMaterial(pieces)){
+        if (insufficientMaterial(pieces)) {
             JOptionPane.showMessageDialog(null, "Draw by insufficient material!");
             restart();
         }
@@ -54,9 +54,11 @@ public class WinRules {
     private static boolean didWin(HashSet<Piece> pieces, PieceColor pieceColor) {
         for (Piece piece : pieces) {
             if (piece.getPieceColor() == pieceColor) {
+                /*
                 if (!PiecesRules.getPossibleMoves(piece, pieces).isEmpty()) {
                     return false;
                 }
+                 */
             }
         }
 
@@ -70,12 +72,12 @@ public class WinRules {
             if (piece.getPieceType() == PieceType.Pawn || piece.getPieceType() == PieceType.Tower || piece.getPieceType() == PieceType.Queen) {
                 return false;
             }
-            if (piece.getPieceType() == PieceType.Knight || piece.getPieceType() == PieceType.Bishop){
+            if (piece.getPieceType() == PieceType.Knight || piece.getPieceType() == PieceType.Bishop) {
                 knightAndBishopNum++;
             }
         }
 
-        if (knightAndBishopNum > 1){
+        if (knightAndBishopNum > 1) {
             return false;
         }
 

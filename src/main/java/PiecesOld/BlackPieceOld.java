@@ -1,10 +1,11 @@
-package Pieces;
+package PiecesOld;
 
 /**
  * ConcreteComponent
- */
-public class BlackPiece extends Piece {
+ /
+public class BlackPieceOld extends PieceImpl {
     public String getPieceName() {
         return "Black";
     }
 }
+*/

@@ -1,7 +1,7 @@
 package Pieces;
 
 /**
- * Types of Pieces
+ * Types of PiecesOld
  */
 public enum PieceType {
     Pawn("Pawn"),
