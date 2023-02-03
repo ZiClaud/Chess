@@ -54,11 +54,9 @@ public class WinRules {
     private static boolean didWin(HashSet<Piece> pieces, PieceColor pieceColor) {
         for (Piece piece : pieces) {
             if (piece.getPieceColor() == pieceColor) {
-                /*
-                if (!PiecesRules.getPossibleMoves(piece, pieces).isEmpty()) {
+//                if (!PiecesRules.getPossibleMoves(piece, pieces).isEmpty()) {
                     return false;
-                }
-                 */
+//                }
             }
         }
 

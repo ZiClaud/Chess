@@ -25,5 +25,6 @@ public class PieceImpl extends PieceAbst {
 
     @Override
     public void move(Position position) {
+        setPosition(position);
     }
 }

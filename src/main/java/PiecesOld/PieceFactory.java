@@ -1,4 +1,4 @@
-package Pieces;
+package PiecesOld;
 /*
 public class PieceFactory {
     public static PieceImpl newPiece(PieceColor color, PieceType type, char x, int y) {
