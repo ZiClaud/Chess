@@ -7,23 +7,25 @@ import Pieces.Position;
 
 import java.util.ArrayList;
 
-public class PossibleMovesTower extends PossibleMoves {
+public class PossibleMovesKnight extends PossibleMoves {
     @Override
     public ArrayList<Position> getPossibleMovesPerPiece(Piece piece, BoardSize size) {
-        Position piecePos = piece.getPosition();
+        char pX = piece.getPosition().getX();
+        int pY = piece.getPosition().getY();
+
         ArrayList<Position> positions = new ArrayList<>();
 
-        for (char x = 'a'; x <= size.getX(); x++) {
-            for (int y = 1; y <= size.getY(); y++) {
-                if (piecePos.getX() == x || piecePos.getY() == y){
-                    positions.add(new Position(x, y));
-                }
-            }
-        }
-        positions.remove(piecePos);
+        positions.add(new Position((char) (pX + 2), pY + 1));
+        positions.add(new Position((char) (pX + 1), pY + 2));
+        positions.add(new Position((char) (pX - 2), pY - 1));
+        positions.add(new Position((char) (pX - 1), pY - 2));
+        positions.add(new Position((char) (pX + 2), pY - 1));
+        positions.add(new Position((char) (pX - 1), pY + 2));
+        positions.add(new Position((char) (pX - 2), pY + 1));
+        positions.add(new Position((char) (pX + 1), pY - 2));
+
         return positions;
     }
-
 
     @Override
     protected ArrayList<Position> removeTroughPiecesIllegalMove(ArrayList<Position> positions, Piece piece, BoardConnectPieces board) {

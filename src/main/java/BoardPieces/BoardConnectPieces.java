@@ -93,35 +93,36 @@ public class BoardConnectPieces {
             });
         }
     }
-/*
-    private void placeCaslteMoveOnPanel(Piece king, Piece rook) {   // TODO: It's pretty much equal to the other one
-        JButton moveHereBT = new JButton();
-        moveHereBT.setOpaque(true);
-        moveHereBT.setContentAreaFilled(false);
-        moveHereBT.setBorderPainted(false);
 
-        char x = 0;
-        int y = king.getPosY();
+    /*
+        private void placeCaslteMoveOnPanel(Piece king, Piece rook) {   // TODO: It's pretty much equal to the other one
+            JButton moveHereBT = new JButton();
+            moveHereBT.setOpaque(true);
+            moveHereBT.setContentAreaFilled(false);
+            moveHereBT.setBorderPainted(false);
 
-        if (rook.getPosX() == 'h') {
-            x = 'g';
-        } else if (rook.getPosX() == 'a') {
-            x = 'c';
+            char x = 0;
+            int y = king.getPosY();
+
+            if (rook.getPosX() == 'h') {
+                x = 'g';
+            } else if (rook.getPosX() == 'a') {
+                x = 'c';
+            }
+            char finalX = x;
+
+            assert (x != 0);
+
+            moveHereBT.addActionListener(actionEvent -> {
+                moveClicked(king, finalX, y);
+            });
+
+            windowBoard.getMatrixPanels()[y - 1][x - 'a'].setBackground(Color.GRAY);
+            windowBoard.getMatrixPanels()[y - 1][x - 'a'].add(moveHereBT);
+            jMovesButtons.add(moveHereBT);
         }
-        char finalX = x;
 
-        assert (x != 0);
-
-        moveHereBT.addActionListener(actionEvent -> {
-            moveClicked(king, finalX, y);
-        });
-
-        windowBoard.getMatrixPanels()[y - 1][x - 'a'].setBackground(Color.GRAY);
-        windowBoard.getMatrixPanels()[y - 1][x - 'a'].add(moveHereBT);
-        jMovesButtons.add(moveHereBT);
-    }
-
-*/
+    */
     private void pieceClicked(Piece piece) {
         windowBoard.colorTiles();
         resetBoard();
@@ -129,10 +130,10 @@ public class BoardConnectPieces {
     }
 
     private void showPossibleMoves(Piece piece) {
-        System.out.println(piece);
         ArrayList<Position> positions = piece.getPossibleMoves().getPossibleMovesOnBoard(piece, this);
 
-        System.out.println(positions);
+        //System.out.println(piece);
+        //System.out.println(positions);
 
         for (Position position : positions) {
             placeMoveOnPanel(piece, position.getX(), position.getY());
@@ -287,13 +288,41 @@ public class BoardConnectPieces {
     }
 
     private void setupPieces() {
-
         pieces.addAll(Set.of(
                 new PieceImpl(PieceType.Tower, PieceColor.WHITE, new Position('a', 1)),
-                new PieceImpl(PieceType.Tower, PieceColor.WHITE, new Position('b', 1)),
-                new PieceImpl(PieceType.Tower, PieceColor.BLACK, new Position('c', 1)),
-                new PieceImpl(PieceType.Tower, PieceColor.BLACK, new Position('d', 1))
+                new PieceImpl(PieceType.Knight, PieceColor.WHITE, new Position('b', 1)),
+                new PieceImpl(PieceType.Bishop, PieceColor.WHITE, new Position('c', 1)),
+                new PieceImpl(PieceType.Queen, PieceColor.WHITE, new Position('d', 1)),
+                new PieceImpl(PieceType.King, PieceColor.WHITE, new Position('e', 1)),
+                new PieceImpl(PieceType.Bishop, PieceColor.WHITE, new Position('f', 1)),
+                new PieceImpl(PieceType.Knight, PieceColor.WHITE, new Position('g', 1)),
+                new PieceImpl(PieceType.Tower, PieceColor.WHITE, new Position('h', 1)),
+                new PieceImpl(PieceType.Pawn, PieceColor.WHITE, new Position('a', 2)),
+                new PieceImpl(PieceType.Pawn, PieceColor.WHITE, new Position('b', 2)),
+                new PieceImpl(PieceType.Pawn, PieceColor.WHITE, new Position('c', 2)),
+                new PieceImpl(PieceType.Pawn, PieceColor.WHITE, new Position('d', 2)),
+                new PieceImpl(PieceType.Pawn, PieceColor.WHITE, new Position('e', 2)),
+                new PieceImpl(PieceType.Pawn, PieceColor.WHITE, new Position('f', 2)),
+                new PieceImpl(PieceType.Pawn, PieceColor.WHITE, new Position('g', 2)),
+                new PieceImpl(PieceType.Pawn, PieceColor.WHITE, new Position('h', 2)),
+                new PieceImpl(PieceType.Pawn, PieceColor.BLACK, new Position('a', 7)),
+                new PieceImpl(PieceType.Pawn, PieceColor.BLACK, new Position('b', 7)),
+                new PieceImpl(PieceType.Pawn, PieceColor.BLACK, new Position('c', 7)),
+                new PieceImpl(PieceType.Pawn, PieceColor.BLACK, new Position('d', 7)),
+                new PieceImpl(PieceType.Pawn, PieceColor.BLACK, new Position('e', 7)),
+                new PieceImpl(PieceType.Pawn, PieceColor.BLACK, new Position('f', 7)),
+                new PieceImpl(PieceType.Pawn, PieceColor.BLACK, new Position('g', 7)),
+                new PieceImpl(PieceType.Pawn, PieceColor.BLACK, new Position('h', 7)),
+                new PieceImpl(PieceType.Tower, PieceColor.BLACK, new Position('a', 8)),
+                new PieceImpl(PieceType.Knight, PieceColor.BLACK, new Position('b', 8)),
+                new PieceImpl(PieceType.Bishop, PieceColor.BLACK, new Position('c', 8)),
+                new PieceImpl(PieceType.Queen, PieceColor.BLACK, new Position('d', 8)),
+                new PieceImpl(PieceType.King, PieceColor.BLACK, new Position('e', 8)),
+                new PieceImpl(PieceType.Bishop, PieceColor.BLACK, new Position('f', 8)),
+                new PieceImpl(PieceType.Knight, PieceColor.BLACK, new Position('g', 8)),
+                new PieceImpl(PieceType.Tower, PieceColor.BLACK, new Position('h', 8))
         ));
+
         /*
         pieces.addAll(Set.of(
                 PieceFactory.newPiece(PieceColor.WHITE, PieceType.Tower, 'a', 1),

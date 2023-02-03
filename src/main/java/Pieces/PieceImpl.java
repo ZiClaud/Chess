@@ -1,6 +1,6 @@
 package Pieces;
 
-import Pieces.PossibleMoves.PossibleMovesTower;
+import Pieces.PossibleMoves.*;
 
 public class PieceImpl extends PieceAbst {
 
@@ -14,17 +14,29 @@ public class PieceImpl extends PieceAbst {
 
     private void setPossibleMoves() {
         if (pieceType == PieceType.Pawn) {
-            //this.possibleMoves = new PossibleMovesPawn();
+            if (pieceColor == PieceColor.WHITE) {
+                this.possibleMoves = new PossibleMovesWhitePawn();
+            } else if (pieceColor == PieceColor.BLACK) {
+                this.possibleMoves = new PossibleMovesBlackPawn();
+            }
+            assert false;
         } else if (pieceType == PieceType.Tower) {
             this.possibleMoves = new PossibleMovesTower();
-        } else if (true) {
-            // TODO: Finish this
+        } else if (pieceType == PieceType.Knight) {
+            this.possibleMoves = new PossibleMovesKnight();
+        } else if (pieceType == PieceType.Bishop) {
+            this.possibleMoves = new PossibleMovesBishop();
+        } else if (pieceType == PieceType.Queen) {
+            this.possibleMoves = new PossibleMovesQueen();
+        } else if (pieceType == PieceType.King) {
+            this.possibleMoves = new PossibleMovesKing();
         }
-        // TODO: Finish this
+        assert false;
     }
 
     @Override
     public void move(Position position) {
+        isValidPosition();
         setPosition(position);
     }
 }
