@@ -12,7 +12,7 @@ public abstract class PossibleMoves {
         ArrayList<Position> positions = getPossibleMovesPerPiece(piece, board.getWindowBoard().getBoardSize());
         positions = extraMoves(positions, piece, board);
         positions = removeIllegalMoves(positions, piece, board);
-        positions = removeOutOfBoardIllegalMove(positions, board);
+        positions = removeOutOfBoardIllegalMoves(positions, board);
 
         return positions;
     }
@@ -23,7 +23,7 @@ public abstract class PossibleMoves {
         return positions;
     }
 
-    private ArrayList<Position> removeOutOfBoardIllegalMove(ArrayList<Position> positions, BoardConnectPieces board) {
+    private ArrayList<Position> removeOutOfBoardIllegalMoves(ArrayList<Position> positions, BoardConnectPieces board) {
         int i = 0;
 //        System.out.println(positions);
 //        System.out.println("Removing...");
