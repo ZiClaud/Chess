@@ -10,13 +10,15 @@ import java.util.ArrayList;
  * This is abstract because it can be both white and black pawn
  */
 public abstract class PossibleMovesPawn extends PossibleMoves {
+    protected boolean allowsElPassant = false;
+
     protected static ArrayList<Position> getPawnTakesMoves(ArrayList<Position> positions, Piece piece, BoardConnectPieces board, Position posTakeLeft, Position posTakeRight) {
         for (Piece enemyPiece : board.getPieces()) {
             if (enemyPiece.getPieceColor() != piece.getPieceColor()) {
-                if (enemyPiece.getPosition().equals(posTakeLeft)) {
+                if (enemyPiece.getPosition().equals(posTakeLeft)) { // TODO: if is pawn and allowsElPassant then..
                     positions.add(enemyPiece.getPosition());
                 }
-                if (enemyPiece.getPosition().equals(posTakeRight)) {
+                if (enemyPiece.getPosition().equals(posTakeRight)) { // TODO: if is pawn and allowsElPassant then..
                     positions.add(enemyPiece.getPosition());
                 }
             }
