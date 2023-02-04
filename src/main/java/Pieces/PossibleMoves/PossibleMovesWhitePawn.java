@@ -27,7 +27,9 @@ public class PossibleMovesWhitePawn extends PossibleMovesPawn {
      */
     @Override
     protected ArrayList<Position> extraMoves(ArrayList<Position> positions, Piece piece, BoardConnectPieces board) {
-        return positions;
+        Position posTL = new Position((char) (piece.getPosition().getX() - 1), piece.getPosition().getY() + 1);
+        Position posTR = new Position((char) (piece.getPosition().getX() + 1), piece.getPosition().getY() + 1);
+        return getPawnTakesMoves(positions, piece, board, posTL, posTR);
     }
 
     @Override

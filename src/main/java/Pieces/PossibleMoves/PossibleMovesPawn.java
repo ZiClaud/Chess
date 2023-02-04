@@ -1,9 +1,29 @@
 package Pieces.PossibleMoves;
 
+import BoardPieces.BoardConnectPieces;
+import Pieces.Piece;
+import Pieces.Position;
+
+import java.util.ArrayList;
+
 /**
  * This is abstract because it can be both white and black pawn
  */
 public abstract class PossibleMovesPawn extends PossibleMoves {
+    protected static ArrayList<Position> getPawnTakesMoves(ArrayList<Position> positions, Piece piece, BoardConnectPieces board, Position posTakeLeft, Position posTakeRight) {
+        for (Piece enemyPiece : board.getPieces()) {
+            if (enemyPiece.getPieceColor() != piece.getPieceColor()) {
+                if (enemyPiece.getPosition().equals(posTakeLeft)) {
+                    positions.add(enemyPiece.getPosition());
+                }
+                if (enemyPiece.getPosition().equals(posTakeRight)) {
+                    positions.add(enemyPiece.getPosition());
+                }
+            }
+        }
+        return positions;
+    }
+}
     /*
         @Override
         public ArrayList<Position> getPossibleMovesPerPiece(Piece piece, BoardSize size) {
@@ -86,5 +106,5 @@ public abstract class PossibleMovesPawn extends PossibleMoves {
         // TODO: Finish
         return false;
     }
-    */
 }
+*/
