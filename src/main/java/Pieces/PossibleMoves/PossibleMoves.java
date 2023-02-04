@@ -12,12 +12,12 @@ public abstract class PossibleMoves {
         ArrayList<Position> positions = getPossibleMovesPerPiece(piece, board.getWindowBoard().getBoardSize());
         positions = extraMoves(positions, piece, board);
         positions = removeIllegalMoves(positions, piece, board);
-        positions = removeOutOfBoardIllegalMoves(positions, board);
 
         return positions;
     }
 
     protected ArrayList<Position> removeIllegalMoves(ArrayList<Position> positions, Piece piece, BoardConnectPieces board) {
+        positions = removeOutOfBoardIllegalMoves(positions, board);
         positions = removeTroughPieceIllegalMoves(positions, piece, board);
         positions = removeCheckIllegalMoves(positions, piece, board);
         return positions;
@@ -41,6 +41,26 @@ public abstract class PossibleMoves {
 //        System.out.println("...Removed");
 //        System.out.println(positions);
         return positions;
+    }
+
+    protected boolean isPieceThere(ArrayList<Piece> pieces, Position position) {
+        for (Piece boardPiece : pieces) {
+            if (boardPiece.getPosition().equals(position)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private boolean isSameColorPieceThere(Piece piece, ArrayList<Piece> pieces, Position position) {
+        for (Piece boardPiece : pieces) {
+            if (boardPiece.getPosition().equals(position)) {
+                if (boardPiece.getPieceColor() == piece.getPieceColor()) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     /**

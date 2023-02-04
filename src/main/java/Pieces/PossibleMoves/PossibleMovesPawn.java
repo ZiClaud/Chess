@@ -25,6 +25,21 @@ public abstract class PossibleMovesPawn extends PossibleMoves {
         }
         return positions;
     }
+
+    protected static ArrayList<Position> removePawnForwardMovement(ArrayList<Position> positions, BoardConnectPieces board, Position removePos1, Position removePos2){
+        for (Piece boardPiece : board.getPieces()) {
+            if (boardPiece.getPosition().equals(removePos1)) {
+                positions.remove(removePos1);
+                positions.remove(removePos2);
+                break;
+            }
+            if (boardPiece.getPosition().equals(removePos2)) {
+                positions.remove(removePos2);
+            }
+        }
+
+        return positions;
+    }
 }
     /*
         @Override

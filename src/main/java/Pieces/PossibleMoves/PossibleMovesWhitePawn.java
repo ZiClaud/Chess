@@ -10,8 +10,8 @@ import java.util.ArrayList;
 public class PossibleMovesWhitePawn extends PossibleMovesPawn {
     @Override
     public ArrayList<Position> getPossibleMovesPerPiece(Piece piece, BoardSize size) {
-        Position piecePos = piece.getPosition();
         ArrayList<Position> positions = new ArrayList<>();
+        Position piecePos = piece.getPosition();
         char pX = piecePos.getX();
         int pY = piecePos.getY();
 
@@ -34,7 +34,23 @@ public class PossibleMovesWhitePawn extends PossibleMovesPawn {
 
     @Override
     protected ArrayList<Position> removeTroughPieceIllegalMoves(ArrayList<Position> positions, Piece piece, BoardConnectPieces board) {
-        return positions;
+        Position piecePos = piece.getPosition();
+        char pX = piecePos.getX();
+        int pY = piecePos.getY();
+
+        Position removePos1 = null;
+        Position removePos2 = null;
+
+        for (Position pos : positions) {
+            if (pos.equals(new Position(pX, pY + 1))) {
+                removePos1 = pos;
+            }
+            if (pos.equals(new Position(pX, pY + 2))) {
+                removePos2 = pos;
+            }
+        }
+
+        return removePawnForwardMovement(positions, board, removePos1, removePos2);
     }
 
     @Override
