@@ -12,10 +12,12 @@ public class PossibleMovesTower extends PossibleMoves {
     public ArrayList<Position> getPossibleMovesPerPiece(Piece piece, BoardSize size) {
         Position piecePos = piece.getPosition();
         ArrayList<Position> positions = new ArrayList<>();
+        char pX = piecePos.getX();
+        int pY = piecePos.getY();
 
         for (char x = 'a'; x <= size.getX(); x++) {
             for (int y = 1; y <= size.getY(); y++) {
-                if (piecePos.getX() == x || piecePos.getY() == y){
+                if (pX == x || pY == y) {
                     positions.add(new Position(x, y));
                 }
             }
