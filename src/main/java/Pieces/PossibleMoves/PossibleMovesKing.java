@@ -12,18 +12,37 @@ public class PossibleMovesKing extends PossibleMoves {
     public ArrayList<Position> getPossibleMovesPerPiece(Piece piece, BoardSize size) {
         Position piecePos = piece.getPosition();
         ArrayList<Position> positions = new ArrayList<>();
+        char pX = piecePos.getX();
+        int pY = piecePos.getY();
+
+        positions.add(new Position(pX, pY + 1));
+        positions.add(new Position((char) (pX + 1), pY));
+        positions.add(new Position((char) (pX + 1), pY + 1));
+        positions.add(new Position((char) (pX + 1), pY - 1));
+
+        positions.add(new Position(pX, pY - 1));
+        positions.add(new Position((char) (pX - 1), pY));
+        positions.add(new Position((char) (pX - 1), pY - 1));
+        positions.add(new Position((char) (pX - 1), pY + 1));
 
         return positions;
     }
 
-
+    /**
+     * Castle
+     */
     @Override
-    protected ArrayList<Position> removeTroughPiecesIllegalMove(ArrayList<Position> positions, Piece piece, BoardConnectPieces board) {
+    protected ArrayList<Position> extraMoves(ArrayList<Position> positions, Piece piece, BoardConnectPieces board) {
         return positions;
     }
 
     @Override
-    protected ArrayList<Position> removeCheckIllegalMove(ArrayList<Position> positions, Piece piece, BoardConnectPieces board) {
+    protected ArrayList<Position> removeTroughPieceIllegalMoves(ArrayList<Position> positions, Piece piece, BoardConnectPieces board) {
+        return positions;
+    }
+
+    @Override
+    protected ArrayList<Position> removeCheckIllegalMoves(ArrayList<Position> positions, Piece piece, BoardConnectPieces board) {
         return positions;
     }
 }

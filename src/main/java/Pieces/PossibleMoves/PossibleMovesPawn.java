@@ -1,11 +1,5 @@
 package Pieces.PossibleMoves;
 
-import Board.BoardSize;
-import BoardPieces.BoardConnectPieces;
-import Pieces.*;
-
-import java.util.ArrayList;
-
 /**
  * This is abstract because it can be both white and black pawn
  */

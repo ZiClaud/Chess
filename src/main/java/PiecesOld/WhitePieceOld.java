@@ -2,11 +2,10 @@ package PiecesOld;
 
 /**
  * ConcreteComponent
- *
-public class WhitePieceOld extends PieceImpl {
-    public String getPieceName() {
-        return "White";
-    }
-}
-
-*/
+ * <p>
+ * public class WhitePieceOld extends PieceImpl {
+ * public String getPieceName() {
+ * return "White";
+ * }
+ * }
+ */

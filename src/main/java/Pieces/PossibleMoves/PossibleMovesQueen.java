@@ -30,12 +30,12 @@ public class PossibleMovesQueen extends PossibleMoves {
 
 
     @Override
-    protected ArrayList<Position> removeTroughPiecesIllegalMove(ArrayList<Position> positions, Piece piece, BoardConnectPieces board) {
+    protected ArrayList<Position> removeTroughPieceIllegalMoves(ArrayList<Position> positions, Piece piece, BoardConnectPieces board) {
         return positions;
     }
 
     @Override
-    protected ArrayList<Position> removeCheckIllegalMove(ArrayList<Position> positions, Piece piece, BoardConnectPieces board) {
+    protected ArrayList<Position> removeCheckIllegalMoves(ArrayList<Position> positions, Piece piece, BoardConnectPieces board) {
         return positions;
     }
 }

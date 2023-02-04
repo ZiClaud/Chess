@@ -26,6 +26,13 @@ public class Game {
         boardPieces.drawPiecesOnBoard();
     }
 
+    public static void restartGame() {
+        if (blackPlayer.isTurn()) {
+            TurnRules.switchTurn();
+        }
+        windowBoard.removeWindow();
+    }
+
     private Integer askBoardSize() {
         Integer[] options = {600, 800, 1000, 1200, 1400};
         Integer boardSize;
@@ -36,13 +43,6 @@ public class Game {
         }
 
         return boardSize;
-    }
-
-    public static void restartGame(){
-        if (blackPlayer.isTurn()){
-            TurnRules.switchTurn();
-        }
-        windowBoard.removeWindow();
     }
 
     public BoardConnectPieces getBoardPieces() {

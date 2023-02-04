@@ -55,7 +55,7 @@ public class WinRules {
         for (Piece piece : pieces) {
             if (piece.getPieceColor() == pieceColor) {
 //                if (!PiecesRules.getPossibleMoves(piece, pieces).isEmpty()) {
-                    return false;
+                return false;
 //                }
             }
         }
@@ -75,10 +75,6 @@ public class WinRules {
             }
         }
 
-        if (knightAndBishopNum > 1) {
-            return false;
-        }
-
-        return true;
+        return knightAndBishopNum <= 1;
     }
 }

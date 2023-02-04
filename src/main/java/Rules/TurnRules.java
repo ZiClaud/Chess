@@ -1,9 +1,8 @@
 package Rules;
 
-import Pieces.Piece;
-import Pieces.PieceColor;
-import Player.Player;
 import Game.Game;
+import Pieces.Piece;
+import Player.Player;
 
 import java.util.HashSet;
 

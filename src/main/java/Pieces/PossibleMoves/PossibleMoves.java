@@ -18,8 +18,8 @@ public abstract class PossibleMoves {
     }
 
     protected ArrayList<Position> removeIllegalMoves(ArrayList<Position> positions, Piece piece, BoardConnectPieces board) {
-        positions = removeTroughPiecesIllegalMove(positions, piece, board);
-        positions = removeCheckIllegalMove(positions, piece, board);
+        positions = removeTroughPieceIllegalMoves(positions, piece, board);
+        positions = removeCheckIllegalMoves(positions, piece, board);
         return positions;
     }
 
@@ -52,7 +52,7 @@ public abstract class PossibleMoves {
 
     protected abstract ArrayList<Position> getPossibleMovesPerPiece(Piece piece, BoardSize size);
 
-    protected abstract ArrayList<Position> removeTroughPiecesIllegalMove(ArrayList<Position> positions, Piece piece, BoardConnectPieces board);
+    protected abstract ArrayList<Position> removeTroughPieceIllegalMoves(ArrayList<Position> positions, Piece piece, BoardConnectPieces board);
 
-    protected abstract ArrayList<Position> removeCheckIllegalMove(ArrayList<Position> positions, Piece piece, BoardConnectPieces board);
+    protected abstract ArrayList<Position> removeCheckIllegalMoves(ArrayList<Position> positions, Piece piece, BoardConnectPieces board);
 }

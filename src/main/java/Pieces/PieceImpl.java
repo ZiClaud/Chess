@@ -37,6 +37,7 @@ public class PieceImpl extends PieceAbst {
     @Override
     public void move(Position position) {
         isValidPosition();
+        this.moved = true;
         setPosition(position);
     }
 }

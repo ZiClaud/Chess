@@ -2,7 +2,7 @@ package Player;
 
 import Pieces.PieceColor;
 
-public class PlayerBlack extends Player{
+public class PlayerBlack extends Player {
     public PlayerBlack() {
         super.turn = false;
     }

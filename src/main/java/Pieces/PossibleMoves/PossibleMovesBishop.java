@@ -17,7 +17,7 @@ public class PossibleMovesBishop extends PossibleMoves {
 
         for (char x = 'a'; x <= size.getX(); x++) {
             for (int y = 1; y <= size.getY(); y++) {
-                if ((pX + pY == x + y) || (pX - pY == x - y)){
+                if ((pX + pY == x + y) || (pX - pY == x - y)) {
                     positions.add(new Position(x, y));
                 }
             }
@@ -28,12 +28,12 @@ public class PossibleMovesBishop extends PossibleMoves {
 
 
     @Override
-    protected ArrayList<Position> removeTroughPiecesIllegalMove(ArrayList<Position> positions, Piece piece, BoardConnectPieces board) {
+    protected ArrayList<Position> removeTroughPieceIllegalMoves(ArrayList<Position> positions, Piece piece, BoardConnectPieces board) {
         return positions;
     }
 
     @Override
-    protected ArrayList<Position> removeCheckIllegalMove(ArrayList<Position> positions, Piece piece, BoardConnectPieces board) {
+    protected ArrayList<Position> removeCheckIllegalMoves(ArrayList<Position> positions, Piece piece, BoardConnectPieces board) {
         return positions;
     }
 }
