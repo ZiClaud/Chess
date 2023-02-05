@@ -6,6 +6,7 @@ import Pieces.Piece;
 import Pieces.Position;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 
 public class PossibleMovesKing extends PossibleMoves {
     @Override
@@ -32,17 +33,17 @@ public class PossibleMovesKing extends PossibleMoves {
      * Castle
      */
     @Override
-    protected ArrayList<Position> extraMoves(ArrayList<Position> positions, Piece piece, BoardConnectPieces board) {
+    protected ArrayList<Position> extraMoves(ArrayList<Position> positions, Piece piece, BoardSize boardSize, HashSet<Piece> pieces) {
         return positions;
     }
 
     @Override
-    protected ArrayList<Position> removeTroughPieceIllegalMoves(ArrayList<Position> positions, Piece piece, BoardConnectPieces board) {
+    protected ArrayList<Position> removeTroughPieceIllegalMoves(ArrayList<Position> positions, Piece piece, BoardSize boardSize, HashSet<Piece> pieces) {
         return positions;
     }
 
     @Override
-    protected ArrayList<Position> removeCheckIllegalMoves(ArrayList<Position> positions, Piece piece, BoardConnectPieces board) {
+    protected ArrayList<Position> removeCheckIllegalMoves(ArrayList<Position> positions, Piece piece, BoardSize boardSize, HashSet<Piece> pieces) {
         return positions;
     }
 }

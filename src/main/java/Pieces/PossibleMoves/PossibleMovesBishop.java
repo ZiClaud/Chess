@@ -6,6 +6,7 @@ import Pieces.Piece;
 import Pieces.Position;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 
 public class PossibleMovesBishop extends PossibleMoves {
     @Override
@@ -28,12 +29,12 @@ public class PossibleMovesBishop extends PossibleMoves {
 
 
     @Override
-    protected ArrayList<Position> removeTroughPieceIllegalMoves(ArrayList<Position> positions, Piece piece, BoardConnectPieces board) {
+    protected ArrayList<Position> removeTroughPieceIllegalMoves(ArrayList<Position> positions, Piece piece, BoardSize boardSize, HashSet<Piece> pieces) {
         return positions;
     }
 
     @Override
-    protected ArrayList<Position> removeCheckIllegalMoves(ArrayList<Position> positions, Piece piece, BoardConnectPieces board) {
+    protected ArrayList<Position> removeCheckIllegalMoves(ArrayList<Position> positions, Piece piece, BoardSize boardSize, HashSet<Piece> pieces) {
         return positions;
     }
 }

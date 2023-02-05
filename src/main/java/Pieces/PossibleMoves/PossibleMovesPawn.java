@@ -1,10 +1,12 @@
 package Pieces.PossibleMoves;
 
+import Board.BoardSize;
 import BoardPieces.BoardConnectPieces;
 import Pieces.Piece;
 import Pieces.Position;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 
 /**
  * This is abstract because it can be both white and black pawn
@@ -12,8 +14,8 @@ import java.util.ArrayList;
 public abstract class PossibleMovesPawn extends PossibleMoves {
     protected boolean allowsElPassant = false;
 
-    protected static ArrayList<Position> getPawnTakesMoves(ArrayList<Position> positions, Piece piece, BoardConnectPieces board, Position posTakeLeft, Position posTakeRight) {
-        for (Piece enemyPiece : board.getPieces()) {
+    protected static ArrayList<Position> getPawnTakesMoves(ArrayList<Position> positions, Piece piece, Position posTakeLeft, Position posTakeRight, BoardSize boardSize, HashSet<Piece> pieces) {
+        for (Piece enemyPiece : pieces) {
             if (enemyPiece.getPieceColor() != piece.getPieceColor()) {
                 if (enemyPiece.getPosition().equals(posTakeLeft)) { // TODO: if is pawn and allowsElPassant then..
                     positions.add(enemyPiece.getPosition());
@@ -26,8 +28,8 @@ public abstract class PossibleMovesPawn extends PossibleMoves {
         return positions;
     }
 
-    protected static ArrayList<Position> removePawnForwardMovement(ArrayList<Position> positions, BoardConnectPieces board, Position removePos1, Position removePos2){
-        for (Piece boardPiece : board.getPieces()) {
+    protected static ArrayList<Position> removePawnForwardMovement(ArrayList<Position> positions, Position removePos1, Position removePos2, BoardSize boardSize, HashSet<Piece> pieces){
+        for (Piece boardPiece : pieces) {
             if (boardPiece.getPosition().equals(removePos1)) {
                 positions.remove(removePos1);
                 positions.remove(removePos2);
