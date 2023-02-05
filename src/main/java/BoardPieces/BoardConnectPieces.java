@@ -130,7 +130,7 @@ public class BoardConnectPieces {
     }
 
     private void showPossibleMoves(Piece piece) {
-        ArrayList<Position> positions = piece.getPossibleMoves().getPossibleMovesOnBoard(piece, this);
+        ArrayList<Position> positions = piece.getPossibleMovesObj().getPossibleMovesOnBoard(piece, this);
 
         //System.out.println(piece);
         //System.out.println(positions);
@@ -248,7 +248,7 @@ public class BoardConnectPieces {
      */
 
     private void moveToCoordinates(Piece piece, char x, int y) {
-        piece.move(new Position(x, y));
+        piece.move(new Position(x, y), windowBoard.getBoardSize(), getPieces());
 
         placePieceOnPanel(piece, windowBoard.getMatrixPanels()[piece.getPosition().getY() - 1][piece.getPosition().getX() - 'a']);
         removeMoveToCoordinatesPanels(windowBoard);

@@ -1,9 +1,11 @@
 package Pieces;
 
+import Board.BoardSize;
 import Game.Game;
 import Pieces.PossibleMoves.PossibleMoves;
 
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 
 /**
  * Piece abstract class
@@ -43,7 +45,7 @@ public abstract class PieceAbst implements Piece {
     }
 
     @Override
-    public PossibleMoves getPossibleMoves() {
+    public PossibleMoves getPossibleMovesObj() {
         return possibleMoves;
     }
 
@@ -53,8 +55,8 @@ public abstract class PieceAbst implements Piece {
     }
 
     // TODO: Change using BoardSize, maybe move it
-    protected void isValidPosition() {
-        if (position.getX() < 'a' || position.getX() > 'h' || position.getY() < 1 || position.getY() > 8) {
+    protected void isValidPosition(BoardSize boardSize) {
+        if (position.getX() < 'a' || position.getX() > boardSize.getX() || position.getY() < 1 || position.getY() > boardSize.getY()) {
             System.err.println("Invalid value of XY: " + position.getX() + position.getY());
             throw new UnsupportedOperationException();
         }

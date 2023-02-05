@@ -24,6 +24,19 @@ public abstract class PossibleMoves {
         positions = removeOutOfBoardIllegalMoves(positions, boardSize, pieces);
         positions = removeTroughPieceIllegalMoves(positions, piece, boardSize, pieces);
         positions = removeCheckIllegalMoves(positions, piece, boardSize, pieces);
+        positions = removeSamePieceAlreadyThereMoves(positions, piece, pieces);
+        return positions;
+    }
+
+    private ArrayList<Position> removeSamePieceAlreadyThereMoves(ArrayList<Position> positions, Piece piece, HashSet<Piece> pieces) {
+        Position position;
+        for (int i = 0; i < positions.size(); i++) {
+            position = positions.get(i);
+            if (isSameColorPieceThere(piece, pieces, position)) {
+                positions.remove(position);
+                i = -1;
+            }
+        }
         return positions;
     }
 
@@ -56,6 +69,46 @@ public abstract class PossibleMoves {
         return false;
     }
 
+    /*
+        protected boolean isThisPositionThreatened(PieceColor pieceColor, HashSet<Piece> pieces, Position position) {
+            Character x = position.getX();
+            Integer y = position.getY();
+
+            for (Piece enemyPiece : pieces) {
+                if (enemyPiece.getPieceColor() != pieceColor) {
+
+                }
+                /*
+                if (((Game.whitePlayer.isTurn() && enemyPiece.getPieceColor() == PieceColor.BLACK) ||
+                        (Game.blackPlayer.isTurn() && enemyPiece.getPieceColor() == PieceColor.WHITE)) &&
+                        PiecesRules.getPossibleMoves(enemyPiece, pieces).containsValue(xy)) {
+                    if (enemyPiece.getPieceType() != PieceType.Pawn) {
+                        System.out.println("mhm2 " + enemyPiece + " " + x + y);
+                        return true;
+                    } else if (PawnRules.canThisPawnThreaten(enemyPiece, x, y)) {
+                        System.out.println("mhm " + enemyPiece + " " + x + y);
+                        return true;
+                    } else {
+                        System.out.println("ok " + enemyPiece + " " + x + y);
+                        // TODO ??
+                    }
+                }
+                * /
+    }
+            return false;
+                    }
+        protected boolean isOpponentThreateningThere(Piece piece, HashSet<Piece> pieces, Position position) {
+            PieceColor pieceColor = piece.getPieceColor();
+            for (Piece boardPiece : pieces) {
+                if (boardPiece.getPieceColor() != pieceColor) {
+    //                if (boardPiece.getPossibleMoves().contains(position)) {
+    //                    return true;
+    //                }
+                }
+            }
+            return false;
+        }
+    */
     private boolean isSameColorPieceThere(Piece piece, HashSet<Piece> pieces, Position position) {
         for (Piece boardPiece : pieces) {
             if (boardPiece.getPosition().equals(position)) {

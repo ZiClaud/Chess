@@ -1,9 +1,11 @@
 package Pieces;
 
+import Board.BoardSize;
 import Pieces.PossibleMoves.*;
 
-public class PieceImpl extends PieceAbst {
+import java.util.HashSet;
 
+public class PieceImpl extends PieceAbst {
     public PieceImpl(PieceType pieceType, PieceColor pieceColor, Position position) {
         this.pieceColor = pieceColor;
         this.pieceType = pieceType;
@@ -35,9 +37,19 @@ public class PieceImpl extends PieceAbst {
     }
 
     @Override
-    public void move(Position position) {
-        isValidPosition();
+    public void move(Position position, BoardSize boardSize, HashSet<Piece> pieces) {
+        isValidPosition(boardSize);
         this.moved = true;
+        take(pieces, position);
         setPosition(position);
+    }
+
+    private void take(HashSet<Piece> pieces, Position position) {
+        for (Piece piece : pieces) {
+            if (piece.getPosition().equals(position)){
+                pieces.remove(piece);
+                break;
+            }
+        }
     }
 }
