@@ -1,7 +1,6 @@
 package Pieces.PossibleMoves;
 
 import Board.BoardSize;
-import BoardPieces.BoardConnectPieces;
 import Pieces.Piece;
 import Pieces.Position;
 
@@ -27,14 +26,15 @@ public class PossibleMovesWhitePawn extends PossibleMovesPawn {
      * Take piece
      */
     @Override
-    protected ArrayList<Position> extraMoves(ArrayList<Position> positions, Piece piece, BoardSize boardSize, HashSet<Piece> pieces) {
+    protected void extraMoves(ArrayList<Position> positions, Piece piece, BoardSize boardSize, HashSet<Piece> pieces) {
         Position posTL = new Position((char) (piece.getPosition().getX() - 1), piece.getPosition().getY() + 1);
         Position posTR = new Position((char) (piece.getPosition().getX() + 1), piece.getPosition().getY() + 1);
-        return getPawnTakesMoves(positions, piece, posTL, posTR, boardSize, pieces);
+
+        addPawnTakesMoves(positions, piece, posTL, posTR, boardSize, pieces);
     }
 
     @Override
-    protected ArrayList<Position> removeTroughPieceIllegalMoves(ArrayList<Position> positions, Piece piece, BoardSize boardSize, HashSet<Piece> pieces) {
+    protected void removeTroughPieceIllegalMoves(ArrayList<Position> positions, Piece piece, BoardSize boardSize, HashSet<Piece> pieces) {
         Position piecePos = piece.getPosition();
         char pX = piecePos.getX();
         int pY = piecePos.getY();
@@ -51,11 +51,10 @@ public class PossibleMovesWhitePawn extends PossibleMovesPawn {
             }
         }
 
-        return removePawnForwardMovement(positions, removePos1, removePos2, boardSize, pieces);
+        removePawnForwardMovement(positions, removePos1, removePos2, boardSize, pieces);
     }
 
     @Override
-    protected ArrayList<Position> removeCheckIllegalMoves(ArrayList<Position> positions, Piece piece, BoardSize boardSize, HashSet<Piece> pieces) {
-        return positions;
+    protected void removeCheckIllegalMoves(ArrayList<Position> positions, Piece piece, BoardSize boardSize, HashSet<Piece> pieces) {
     }
 }

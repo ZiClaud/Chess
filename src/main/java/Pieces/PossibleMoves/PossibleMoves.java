@@ -14,21 +14,20 @@ public abstract class PossibleMoves {
         HashSet<Piece> piecesOnBoard = board.getPieces(); //TODO: Use only ArrayList, not HashSet
 
         ArrayList<Position> positions = getPossibleMovesPerPiece(piece, boardSize);
-        positions = extraMoves(positions, piece, boardSize, piecesOnBoard);
-        positions = removeIllegalMoves(positions, piece, boardSize, piecesOnBoard);
+        extraMoves(positions, piece, boardSize, piecesOnBoard);
+        removeIllegalMoves(positions, piece, boardSize, piecesOnBoard);
 
         return positions;
     }
 
-    protected ArrayList<Position> removeIllegalMoves(ArrayList<Position> positions, Piece piece, BoardSize boardSize, HashSet<Piece> pieces) {
-        positions = removeOutOfBoardIllegalMoves(positions, boardSize, pieces);
-        positions = removeTroughPieceIllegalMoves(positions, piece, boardSize, pieces);
-        positions = removeCheckIllegalMoves(positions, piece, boardSize, pieces);
-        positions = removeSamePieceAlreadyThereMoves(positions, piece, pieces);
-        return positions;
+    protected void removeIllegalMoves(ArrayList<Position> positions, Piece piece, BoardSize boardSize, HashSet<Piece> pieces) {
+        removeOutOfBoardIllegalMoves(positions, boardSize, pieces);
+        removeTroughPieceIllegalMoves(positions, piece, boardSize, pieces);
+        removeCheckIllegalMoves(positions, piece, boardSize, pieces);
+        removeSamePieceAlreadyThereMoves(positions, piece, pieces);
     }
 
-    private ArrayList<Position> removeSamePieceAlreadyThereMoves(ArrayList<Position> positions, Piece piece, HashSet<Piece> pieces) {
+    private void removeSamePieceAlreadyThereMoves(ArrayList<Position> positions, Piece piece, HashSet<Piece> pieces) {
         Position position;
         for (int i = 0; i < positions.size(); i++) {
             position = positions.get(i);
@@ -37,10 +36,9 @@ public abstract class PossibleMoves {
                 i = -1;
             }
         }
-        return positions;
     }
 
-    private ArrayList<Position> removeOutOfBoardIllegalMoves(ArrayList<Position> positions, BoardSize boardSize, HashSet<Piece> pieces) {
+    private void removeOutOfBoardIllegalMoves(ArrayList<Position> positions, BoardSize boardSize, HashSet<Piece> pieces) {
         int i = 0;
 //        System.out.println(positions);
 //        System.out.println("Removing...");
@@ -57,7 +55,6 @@ public abstract class PossibleMoves {
         }
 //        System.out.println("...Removed");
 //        System.out.println(positions);
-        return positions;
     }
 
     protected boolean isPieceThere(HashSet<Piece> pieces, Position position) {
@@ -123,13 +120,12 @@ public abstract class PossibleMoves {
     /**
      * Hook
      */
-    protected ArrayList<Position> extraMoves(ArrayList<Position> positions, Piece piece, BoardSize boardSize, HashSet<Piece> pieces) {
-        return positions;
+    protected void extraMoves(ArrayList<Position> positions, Piece piece, BoardSize boardSize, HashSet<Piece> pieces) {
     }
 
     protected abstract ArrayList<Position> getPossibleMovesPerPiece(Piece piece, BoardSize size);
 
-    protected abstract ArrayList<Position> removeTroughPieceIllegalMoves(ArrayList<Position> positions, Piece piece, BoardSize boardSize, HashSet<Piece> pieces);
+    protected abstract void removeTroughPieceIllegalMoves(ArrayList<Position> positions, Piece piece, BoardSize boardSize, HashSet<Piece> pieces);
 
-    protected abstract ArrayList<Position> removeCheckIllegalMoves(ArrayList<Position> positions, Piece piece, BoardSize boardSize, HashSet<Piece> pieces);
+    protected abstract void removeCheckIllegalMoves(ArrayList<Position> positions, Piece piece, BoardSize boardSize, HashSet<Piece> pieces);
 }

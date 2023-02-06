@@ -26,14 +26,14 @@ public class PossibleMovesBlackPawn extends PossibleMovesPawn {
      * Take piece
      */
     @Override
-    protected ArrayList<Position> extraMoves(ArrayList<Position> positions, Piece piece, BoardSize boardSize, HashSet<Piece> pieces) {
+    protected void extraMoves(ArrayList<Position> positions, Piece piece, BoardSize boardSize, HashSet<Piece> pieces) {
         Position posBL = new Position((char) (piece.getPosition().getX() - 1), piece.getPosition().getY() - 1);
         Position posBR = new Position((char) (piece.getPosition().getX() + 1), piece.getPosition().getY() - 1);
-        return getPawnTakesMoves(positions, piece, posBL, posBR, boardSize, pieces);
+        addPawnTakesMoves(positions, piece, posBL, posBR, boardSize, pieces);
     }
 
     @Override
-    protected ArrayList<Position> removeTroughPieceIllegalMoves(ArrayList<Position> positions, Piece piece, BoardSize boardSize, HashSet<Piece> pieces) {
+    protected void removeTroughPieceIllegalMoves(ArrayList<Position> positions, Piece piece, BoardSize boardSize, HashSet<Piece> pieces) {
         Position piecePos = piece.getPosition();
         char pX = piecePos.getX();
         int pY = piecePos.getY();
@@ -50,11 +50,10 @@ public class PossibleMovesBlackPawn extends PossibleMovesPawn {
             }
         }
 
-        return removePawnForwardMovement(positions, removePos1, removePos2, boardSize, pieces);
+        removePawnForwardMovement(positions, removePos1, removePos2, boardSize, pieces);
     }
 
     @Override
-    protected ArrayList<Position> removeCheckIllegalMoves(ArrayList<Position> positions, Piece piece, BoardSize boardSize, HashSet<Piece> pieces) {
-        return positions;
+    protected void removeCheckIllegalMoves(ArrayList<Position> positions, Piece piece, BoardSize boardSize, HashSet<Piece> pieces) {
     }
 }
