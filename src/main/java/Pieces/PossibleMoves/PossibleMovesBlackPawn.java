@@ -33,7 +33,7 @@ public class PossibleMovesBlackPawn extends PossibleMovesPawn {
     }
 
     @Override
-    protected void removeTroughPieceIllegalMoves(ArrayList<Position> positions, Piece piece, BoardSize boardSize, HashSet<Piece> pieces) {
+    protected void removeThroughPieceIllegalMoves(ArrayList<Position> positions, Piece piece, BoardSize boardSize, HashSet<Piece> pieces) {
         Position piecePos = piece.getPosition();
         char pX = piecePos.getX();
         int pY = piecePos.getY();

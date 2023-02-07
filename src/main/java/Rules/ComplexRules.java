@@ -1,12 +1,20 @@
 package Rules;
 
-/*
+import Pieces.Piece;
+import Pieces.PieceType;
+import Pieces.Position;
+
+import java.util.HashSet;
+
 public class ComplexRules {
-    public static boolean isThisALegalMove(PieceAbst piece, HashSet<PieceAbst> pieces, char x, int y) {
-        return !isGoingThroughPieceToGetThere(piece, pieces, x, y);
+    public static boolean isThisALegalMove(Piece piece, HashSet<Piece> pieces, Position position) {
+        return !isGoingThroughPieceToGetThere(piece, pieces, position);
     }
 
-    private static boolean isGoingThroughPieceToGetThere(PieceAbst piece, HashSet<PieceAbst> pieces, char x, int y) {
+    public static boolean isGoingThroughPieceToGetThere(Piece piece, HashSet<Piece> pieces, Position position) {
+        char x = position.getX();
+        int y = position.getY();
+
         PieceType pieceType = piece.getPieceType();
 
         if (pieceType == PieceType.Pawn && isTowerGoingThroughPiecesToGetThere(piece, pieces, x, y)) {
@@ -22,11 +30,11 @@ public class ComplexRules {
         return false;
     }
 
-    private static boolean isQueenGoingThroughPiecesToGetThere(PieceAbst queen, HashSet<PieceAbst> pieces, char x, int y) {
+    private static boolean isQueenGoingThroughPiecesToGetThere(Piece queen, HashSet<Piece> pieces, char x, int y) {
         return (isBishopGoingThroughPiecesToGetThere(queen, pieces, x, y) || isTowerGoingThroughPiecesToGetThere(queen, pieces, x, y));
     }
 
-    private static boolean isBishopGoingThroughPiecesToGetThere(PieceAbst bishop, HashSet<PieceAbst> pieces, char x, int y) {
+    private static boolean isBishopGoingThroughPiecesToGetThere(Piece bishop, HashSet<Piece> pieces, char x, int y) {
         if (isBishopGoingTopLeft(bishop, x, y)) {
             return isPieceInBishopWayTopLeft(bishop, pieces, x, y);
         } else if (isBishopGoingBottomLeft(bishop, x, y)) {
@@ -40,16 +48,16 @@ public class ComplexRules {
         return false;
     }
 
-    private static boolean isBishopGoingTopLeft(PieceAbst bishop, char x, int y) {
-        return (bishop.getPosX() > x && bishop.getPosY() < y);
+    private static boolean isBishopGoingTopLeft(Piece bishop, char x, int y) {
+        return (bishop.getPosition().getX() > x && bishop.getPosition().getY() < y);
     }
 
-    private static boolean isPieceInBishopWayTopLeft(PieceAbst bishop, HashSet<PieceAbst> pieces, char x, int y) {
-        for (PieceAbst piece : pieces) {
+    private static boolean isPieceInBishopWayTopLeft(Piece bishop, HashSet<Piece> pieces, char x, int y) {
+        for (Piece piece : pieces) {
             for (int i = 1; i < 8; i++) {
-                if (piece.getPosX() == bishop.getPosX() - i &&
-                        piece.getPosY() == bishop.getPosY() + i) {
-                    if (piece.getPosX() > x && piece.getPosY() < y) {
+                if (piece.getPosition().getX() == bishop.getPosition().getX() - i &&
+                        piece.getPosition().getY() == bishop.getPosition().getY() + i) {
+                    if (piece.getPosition().getX() > x && piece.getPosition().getY() < y) {
                         return true;
                     }
                 }
@@ -58,16 +66,16 @@ public class ComplexRules {
         return false;
     }
 
-    private static boolean isBishopGoingBottomLeft(PieceAbst bishop, char x, int y) {
-        return (bishop.getPosX() > x && bishop.getPosY() > y);
+    private static boolean isBishopGoingBottomLeft(Piece bishop, char x, int y) {
+        return (bishop.getPosition().getX() > x && bishop.getPosition().getY() > y);
     }
 
-    private static boolean isPieceInBishopWayBottomLeft(PieceAbst bishop, HashSet<PieceAbst> pieces, char x, int y) {
-        for (PieceAbst piece : pieces) {
+    private static boolean isPieceInBishopWayBottomLeft(Piece bishop, HashSet<Piece> pieces, char x, int y) {
+        for (Piece piece : pieces) {
             for (int i = 1; i < 8; i++) {
-                if (piece.getPosX() == bishop.getPosX() - i &&
-                        piece.getPosY() == bishop.getPosY() - i) {
-                    if (piece.getPosX() > x && piece.getPosY() > y) {
+                if (piece.getPosition().getX() == bishop.getPosition().getX() - i &&
+                        piece.getPosition().getY() == bishop.getPosition().getY() - i) {
+                    if (piece.getPosition().getX() > x && piece.getPosition().getY() > y) {
                         return true;
                     }
                 }
@@ -76,16 +84,16 @@ public class ComplexRules {
         return false;
     }
 
-    private static boolean isBishopGoingTopRight(PieceAbst bishop, char x, int y) {
-        return (bishop.getPosX() < x && bishop.getPosY() < y);
+    private static boolean isBishopGoingTopRight(Piece bishop, char x, int y) {
+        return (bishop.getPosition().getX() < x && bishop.getPosition().getY() < y);
     }
 
-    private static boolean isPieceInBishopWayTopRight(PieceAbst bishop, HashSet<PieceAbst> pieces, char x, int y) {
-        for (PieceAbst piece : pieces) {
+    private static boolean isPieceInBishopWayTopRight(Piece bishop, HashSet<Piece> pieces, char x, int y) {
+        for (Piece piece : pieces) {
             for (int i = 1; i < 8; i++) {
-                if (piece.getPosX() == bishop.getPosX() + i &&
-                        piece.getPosY() == bishop.getPosY() + i) {
-                    if (piece.getPosX() < x && piece.getPosY() < y) {
+                if (piece.getPosition().getX() == bishop.getPosition().getX() + i &&
+                        piece.getPosition().getY() == bishop.getPosition().getY() + i) {
+                    if (piece.getPosition().getX() < x && piece.getPosition().getY() < y) {
                         return true;
                     }
                 }
@@ -94,16 +102,16 @@ public class ComplexRules {
         return false;
     }
 
-    private static boolean isBishopGoingBottomRight(PieceAbst bishop, char x, int y) {
-        return (bishop.getPosX() < x && bishop.getPosY() > y);
+    private static boolean isBishopGoingBottomRight(Piece bishop, char x, int y) {
+        return (bishop.getPosition().getX() < x && bishop.getPosition().getY() > y);
     }
 
-    private static boolean isPieceInBishopWayBottomRight(PieceAbst bishop, HashSet<PieceAbst> pieces, char x, int y) {
-        for (PieceAbst piece : pieces) {
+    private static boolean isPieceInBishopWayBottomRight(Piece bishop, HashSet<Piece> pieces, char x, int y) {
+        for (Piece piece : pieces) {
             for (int i = 1; i < 8; i++) {
-                if (piece.getPosX() == bishop.getPosX() + i &&
-                        piece.getPosY() == bishop.getPosY() - i) {
-                    if (piece.getPosX() < x && piece.getPosY() > y) {
+                if (piece.getPosition().getX() == bishop.getPosition().getX() + i &&
+                        piece.getPosition().getY() == bishop.getPosition().getY() - i) {
+                    if (piece.getPosition().getX() < x && piece.getPosition().getY() > y) {
                         return true;
                     }
                 }
@@ -112,25 +120,25 @@ public class ComplexRules {
         return false;
     }
 
-    private static boolean isTowerGoingThroughPiecesToGetThere(PieceAbst tower, HashSet<PieceAbst> pieces, char x, int y) {
-        if (tower.getPosX() == x) {
+    private static boolean isTowerGoingThroughPiecesToGetThere(Piece tower, HashSet<Piece> pieces, char x, int y) {
+        if (tower.getPosition().getX() == x) {
             return isXTowerGoingThroughPiecesToGetThere(tower, pieces, x, y);
-        } else if (tower.getPosY() == y) {
+        } else if (tower.getPosition().getY() == y) {
             return isYTowerGoingThroughPiecesToGetThere(tower, pieces, x, y);
         }
         assert (false);
         return false;
     }
 
-    private static boolean isXTowerGoingThroughPiecesToGetThere(PieceAbst tower, HashSet<PieceAbst> pieces, char x, int y) {
-        char towerX = tower.getPosX();
-        int towerY = tower.getPosY();
+    private static boolean isXTowerGoingThroughPiecesToGetThere(Piece tower, HashSet<Piece> pieces, char x, int y) {
+        char towerX = tower.getPosition().getX();
+        int towerY = tower.getPosition().getY();
         char pieceX;
         int pieceY;
 
-        for (PieceAbst piece : pieces) {
-            pieceX = piece.getPosX();
-            pieceY = piece.getPosY();
+        for (Piece piece : pieces) {
+            pieceX = piece.getPosition().getX();
+            pieceY = piece.getPosition().getY();
             if (pieceX == towerX && towerX == x) {
                 if (y > towerY && y > pieceY && towerY < pieceY) {
                     return true;
@@ -143,15 +151,15 @@ public class ComplexRules {
         return false;
     }
 
-    private static boolean isYTowerGoingThroughPiecesToGetThere(PieceAbst tower, HashSet<PieceAbst> pieces, char x, int y) {
-        char towerX = tower.getPosX();
-        int towerY = tower.getPosY();
+    private static boolean isYTowerGoingThroughPiecesToGetThere(Piece tower, HashSet<Piece> pieces, char x, int y) {
+        char towerX = tower.getPosition().getX();
+        int towerY = tower.getPosition().getY();
         char pieceX;
         int pieceY;
 
-        for (PieceAbst piece : pieces) {
-            pieceX = piece.getPosX();
-            pieceY = piece.getPosY();
+        for (Piece piece : pieces) {
+            pieceX = piece.getPosition().getX();
+            pieceY = piece.getPosition().getY();
             if (pieceY == towerY && towerY == y) {
                 if (x > towerX && x > pieceX && towerX < pieceX) {
                     return true;
@@ -163,19 +171,19 @@ public class ComplexRules {
         }
         return false;
     }
-
-    public static boolean canThisKingCastleRight(PieceAbst king, HashSet<PieceAbst> pieces) {
+/*
+    public static boolean canThisKingCastleRight(Piece king, HashSet<Piece> pieces) {
         if (king.getPieceType() == PieceType.King && ((KingOld) king).canCastle()) {
-            for (PieceAbst piece : pieces) {
-                if (piece.getPosY() == king.getPosY()
-                        && (piece.getPosX() == king.getPosX() + 1
-                        || piece.getPosX() == king.getPosX() + 2)) {
+            for (Piece piece : pieces) {
+                if (piece.getPosition().getY() == king.getPosition().getY()
+                        && (piece.getPosition().getX() == king.getPosition().getX() + 1
+                        || piece.getPosition().getX() == king.getPosition().getX() + 2)) {
                     return false;
                 }
             }
-            if (ThreatRules.isThisPositionThreatened(pieces, king.getPosX(), king.getPosY())
-                    || ThreatRules.isThisPositionThreatened(pieces, (char) (king.getPosX() + 1), king.getPosY())
-                    || ThreatRules.isThisPositionThreatened(pieces, (char) (king.getPosX() + 2), king.getPosY())) {
+            if (ThreatRules.isThisPositionThreatened(pieces, king.getPosition().getX(), king.getPosition().getY())
+                    || ThreatRules.isThisPositionThreatened(pieces, (char) (king.getPosition().getX() + 1), king.getPosition().getY())
+                    || ThreatRules.isThisPositionThreatened(pieces, (char) (king.getPosition().getX() + 2), king.getPosition().getY())) {
                 return false;
             }
             return true;
@@ -184,20 +192,20 @@ public class ComplexRules {
         return false;
     }
 
-    public static boolean canThisKingCastleLeft(PieceAbst king, HashSet<PieceAbst> pieces) {
+    public static boolean canThisKingCastleLeft(Piece king, HashSet<Piece> pieces) {
         if (king.getPieceType() == PieceType.King && ((KingOld) king).canCastle()) {
-            for (PieceAbst piece : pieces) {
-                if (piece.getPosY() == king.getPosY()
-                        && (piece.getPosX() == king.getPosX() - 1
-                        || piece.getPosX() == king.getPosX() - 2
-                        || piece.getPosX() == king.getPosX() - 3)) {
+            for (Piece piece : pieces) {
+                if (piece.getPosition().getY() == king.getPosition().getY()
+                        && (piece.getPosition().getX() == king.getPosition().getX() - 1
+                        || piece.getPosition().getX() == king.getPosition().getX() - 2
+                        || piece.getPosition().getX() == king.getPosition().getX() - 3)) {
                     return false;
                 }
             }
-            if (ThreatRules.isThisPositionThreatened(pieces, king.getPosX(), king.getPosY()) ||
-                    ThreatRules.isThisPositionThreatened(pieces, (char) (king.getPosX() - 1), king.getPosY()) ||
-                    ThreatRules.isThisPositionThreatened(pieces, (char) (king.getPosX() - 2), king.getPosY()) ||
-                    ThreatRules.isThisPositionThreatened(pieces, (char) (king.getPosX() - 3), king.getPosY())) {
+            if (ThreatRules.isThisPositionThreatened(pieces, king.getPosition().getX(), king.getPosition().getY()) ||
+                    ThreatRules.isThisPositionThreatened(pieces, (char) (king.getPosition().getX() - 1), king.getPosition().getY()) ||
+                    ThreatRules.isThisPositionThreatened(pieces, (char) (king.getPosition().getX() - 2), king.getPosition().getY()) ||
+                    ThreatRules.isThisPositionThreatened(pieces, (char) (king.getPosition().getX() - 3), king.getPosition().getY())) {
                 return false;
             }
             return true;
@@ -205,5 +213,5 @@ public class ComplexRules {
         assert false;
         return false;
     }
+    */
 }
-*/

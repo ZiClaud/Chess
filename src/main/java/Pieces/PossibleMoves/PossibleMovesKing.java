@@ -37,10 +37,6 @@ public class PossibleMovesKing extends PossibleMoves {
     }
 
     @Override
-    protected void removeTroughPieceIllegalMoves(ArrayList<Position> positions, Piece piece, BoardSize boardSize, HashSet<Piece> pieces) {
-    }
-
-    @Override
     protected void removeCheckIllegalMoves(ArrayList<Position> positions, Piece piece, BoardSize boardSize, HashSet<Piece> pieces) {
     }
 }
