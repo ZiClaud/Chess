@@ -1,10 +1,15 @@
 package Rules;
 
 /*
+import Pieces.Piece;
+import Pieces.PieceColor;
+import Pieces.PieceType;
+
+import java.util.HashSet;
 public class ThreatRules {
-    public static boolean isCheckWhiteK(HashSet<PieceAbst> pieces) {
-        PieceAbst king = null;
-        for (PieceAbst piece : pieces) {
+    public static boolean isCheckWhiteK(HashSet<Piece> pieces) {
+        Piece king = null;
+        for (Piece piece : pieces) {
             if (piece.getPieceColor() == PieceColor.WHITE && piece.getPieceType() == PieceType.King) {
                 king = piece;
                 break;
@@ -13,8 +18,8 @@ public class ThreatRules {
 
         assert king != null;
 
-        for (PieceAbst piece : pieces) {
-            if (piece.getPieceColor() == PieceColor.BLACK && PiecesRules.isThisAPossibleMove(piece, pieces, king.getPosX(), king.getPosY())) {
+        for (Piece piece : pieces) {
+            if (piece.getPosition().equals(king.getPosition())) {
                 return true;
             }
         }
@@ -22,9 +27,9 @@ public class ThreatRules {
         return false;
     }
 
-    public static boolean isCheckBlackK(HashSet<PieceAbst> pieces) {
-        PieceAbst king = null;
-        for (PieceAbst piece : pieces) {
+    public static boolean isCheckBlackK(HashSet<Piece> pieces) {
+        Piece king = null;
+        for (Piece piece : pieces) {
             if (piece.getPieceColor() == PieceColor.BLACK && piece.getPieceType() == PieceType.King) {
                 king = piece;
             }
@@ -32,7 +37,7 @@ public class ThreatRules {
 
         assert king != null;
 
-        for (PieceAbst piece : pieces) {
+        for (Piece piece : pieces) {
             if (piece.getPieceColor() == PieceColor.WHITE &&
                     PiecesRules.isThisAPossibleMove(piece, pieces, king.getPosX(), king.getPosY())) {
                 return true;
@@ -42,9 +47,9 @@ public class ThreatRules {
         return false;
     }
 
-    protected static boolean isThisPositionThreatened(HashSet<PieceAbst> pieces, Character x, Integer y) {
+    protected static boolean isThisPositionThreatened(HashSet<Piece> pieces, Character x, Integer y) {
         String xy = x.toString() + y.toString();
-        for (PieceAbst enemyPiece : pieces) {
+        for (Piece enemyPiece : pieces) {
             if (((Game.whitePlayer.isTurn() && enemyPiece.getPieceColor() == PieceColor.BLACK) ||
                     (Game.blackPlayer.isTurn() && enemyPiece.getPieceColor() == PieceColor.WHITE)) &&
                     PiecesRules.getPossibleMoves(enemyPiece, pieces).containsValue(xy)) {
@@ -63,14 +68,14 @@ public class ThreatRules {
         return false;
     }
 
-    public static boolean doesStopCheck(HashSet<PieceAbst> pieces, PieceAbst piece, char x, int y) {
+    public static boolean doesStopCheck(HashSet<Piece> pieces, Piece piece, char x, int y) {
         if (piece.getPieceType() == PieceType.King) {
             return !isThisPositionThreatened(pieces, x, y);
         }
 
-        HashSet<PieceAbst> futurePieces = new HashSet<>(pieces);
+        HashSet<Piece> futurePieces = new HashSet<>(pieces);
 
-        for (PieceAbst enemyP : pieces) {
+        for (Piece enemyP : pieces) {
             if (enemyP.getPosX() == x && enemyP.getPosY() == y && enemyP.getPieceType() != PieceType.King) {
                 futurePieces.remove(enemyP);
             }
@@ -85,12 +90,12 @@ public class ThreatRules {
         }
     }
 
-    public static boolean willThisMoveCauseCheck(PieceAbst piece, HashSet<PieceAbst> pieces, Character x, Integer y) {
+    public static boolean willThisMoveCauseCheck(Piece piece, HashSet<Piece> pieces, Character x, Integer y) {
         boolean ris = false;
 
-        HashSet<PieceAbst> futurePieces = new HashSet<>(pieces);
+        HashSet<Piece> futurePieces = new HashSet<>(pieces);
         futurePieces.remove(piece);
-        for (PieceAbst enemyP : pieces) {
+        for (Piece enemyP : pieces) {
             if (enemyP.getPosX() == x && enemyP.getPosY() == y && enemyP.getPieceType() != PieceType.King) {
                 futurePieces.remove(enemyP);
             }

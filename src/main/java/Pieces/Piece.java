@@ -4,11 +4,10 @@ import Board.BoardSize;
 import Pieces.PossibleMoves.PossibleMoves;
 
 import java.awt.image.BufferedImage;
-import java.util.ArrayList;
 import java.util.HashSet;
 
 public interface Piece {
-    PossibleMoves getPossibleMovesObj();
+    PossibleMoves getPossibleMoves();
 
     Position getPosition();
 

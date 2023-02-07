@@ -13,7 +13,7 @@ import java.util.HashSet;
 public abstract class PossibleMovesPawn extends PossibleMoves {
     protected boolean allowsElPassant = false;
 
-    protected void addPawnTakesMoves(ArrayList<Position> positions, Piece piece, Position posTakeLeft, Position posTakeRight, BoardSize boardSize, HashSet<Piece> pieces) {
+    protected void addPawnTakesMoves(Piece piece, Position posTakeLeft, Position posTakeRight, BoardSize boardSize, HashSet<Piece> pieces) {
         for (Piece enemyPiece : pieces) {
             if (enemyPiece.getPieceColor() != piece.getPieceColor()) {
                 if (enemyPiece.getPosition().equals(posTakeLeft)) { // TODO: if is pawn and allowsElPassant then..
@@ -26,7 +26,7 @@ public abstract class PossibleMovesPawn extends PossibleMoves {
         }
     }
 
-    protected void removePawnForwardMovement(ArrayList<Position> positions, Position removePos1, Position removePos2, BoardSize boardSize, HashSet<Piece> pieces){
+    protected void removePawnForwardMovement(Position removePos1, Position removePos2, BoardSize boardSize, HashSet<Piece> pieces){
         for (Piece boardPiece : pieces) {
             if (boardPiece.getPosition().equals(removePos1)) {
                 positions.remove(removePos1);

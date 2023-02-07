@@ -10,25 +10,30 @@ import java.util.ArrayList;
 import java.util.HashSet;
 
 public abstract class PossibleMoves {
-    public ArrayList<Position> getPossibleMovesOnBoard(Piece piece, BoardConnectPieces board) {
-        BoardSize boardSize = board.getWindowBoard().getBoardSize();
-        HashSet<Piece> piecesOnBoard = board.getPieces(); //TODO: Use only ArrayList, not HashSet
+    ArrayList<Position> positions = new ArrayList<>();
 
-        ArrayList<Position> positions = getPossibleMovesPerPiece(piece, boardSize);
-        extraMoves(positions, piece, boardSize, piecesOnBoard);
-        removeIllegalMoves(positions, piece, boardSize, piecesOnBoard);
-
+    public ArrayList<Position> getPositions() {
         return positions;
     }
 
-    protected void removeIllegalMoves(ArrayList<Position> positions, Piece piece, BoardSize boardSize, HashSet<Piece> pieces) {
-        removeOutOfBoardIllegalMoves(positions, boardSize, pieces);
-        removeThroughPieceIllegalMoves(positions, piece, boardSize, pieces);
-        removeCheckIllegalMoves(positions, piece, boardSize, pieces);
-        removeSamePieceAlreadyThereMoves(positions, piece, pieces);
+    public void setPossibleMovesOnBoard(Piece piece, BoardConnectPieces board) {
+        BoardSize boardSize = board.getWindowBoard().getBoardSize();
+        HashSet<Piece> piecesOnBoard = board.getPieces(); //TODO: Use only ArrayList, not HashSet
+        positions = new ArrayList<>();
+
+        addPossibleMovesPerPiece(piece, boardSize);
+        extraMoves(piece, boardSize, piecesOnBoard);
+        removeIllegalMoves(piece, boardSize, piecesOnBoard);
     }
 
-    private void removeSamePieceAlreadyThereMoves(ArrayList<Position> positions, Piece piece, HashSet<Piece> pieces) {
+    protected void removeIllegalMoves(Piece piece, BoardSize boardSize, HashSet<Piece> pieces) {
+        removeOutOfBoardIllegalMoves(boardSize, pieces);
+        removeThroughPieceIllegalMoves(piece, boardSize, pieces);
+        removeCheckIllegalMoves(piece, boardSize, pieces);
+        removeSamePieceAlreadyThereMoves(piece, pieces);
+    }
+
+    private void removeSamePieceAlreadyThereMoves(Piece piece, HashSet<Piece> pieces) {
         Position position;
         for (int i = 0; i < positions.size(); i++) {
             position = positions.get(i);
@@ -39,7 +44,7 @@ public abstract class PossibleMoves {
         }
     }
 
-    private void removeOutOfBoardIllegalMoves(ArrayList<Position> positions, BoardSize boardSize, HashSet<Piece> pieces) {
+    private void removeOutOfBoardIllegalMoves(BoardSize boardSize, HashSet<Piece> pieces) {
         int i = 0;
 //        System.out.println(positions);
 //        System.out.println("Removing...");
@@ -67,46 +72,6 @@ public abstract class PossibleMoves {
         return false;
     }
 
-    /*
-        protected boolean isThisPositionThreatened(PieceColor pieceColor, HashSet<Piece> pieces, Position position) {
-            Character x = position.getX();
-            Integer y = position.getY();
-
-            for (Piece enemyPiece : pieces) {
-                if (enemyPiece.getPieceColor() != pieceColor) {
-
-                }
-                /*
-                if (((Game.whitePlayer.isTurn() && enemyPiece.getPieceColor() == PieceColor.BLACK) ||
-                        (Game.blackPlayer.isTurn() && enemyPiece.getPieceColor() == PieceColor.WHITE)) &&
-                        PiecesRules.getPossibleMoves(enemyPiece, pieces).containsValue(xy)) {
-                    if (enemyPiece.getPieceType() != PieceType.Pawn) {
-                        System.out.println("mhm2 " + enemyPiece + " " + x + y);
-                        return true;
-                    } else if (PawnRules.canThisPawnThreaten(enemyPiece, x, y)) {
-                        System.out.println("mhm " + enemyPiece + " " + x + y);
-                        return true;
-                    } else {
-                        System.out.println("ok " + enemyPiece + " " + x + y);
-                        // TODO ??
-                    }
-                }
-                * /
-    }
-            return false;
-                    }
-        protected boolean isOpponentThreateningThere(Piece piece, HashSet<Piece> pieces, Position position) {
-            PieceColor pieceColor = piece.getPieceColor();
-            for (Piece boardPiece : pieces) {
-                if (boardPiece.getPieceColor() != pieceColor) {
-    //                if (boardPiece.getPossibleMoves().contains(position)) {
-    //                    return true;
-    //                }
-                }
-            }
-            return false;
-        }
-    */
     private boolean isSameColorPieceThere(Piece piece, HashSet<Piece> pieces, Position position) {
         for (Piece boardPiece : pieces) {
             if (boardPiece.getPosition().equals(position)) {
@@ -121,12 +86,12 @@ public abstract class PossibleMoves {
     /**
      * Hook
      */
-    protected void extraMoves(ArrayList<Position> positions, Piece piece, BoardSize boardSize, HashSet<Piece> pieces) {
+    protected void extraMoves(Piece piece, BoardSize boardSize, HashSet<Piece> pieces) {
     }
 
-    protected abstract ArrayList<Position> getPossibleMovesPerPiece(Piece piece, BoardSize size);
+    protected abstract void addPossibleMovesPerPiece(Piece piece, BoardSize size);
 
-    protected void removeThroughPieceIllegalMoves(ArrayList<Position> positions, Piece piece, BoardSize size, HashSet<Piece> pieces) {
+    protected void removeThroughPieceIllegalMoves(Piece piece, BoardSize size, HashSet<Piece> pieces) {
         for (int i = 0; i < positions.size(); i++) {
             Position position = positions.get(i);
             if (ComplexRules.isGoingThroughPieceToGetThere(piece, pieces, position)) {
@@ -136,5 +101,5 @@ public abstract class PossibleMoves {
         }
     }
 
-    protected abstract void removeCheckIllegalMoves(ArrayList<Position> positions, Piece piece, BoardSize boardSize, HashSet<Piece> pieces);
+    protected abstract void removeCheckIllegalMoves(Piece piece, BoardSize boardSize, HashSet<Piece> pieces);
 }

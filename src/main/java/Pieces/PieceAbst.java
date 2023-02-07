@@ -45,7 +45,7 @@ public abstract class PieceAbst implements Piece {
     }
 
     @Override
-    public PossibleMoves getPossibleMovesObj() {
+    public PossibleMoves getPossibleMoves() {
         return possibleMoves;
     }
 

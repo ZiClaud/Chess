@@ -130,7 +130,9 @@ public class BoardConnectPieces {
     }
 
     private void showPossibleMoves(Piece piece) {
-        ArrayList<Position> positions = piece.getPossibleMovesObj().getPossibleMovesOnBoard(piece, this);
+        piece.getPossibleMoves().setPossibleMovesOnBoard(piece, this);
+        ArrayList<Position> positions = piece.getPossibleMoves().getPositions();
+        //...// ArrayList<Position> positions = piece.getPossibleMoves().getPositions();
 
         //System.out.println(piece);
         //System.out.println(positions);

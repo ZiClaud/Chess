@@ -9,8 +9,7 @@ import java.util.HashSet;
 
 public class PossibleMovesWhitePawn extends PossibleMovesPawn {
     @Override
-    public ArrayList<Position> getPossibleMovesPerPiece(Piece piece, BoardSize size) {
-        ArrayList<Position> positions = new ArrayList<>();
+    public void addPossibleMovesPerPiece(Piece piece, BoardSize size) {
         Position piecePos = piece.getPosition();
         char pX = piecePos.getX();
         int pY = piecePos.getY();
@@ -19,22 +18,21 @@ public class PossibleMovesWhitePawn extends PossibleMovesPawn {
         if (!piece.hasMoved()) {
             positions.add(new Position(pX, pY + 2));
         }
-        return positions;
     }
 
     /**
      * Take piece
      */
     @Override
-    protected void extraMoves(ArrayList<Position> positions, Piece piece, BoardSize boardSize, HashSet<Piece> pieces) {
+    protected void extraMoves(Piece piece, BoardSize boardSize, HashSet<Piece> pieces) {
         Position posTL = new Position((char) (piece.getPosition().getX() - 1), piece.getPosition().getY() + 1);
         Position posTR = new Position((char) (piece.getPosition().getX() + 1), piece.getPosition().getY() + 1);
 
-        addPawnTakesMoves(positions, piece, posTL, posTR, boardSize, pieces);
+        addPawnTakesMoves(piece, posTL, posTR, boardSize, pieces);
     }
 
     @Override
-    protected void removeThroughPieceIllegalMoves(ArrayList<Position> positions, Piece piece, BoardSize boardSize, HashSet<Piece> pieces) {
+    protected void removeThroughPieceIllegalMoves(Piece piece, BoardSize boardSize, HashSet<Piece> pieces) {
         Position piecePos = piece.getPosition();
         char pX = piecePos.getX();
         int pY = piecePos.getY();
@@ -51,10 +49,10 @@ public class PossibleMovesWhitePawn extends PossibleMovesPawn {
             }
         }
 
-        removePawnForwardMovement(positions, removePos1, removePos2, boardSize, pieces);
+        removePawnForwardMovement(removePos1, removePos2, boardSize, pieces);
     }
 
     @Override
-    protected void removeCheckIllegalMoves(ArrayList<Position> positions, Piece piece, BoardSize boardSize, HashSet<Piece> pieces) {
+    protected void removeCheckIllegalMoves(Piece piece, BoardSize boardSize, HashSet<Piece> pieces) {
     }
 }
