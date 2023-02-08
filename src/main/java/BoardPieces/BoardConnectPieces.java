@@ -250,24 +250,23 @@ public class BoardConnectPieces {
      */
 
     private void moveToCoordinates(Piece piece, char x, int y) {
-        piece.move(new Position(x, y), windowBoard.getBoardSize(), getPieces());
+        Position position = new Position(x, y);
+        piece.move(position, windowBoard.getBoardSize(), getPieces());
 
         placePieceOnPanel(piece, windowBoard.getMatrixPanels()[piece.getPosition().getY() - 1][piece.getPosition().getX() - 'a']);
         removeMoveToCoordinatesPanels(windowBoard);
 
         if (piece.getPieceType() == PieceType.Pawn && (piece.getPosition().getY() == 1 || piece.getPosition().getY() == 8)) {
-//            upgradePawn(piece, x, y);
+            upgradePawn(piece);
         }
     }
 
-    /*
-    private void upgradePawn(Piece piece, char x, int y) {
+    private void upgradePawn(Piece piece) {
         PieceType pieceType = chooseUpgradePiece();
         pieces.remove(piece);
-        piece = PieceFactory.newPiece(piece.getPieceColor(), pieceType, x, y);
+        piece = new PieceImpl(pieceType, piece.getPieceColor(), piece.getPosition());
         pieces.add(piece);
     }
-    */
 
     private PieceType chooseUpgradePiece() {
         PieceType[] options = {PieceType.Queen, PieceType.Knight, PieceType.Bishop, PieceType.Tower};

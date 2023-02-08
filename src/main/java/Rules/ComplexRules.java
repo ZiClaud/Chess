@@ -7,10 +7,6 @@ import Pieces.Position;
 import java.util.HashSet;
 
 public class ComplexRules {
-    public static boolean isThisALegalMove(Piece piece, HashSet<Piece> pieces, Position position) {
-        return !isGoingThroughPieceToGetThere(piece, pieces, position);
-    }
-
     public static boolean isGoingThroughPieceToGetThere(Piece piece, HashSet<Piece> pieces, Position position) {
         char x = position.getX();
         int y = position.getY();
@@ -172,6 +168,10 @@ public class ComplexRules {
         return false;
     }
 /*
+    public static boolean isThisALegalMove(Piece piece, HashSet<Piece> pieces, Position position) {
+        return !isGoingThroughPieceToGetThere(piece, pieces, position);
+    }
+
     public static boolean canThisKingCastleRight(Piece king, HashSet<Piece> pieces) {
         if (king.getPieceType() == PieceType.King && ((KingOld) king).canCastle()) {
             for (Piece piece : pieces) {

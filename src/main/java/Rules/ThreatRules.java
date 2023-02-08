@@ -1,11 +1,12 @@
 package Rules;
 
-/*
 import Pieces.Piece;
 import Pieces.PieceColor;
 import Pieces.PieceType;
+import Pieces.Position;
 
 import java.util.HashSet;
+
 public class ThreatRules {
     public static boolean isCheckWhiteK(HashSet<Piece> pieces) {
         Piece king = null;
@@ -39,7 +40,7 @@ public class ThreatRules {
 
         for (Piece piece : pieces) {
             if (piece.getPieceColor() == PieceColor.WHITE &&
-                    PiecesRules.isThisAPossibleMove(piece, pieces, king.getPosX(), king.getPosY())) {
+                    piece.getPossibleMoves().getPositions().contains(king.getPosition())) {
                 return true;
             }
         }
@@ -47,41 +48,25 @@ public class ThreatRules {
         return false;
     }
 
-    protected static boolean isThisPositionThreatened(HashSet<Piece> pieces, Character x, Integer y) {
-        String xy = x.toString() + y.toString();
-        for (Piece enemyPiece : pieces) {
-            if (((Game.whitePlayer.isTurn() && enemyPiece.getPieceColor() == PieceColor.BLACK) ||
-                    (Game.blackPlayer.isTurn() && enemyPiece.getPieceColor() == PieceColor.WHITE)) &&
-                    PiecesRules.getPossibleMoves(enemyPiece, pieces).containsValue(xy)) {
-                if (enemyPiece.getPieceType() != PieceType.Pawn) {
-                    System.out.println("mhm2 " + enemyPiece + " " + x + y);
-                    return true;
-                } else if (PawnRules.canThisPawnThreaten(enemyPiece, x, y)) {
-                    System.out.println("mhm " + enemyPiece + " " + x + y);
-                    return true;
-                } else {
-                    System.out.println("ok " + enemyPiece + " " + x + y);
-                    // TODO ??
-                }
-            }
-        }
+    protected static boolean isThisPositionThreatened(HashSet<Piece> pieces, Position position) {
+        // TODO: Finish this
         return false;
     }
-
-    public static boolean doesStopCheck(HashSet<Piece> pieces, Piece piece, char x, int y) {
+    /*
+    public static boolean doesStopCheck(HashSet<Piece> pieces, Piece piece, Position position) {
         if (piece.getPieceType() == PieceType.King) {
-            return !isThisPositionThreatened(pieces, x, y);
+            return !isThisPositionThreatened(pieces, position);
         }
 
         HashSet<Piece> futurePieces = new HashSet<>(pieces);
 
         for (Piece enemyP : pieces) {
-            if (enemyP.getPosX() == x && enemyP.getPosY() == y && enemyP.getPieceType() != PieceType.King) {
+            if (enemyP.getPosition().equals(position) && enemyP.getPieceType() != PieceType.King) {
                 futurePieces.remove(enemyP);
             }
         }
 
-        futurePieces.add(PieceFactory.newPiece(piece.getPieceColor(), piece.getPieceType(), x, y));
+        futurePieces.add(PieceFactory.newPiece(piece.getPieceColor(), piece.getPieceType(), position));
 
         if (piece.getPieceColor() == PieceColor.WHITE) {
             return !isCheckWhiteK(futurePieces);
@@ -89,18 +74,20 @@ public class ThreatRules {
             return !isCheckBlackK(futurePieces);
         }
     }
+    */
 
-    public static boolean willThisMoveCauseCheck(Piece piece, HashSet<Piece> pieces, Character x, Integer y) {
+    /*
+    public static boolean willThisMoveCauseCheck(Piece piece, HashSet<Piece> pieces, Position position) {
         boolean ris = false;
 
         HashSet<Piece> futurePieces = new HashSet<>(pieces);
         futurePieces.remove(piece);
         for (Piece enemyP : pieces) {
-            if (enemyP.getPosX() == x && enemyP.getPosY() == y && enemyP.getPieceType() != PieceType.King) {
+            if (enemyP.getPosition().equals(position) && enemyP.getPieceType() != PieceType.King) {
                 futurePieces.remove(enemyP);
             }
         }
-        futurePieces.add(PieceFactory.newPiece(piece.getPieceColor(), piece.getPieceType(), x, y));
+        futurePieces.add(PieceFactory.newPiece(piece.getPieceColor(), piece.getPieceType(), position));
 
         if (isCheckWhiteK(futurePieces) && Game.whitePlayer.isTurn() ||
                 isCheckBlackK(futurePieces) && Game.blackPlayer.isTurn()) {
@@ -109,5 +96,5 @@ public class ThreatRules {
 
         return ris;
     }
+    */
 }
-*/
