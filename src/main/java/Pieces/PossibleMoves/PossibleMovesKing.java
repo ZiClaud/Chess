@@ -1,11 +1,10 @@
 package Pieces.PossibleMoves;
 
 import Board.BoardSize;
-import BoardPieces.BoardConnectPieces;
 import Pieces.Piece;
+import Pieces.PieceType;
 import Pieces.Position;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 
 public class PossibleMovesKing extends PossibleMoves {
@@ -31,6 +30,33 @@ public class PossibleMovesKing extends PossibleMoves {
      */
     @Override
     protected void extraMoves(Piece piece, BoardSize boardSize, HashSet<Piece> pieces) {
+        if (!piece.hasMoved()) {
+            HashSet<Piece> rooks = getCastlingRooks(piece, pieces);
+            for (Piece rook : rooks) {
+                if (rook.getPosition().getX() > piece.getPosition().getX()) {
+                    positions.add(new Position((char) (piece.getPosition().getX() + 2), piece.getPosition().getY()));
+                }
+                if (rook.getPosition().getX() < piece.getPosition().getX()) {
+                    positions.add(new Position((char) (piece.getPosition().getX() - 2), piece.getPosition().getY()));
+                }
+            }
+        }
+    }
+
+    /**
+     * returns rooks that are the same color of piece (aka King), that haven't moved
+     */
+    private HashSet<Piece> getCastlingRooks(Piece piece, HashSet<Piece> pieces) {
+        HashSet<Piece> rooks = new HashSet<>();
+
+        for (Piece rook : pieces) {
+            if (rook.getPieceColor() == piece.getPieceColor() &&
+                    rook.getPieceType() == PieceType.Tower &&
+                    !rook.hasMoved()) {
+                rooks.add(rook);
+            }
+        }
+        return rooks;
     }
 
     @Override
