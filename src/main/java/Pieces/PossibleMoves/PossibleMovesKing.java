@@ -29,15 +29,15 @@ public class PossibleMovesKing extends PossibleMoves {
      * Castle
      */
     @Override
-    protected void extraMoves(Piece piece, BoardSize boardSize, HashSet<Piece> pieces) {
-        if (!piece.hasMoved()) {
-            HashSet<Piece> rooks = getCastlingRooks(piece, pieces);
+    protected void extraMoves(Piece king, BoardSize boardSize, HashSet<Piece> pieces) {
+        if (!king.hasMoved()) {
+            HashSet<Piece> rooks = getCastlingRooks(king, pieces);
             for (Piece rook : rooks) {
-                if (rook.getPosition().getX() > piece.getPosition().getX()) {
-                    positions.add(new Position((char) (piece.getPosition().getX() + 2), piece.getPosition().getY()));
+                if (rook.getPosition().getX() > king.getPosition().getX()) {
+                    positions.add(new Position((char) (king.getPosition().getX() + 2), king.getPosition().getY()));
                 }
-                if (rook.getPosition().getX() < piece.getPosition().getX()) {
-                    positions.add(new Position((char) (piece.getPosition().getX() - 2), piece.getPosition().getY()));
+                if (rook.getPosition().getX() < king.getPosition().getX()) {
+                    positions.add(new Position((char) (king.getPosition().getX() - 2), king.getPosition().getY()));
                 }
             }
         }
@@ -61,5 +61,6 @@ public class PossibleMovesKing extends PossibleMoves {
 
     @Override
     protected void removeCheckIllegalMoves(Piece piece, BoardSize boardSize, HashSet<Piece> pieces) {
+
     }
 }

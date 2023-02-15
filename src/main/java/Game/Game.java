@@ -13,11 +13,13 @@ import java.util.Arrays;
 public class Game {
     public static final Player whitePlayer = new PlayerWhite();
     public static final Player blackPlayer = new PlayerBlack();
+    public static String gameMode;
     private static WindowBoard windowBoard;
     private final BoardConnectPieces boardPieces;
 
     public Game() {
         Integer boardSize = askBoardSize();
+        gameMode = askGameMode();
 
         // Board
         windowBoard = new WindowBoard(boardSize, boardSize);
@@ -43,6 +45,21 @@ public class Game {
         }
 
         return boardSize;
+    }
+
+    private String askGameMode() {
+        String[] options = {"Normal", "Fisher Random"};
+        String answer;
+        answer = (String) JOptionPane.showInputDialog(null, "Game mode", "Choose the game mode", JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+
+        if (!Arrays.stream(options).toList().contains(answer)) {
+            answer = options[0];
+        }
+
+        System.out.println(answer);
+        System.out.println(answer.contains("Normal"));
+
+        return answer;
     }
 
     public BoardConnectPieces getBoardPieces() {

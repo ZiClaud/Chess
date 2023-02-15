@@ -1,57 +1,89 @@
 package Rules;
 
+import Game.Game;
 import Pieces.Piece;
 import Pieces.PieceColor;
 import Pieces.PieceType;
 import Pieces.Position;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 
 public class ThreatRules {
-    public static boolean isCheckWhiteK(HashSet<Piece> pieces) {
-        Piece king = null;
-        for (Piece piece : pieces) {
-            if (piece.getPieceColor() == PieceColor.WHITE && piece.getPieceType() == PieceType.King) {
-                king = piece;
-                break;
+    public static void kingSafety(Piece king, ArrayList<Position> positions, HashSet<Piece> pieces) {
+        if (isCheck(pieces)) {
+            for (Position position : positions) {
+                if (isThisPositionThreatened(king.getPieceColor(), pieces, position)) {
+
+                }
             }
         }
+    }
 
+    public static boolean isCheck(HashSet<Piece> pieces) {
+        if (Game.whitePlayer.isTurn()) {
+            return isCheckThisColorK(PieceColor.WHITE, pieces);
+        }
+        if (Game.blackPlayer.isTurn()) {
+            return isCheckThisColorK(PieceColor.BLACK, pieces);
+        }
+
+        assert false;
+        return false;
+    }
+
+    private static boolean isCheckThisColorK(PieceColor pieceColor, HashSet<Piece> pieces) {
+        Piece king = getKing(pieceColor, pieces);
         assert king != null;
+        return isThisPositionThreatened(king.getPieceColor(), pieces, king.getPosition());
+    }
 
-        for (Piece piece : pieces) {
-            if (piece.getPosition().equals(king.getPosition())) {
+    public static Piece getKing(PieceColor pieceColor, HashSet<Piece> pieces) {
+        for (Piece king : pieces) {
+            if (king.getPieceType() == PieceType.King &&
+                    king.getPieceColor() == pieceColor) {
+                return king;
+            }
+        }
+        assert false;
+        return null;
+    }
+
+    public static boolean isThisPositionThreatened(PieceColor pieceColor, HashSet<Piece> pieces, Position position) {
+        HashSet<Position> enemyPossiblePositions = getEnemyPossiblePositions(pieceColor, pieces);
+
+        for (Position enemyPosition : enemyPossiblePositions) {
+            if (enemyPosition.equals(position)) {
                 return true;
             }
         }
-
         return false;
+
+        // TODO: Does this work too?
+/*
+        System.out.println(enemyPossiblePositions.contains(position));
+        return enemyPossiblePositions.contains(position);
+*/
     }
 
-    public static boolean isCheckBlackK(HashSet<Piece> pieces) {
-        Piece king = null;
-        for (Piece piece : pieces) {
-            if (piece.getPieceColor() == PieceColor.BLACK && piece.getPieceType() == PieceType.King) {
-                king = piece;
+    private static HashSet<Position> getEnemyPossiblePositions(PieceColor allyPieceColor, HashSet<Piece> pieces) {
+        HashSet<Piece> enemyPieces = new HashSet<>();
+        HashSet<Position> enemyPossiblePositions = new HashSet<>();
+
+        for (Piece enemyP : pieces) {
+            if (enemyP.getPieceColor() != allyPieceColor) {
+                enemyPieces.add(enemyP);
             }
         }
 
-        assert king != null;
-
-        for (Piece piece : pieces) {
-            if (piece.getPieceColor() == PieceColor.WHITE &&
-                    piece.getPossibleMoves().getPositions().contains(king.getPosition())) {
-                return true;
-            }
+        for (Piece enemyP : enemyPieces) {
+            enemyPossiblePositions.addAll(enemyP.getPossibleMoves().getPositions());
         }
-
-        return false;
+        // TODO: FIX
+        System.out.println("enemyPossiblePositions: " + enemyPossiblePositions);
+        return enemyPossiblePositions;
     }
 
-    protected static boolean isThisPositionThreatened(HashSet<Piece> pieces, Position position) {
-        // TODO: Finish this
-        return false;
-    }
     /*
     public static boolean doesStopCheck(HashSet<Piece> pieces, Piece piece, Position position) {
         if (piece.getPieceType() == PieceType.King) {
