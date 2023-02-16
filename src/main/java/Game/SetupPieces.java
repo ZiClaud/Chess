@@ -12,23 +12,23 @@ public class SetupPieces {
 
     private static void addPawns(HashSet<Piece> pieces) {
         pieces.addAll(Set.of(
-                new PieceImpl(PieceType.Pawn, PieceColor.WHITE, new Position('a', 2)),
-                new PieceImpl(PieceType.Pawn, PieceColor.WHITE, new Position('b', 2)),
-                new PieceImpl(PieceType.Pawn, PieceColor.WHITE, new Position('c', 2)),
-                new PieceImpl(PieceType.Pawn, PieceColor.WHITE, new Position('d', 2)),
-                new PieceImpl(PieceType.Pawn, PieceColor.WHITE, new Position('e', 2)),
-                new PieceImpl(PieceType.Pawn, PieceColor.WHITE, new Position('f', 2)),
-                new PieceImpl(PieceType.Pawn, PieceColor.WHITE, new Position('g', 2)),
-                new PieceImpl(PieceType.Pawn, PieceColor.WHITE, new Position('h', 2)),
+                PieceFactory.newPiece(PieceType.Pawn, PieceColor.WHITE, new Position('a', 2)),
+                PieceFactory.newPiece(PieceType.Pawn, PieceColor.WHITE, new Position('b', 2)),
+                PieceFactory.newPiece(PieceType.Pawn, PieceColor.WHITE, new Position('c', 2)),
+                PieceFactory.newPiece(PieceType.Pawn, PieceColor.WHITE, new Position('d', 2)),
+                PieceFactory.newPiece(PieceType.Pawn, PieceColor.WHITE, new Position('e', 2)),
+                PieceFactory.newPiece(PieceType.Pawn, PieceColor.WHITE, new Position('f', 2)),
+                PieceFactory.newPiece(PieceType.Pawn, PieceColor.WHITE, new Position('g', 2)),
+                PieceFactory.newPiece(PieceType.Pawn, PieceColor.WHITE, new Position('h', 2)),
 
-                new PieceImpl(PieceType.Pawn, PieceColor.BLACK, new Position('a', 7)),
-                new PieceImpl(PieceType.Pawn, PieceColor.BLACK, new Position('b', 7)),
-                new PieceImpl(PieceType.Pawn, PieceColor.BLACK, new Position('c', 7)),
-                new PieceImpl(PieceType.Pawn, PieceColor.BLACK, new Position('d', 7)),
-                new PieceImpl(PieceType.Pawn, PieceColor.BLACK, new Position('e', 7)),
-                new PieceImpl(PieceType.Pawn, PieceColor.BLACK, new Position('f', 7)),
-                new PieceImpl(PieceType.Pawn, PieceColor.BLACK, new Position('g', 7)),
-                new PieceImpl(PieceType.Pawn, PieceColor.BLACK, new Position('h', 7))
+                PieceFactory.newPiece(PieceType.Pawn, PieceColor.BLACK, new Position('a', 7)),
+                PieceFactory.newPiece(PieceType.Pawn, PieceColor.BLACK, new Position('b', 7)),
+                PieceFactory.newPiece(PieceType.Pawn, PieceColor.BLACK, new Position('c', 7)),
+                PieceFactory.newPiece(PieceType.Pawn, PieceColor.BLACK, new Position('d', 7)),
+                PieceFactory.newPiece(PieceType.Pawn, PieceColor.BLACK, new Position('e', 7)),
+                PieceFactory.newPiece(PieceType.Pawn, PieceColor.BLACK, new Position('f', 7)),
+                PieceFactory.newPiece(PieceType.Pawn, PieceColor.BLACK, new Position('g', 7)),
+                PieceFactory.newPiece(PieceType.Pawn, PieceColor.BLACK, new Position('h', 7))
         ));
     }
 
@@ -42,23 +42,23 @@ public class SetupPieces {
         }
 
         pieces.addAll(Set.of(
-                new PieceImpl(pieceOrder.get(0), PieceColor.WHITE, new Position('a', 1)),
-                new PieceImpl(pieceOrder.get(1), PieceColor.WHITE, new Position('b', 1)),
-                new PieceImpl(pieceOrder.get(2), PieceColor.WHITE, new Position('c', 1)),
-                new PieceImpl(pieceOrder.get(3), PieceColor.WHITE, new Position('d', 1)),
-                new PieceImpl(pieceOrder.get(4), PieceColor.WHITE, new Position('e', 1)),
-                new PieceImpl(pieceOrder.get(5), PieceColor.WHITE, new Position('f', 1)),
-                new PieceImpl(pieceOrder.get(6), PieceColor.WHITE, new Position('g', 1)),
-                new PieceImpl(pieceOrder.get(7), PieceColor.WHITE, new Position('h', 1)),
+                PieceFactory.newPiece(pieceOrder.get(0), PieceColor.WHITE, new Position('a', 1)),
+                PieceFactory.newPiece(pieceOrder.get(1), PieceColor.WHITE, new Position('b', 1)),
+                PieceFactory.newPiece(pieceOrder.get(2), PieceColor.WHITE, new Position('c', 1)),
+                PieceFactory.newPiece(pieceOrder.get(3), PieceColor.WHITE, new Position('d', 1)),
+                PieceFactory.newPiece(pieceOrder.get(4), PieceColor.WHITE, new Position('e', 1)),
+                PieceFactory.newPiece(pieceOrder.get(5), PieceColor.WHITE, new Position('f', 1)),
+                PieceFactory.newPiece(pieceOrder.get(6), PieceColor.WHITE, new Position('g', 1)),
+                PieceFactory.newPiece(pieceOrder.get(7), PieceColor.WHITE, new Position('h', 1)),
 
-                new PieceImpl(pieceOrder.get(0), PieceColor.BLACK, new Position('a', 8)),
-                new PieceImpl(pieceOrder.get(1), PieceColor.BLACK, new Position('b', 8)),
-                new PieceImpl(pieceOrder.get(2), PieceColor.BLACK, new Position('c', 8)),
-                new PieceImpl(pieceOrder.get(3), PieceColor.BLACK, new Position('d', 8)),
-                new PieceImpl(pieceOrder.get(4), PieceColor.BLACK, new Position('e', 8)),
-                new PieceImpl(pieceOrder.get(5), PieceColor.BLACK, new Position('f', 8)),
-                new PieceImpl(pieceOrder.get(6), PieceColor.BLACK, new Position('g', 8)),
-                new PieceImpl(pieceOrder.get(7), PieceColor.BLACK, new Position('h', 8))
+                PieceFactory.newPiece(pieceOrder.get(0), PieceColor.BLACK, new Position('a', 8)),
+                PieceFactory.newPiece(pieceOrder.get(1), PieceColor.BLACK, new Position('b', 8)),
+                PieceFactory.newPiece(pieceOrder.get(2), PieceColor.BLACK, new Position('c', 8)),
+                PieceFactory.newPiece(pieceOrder.get(3), PieceColor.BLACK, new Position('d', 8)),
+                PieceFactory.newPiece(pieceOrder.get(4), PieceColor.BLACK, new Position('e', 8)),
+                PieceFactory.newPiece(pieceOrder.get(5), PieceColor.BLACK, new Position('f', 8)),
+                PieceFactory.newPiece(pieceOrder.get(6), PieceColor.BLACK, new Position('g', 8)),
+                PieceFactory.newPiece(pieceOrder.get(7), PieceColor.BLACK, new Position('h', 8))
         ));
     }
 

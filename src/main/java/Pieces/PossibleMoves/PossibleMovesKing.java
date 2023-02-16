@@ -4,6 +4,7 @@ import Board.BoardSize;
 import Pieces.Piece;
 import Pieces.PieceType;
 import Pieces.Position;
+import Rules.ThreatRules;
 
 import java.util.HashSet;
 
@@ -60,7 +61,13 @@ public class PossibleMovesKing extends PossibleMoves {
     }
 
     @Override
-    protected void removeCheckIllegalMoves(Piece piece, BoardSize boardSize, HashSet<Piece> pieces) {
-
+    protected void removeCheckIllegalMoves(Piece king, BoardSize boardSize, HashSet<Piece> pieces) {
+        for (int i = 0; i < positions.size(); i++) {
+            Position position = positions.get(i);
+            if (ThreatRules.isThisPositionThreatened(king.getPieceColor(), pieces, position)) {
+                king.getPossibleMoves().getPositions().remove(position);
+                i = -1;
+            }
+        }
     }
 }
