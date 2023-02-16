@@ -46,7 +46,7 @@ public class PieceImpl extends PieceAbst {
 
     private void take(HashSet<Piece> pieces, Position position) {
         for (Piece piece : pieces) {
-            if (piece.getPosition().equals(position)){
+            if (piece.getPosition().equals(position)) {
                 pieces.remove(piece);
                 break;
             }

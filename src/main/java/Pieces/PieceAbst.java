@@ -5,7 +5,6 @@ import Game.Game;
 import Pieces.PossibleMoves.PossibleMoves;
 
 import java.awt.image.BufferedImage;
-import java.util.ArrayList;
 
 /**
  * Piece abstract class

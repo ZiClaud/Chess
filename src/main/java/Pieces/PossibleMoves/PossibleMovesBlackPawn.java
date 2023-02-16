@@ -4,7 +4,6 @@ import Board.BoardSize;
 import Pieces.Piece;
 import Pieces.Position;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 
 public class PossibleMovesBlackPawn extends PossibleMovesPawn {

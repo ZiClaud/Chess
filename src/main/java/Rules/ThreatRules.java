@@ -58,12 +58,11 @@ public class ThreatRules {
             }
         }
         return false;
-
+    /*
         // TODO: Does this work too?
-/*
         System.out.println(enemyPossiblePositions.contains(position));
         return enemyPossiblePositions.contains(position);
-*/
+    */
     }
 
     private static HashSet<Position> getEnemyPossiblePositions(PieceColor allyPieceColor, HashSet<Piece> pieces) {

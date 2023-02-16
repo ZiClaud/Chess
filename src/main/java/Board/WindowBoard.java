@@ -67,7 +67,7 @@ public class WindowBoard {
         }
     }
 
-    public void colorThisTileRed(char x, int y){
+    public void colorThisTileRed(char x, int y) {
         matrixPanels[y - 1][x - 'a'].setBackground(Color.RED);
     }
 

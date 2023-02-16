@@ -4,7 +4,6 @@ import Board.BoardSize;
 import Pieces.Piece;
 import Pieces.Position;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 
 /**
@@ -26,7 +25,7 @@ public abstract class PossibleMovesPawn extends PossibleMoves {
         }
     }
 
-    protected void removePawnForwardMovement(Position removePos1, Position removePos2, BoardSize boardSize, HashSet<Piece> pieces){
+    protected void removePawnForwardMovement(Position removePos1, Position removePos2, BoardSize boardSize, HashSet<Piece> pieces) {
         for (Piece boardPiece : pieces) {
             if (boardPiece.getPosition().equals(removePos1)) {
                 positions.remove(removePos1);

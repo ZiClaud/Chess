@@ -1,11 +1,9 @@
 package Pieces.PossibleMoves;
 
 import Board.BoardSize;
-import BoardPieces.BoardConnectPieces;
 import Pieces.Piece;
 import Pieces.Position;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 
 public class PossibleMovesBishop extends PossibleMoves {
