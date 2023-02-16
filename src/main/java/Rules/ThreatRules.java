@@ -1,10 +1,7 @@
 package Rules;
 
 import Game.Game;
-import Pieces.Piece;
-import Pieces.PieceColor;
-import Pieces.PieceType;
-import Pieces.Position;
+import Pieces.*;
 
 import java.util.HashSet;
 
@@ -74,27 +71,14 @@ public class ThreatRules {
             }
         }
 
-        for (Piece enemyP : enemyPieces) {
-            enemyPossiblePositions.addAll(enemyP.getPossibleMoves().getPositions());
+        for (Piece enemyPiece : enemyPieces) {
+            enemyPossiblePositions.addAll(enemyPiece.getPossibleMoves().getPositions());
+        }
+        for (Piece enemyPawn : enemyPawns) {
+            enemyPossiblePositions.addAll(((PawnPiece)enemyPawn).getThreatPosition());
         }
 //        System.out.println("enemyPossiblePositions: " + enemyPossiblePositions);
         return enemyPossiblePositions;
-    }
-
-    private static HashSet<Position> getAllyPossiblePositions(PieceColor allyPieceColor, HashSet<Piece> pieces) {
-        HashSet<Piece> allyPieces = new HashSet<>();
-        HashSet<Position> allyPossiblePositions = new HashSet<>();
-
-        for (Piece enemyP : pieces) {
-            if (enemyP.getPieceColor() == allyPieceColor) {
-                allyPieces.add(enemyP);
-            }
-        }
-
-        for (Piece enemyP : allyPieces) {
-            allyPossiblePositions.addAll(enemyP.getPossibleMoves().getPositions());
-        }
-        return allyPossiblePositions;
     }
 }
     /*
