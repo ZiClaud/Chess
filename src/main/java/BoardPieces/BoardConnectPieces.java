@@ -48,6 +48,7 @@ public class BoardConnectPieces {
                 cleanPanel(windowBoard.getMatrixPanels()[y - 1][x - 'a']);
             }
         }
+        updatePossibleMoves();
         drawPiecesOnBoard();
         colorCheck();
     }
@@ -130,8 +131,14 @@ public class BoardConnectPieces {
         showPossibleMoves(piece);
     }
 
+    public void updatePossibleMoves() {
+        for (Piece piece : pieces) {
+            piece.getPossibleMoves().setPossibleMovesOnBoard(piece, this);
+        }
+    }
+
     private void showPossibleMoves(Piece piece) {
-        piece.getPossibleMoves().setPossibleMovesOnBoard(piece, this);
+//        piece.getPossibleMoves().setPossibleMovesOnBoard(piece, this);
         ArrayList<Position> positions = piece.getPossibleMoves().getPositions();
         //...// ArrayList<Position> positions = piece.getPossibleMoves().getPositions();
 
