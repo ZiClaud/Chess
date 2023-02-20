@@ -49,8 +49,4 @@ public class PossibleMovesBlackPawn extends PossibleMovesPawn {
 
         removePawnForwardMovement(removePos1, removePos2, boardSize, pieces);
     }
-
-    @Override
-    protected void removeCheckIllegalMoves(Piece piece, BoardSize boardSize, HashSet<Piece> pieces) {
-    }
 }

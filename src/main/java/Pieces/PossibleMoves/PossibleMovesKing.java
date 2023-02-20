@@ -59,16 +59,4 @@ public class PossibleMovesKing extends PossibleMoves {
         }
         return rooks;
     }
-
-    @Override
-    protected void removeCheckIllegalMoves(Piece king, BoardSize boardSize, HashSet<Piece> pieces) {
-        // TODO: There's a bug, he can walk into check if in doing so he takes a piece
-        for (int i = 0; i < positions.size(); i++) {
-            Position position = positions.get(i);
-            if (ThreatRules.isThisPositionThreatened(king.getPieceColor(), pieces, position)) {
-                king.getPossibleMoves().getPositions().remove(position);
-                i = -1;
-            }
-        }
-    }
 }

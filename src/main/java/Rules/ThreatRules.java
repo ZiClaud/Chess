@@ -9,9 +9,20 @@ public class ThreatRules {
     public static boolean isCheck(HashSet<Piece> pieces) {
         if (Game.whitePlayer.isTurn()) {
             return isCheckThisColorK(PieceColor.WHITE, pieces);
-        }
-        if (Game.blackPlayer.isTurn()) {
+        } else if (Game.blackPlayer.isTurn()) {
             return isCheckThisColorK(PieceColor.BLACK, pieces);
+        }
+
+        assert false;
+        return false;
+    }
+
+    public static boolean isOpponentCheck(HashSet<Piece> pieces) { // TODO: Is this used right?
+
+        if (Game.whitePlayer.isTurn()) {
+            return isCheckThisColorK(PieceColor.BLACK, pieces);
+        } else if (Game.blackPlayer.isTurn()) {
+            return isCheckThisColorK(PieceColor.WHITE, pieces);
         }
 
         assert false;
@@ -35,16 +46,50 @@ public class ThreatRules {
         return null;
     }
 
-    // TODO: Fix for pawns
+    public static boolean willThisMoveCauseCheck(Piece piece, HashSet<Piece> pieces, Position position) {
+        HashSet<Piece> futurePieces = new HashSet<>(pieces);
+        Piece futurePiece = PieceFactory.newPiece(piece.getPieceType(), piece.getPieceColor(), position);
+        futurePieces.remove(piece);
+        futurePieces.add(futurePiece);
+
+        if (isCheck(futurePieces)){ // TODO: FIX THIS - idk why it doesn't work yet
+            System.out.println(piece.getPossibleMoves().getPositions());
+            System.out.println(piece.getPieceType());
+            System.out.println(futurePiece.getPieceType());
+            System.out.println(position);
+        }
+
+        return isCheck(futurePieces);
+    }
+
     public static boolean isThisPositionThreatened(PieceColor pieceColor, HashSet<Piece> pieces, Position position) {
         HashSet<Position> enemyPossiblePositions = getEnemyPossiblePositions(pieceColor, pieces);
+        // TODO: Fix bug -> If we take with the king an enemy piece that is protected
 
         for (Position enemyPosition : enemyPossiblePositions) {
             if (enemyPosition.equals(position)) {
                 return true;
             }
         }
+
+        for (Piece piece : pieces) {
+            if (piece.getPosition().equals(position)) {
+                return isThisPieceProtected(piece, pieces);
+            }
+        }
+
         return false;
+    }
+
+    private static boolean isThisPieceProtected(Piece piece, HashSet<Piece> pieces) {
+        HashSet<Piece> piecesWithoutPiece = getEnemyPieces(piece.getPieceColor(), pieces);
+        piecesWithoutPiece.remove(piece);
+        HashSet<Position> possiblePositions = getEnemyPossiblePositions(piece.getPieceColor(), piecesWithoutPiece);
+        if (possiblePositions.contains(piece.getPosition())) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     private static boolean isThisPositionThreatenedOptimized(PieceColor pieceColor, HashSet<Piece> pieces, Position position) {
@@ -56,26 +101,41 @@ public class ThreatRules {
         return enemyPossiblePositions.contains(position);
     }
 
-    private static HashSet<Position> getEnemyPossiblePositions(PieceColor allyPieceColor, HashSet<Piece> pieces) {
+    private static HashSet<Piece> getEnemyPieces(PieceColor allyPieceColor, HashSet<Piece> pieces) {
         HashSet<Piece> enemyPieces = new HashSet<>();
-        HashSet<Piece> enemyPawns = new HashSet<>();
-        HashSet<Position> enemyPossiblePositions = new HashSet<>();
-
         for (Piece enemyPiece : pieces) {
             if (enemyPiece.getPieceColor() != allyPieceColor) {
                 if (enemyPiece.getPieceType() != PieceType.Pawn) {
                     enemyPieces.add(enemyPiece);
-                } else {
+                }
+            }
+        }
+        return enemyPieces;
+    }
+
+    private static HashSet<Piece> getEnemyPawns(PieceColor allyPieceColor, HashSet<Piece> pieces) {
+        HashSet<Piece> enemyPawns = new HashSet<>();
+        for (Piece enemyPiece : pieces) {
+            if (enemyPiece.getPieceColor() != allyPieceColor) {
+                if (enemyPiece.getPieceType() == PieceType.Pawn) {
                     enemyPawns.add(enemyPiece);
                 }
             }
         }
+        return enemyPawns;
+    }
+
+    private static HashSet<Position> getEnemyPossiblePositions(PieceColor allyPieceColor, HashSet<Piece> pieces) {
+        HashSet<Piece> enemyPieces = getEnemyPieces(allyPieceColor, pieces);
+        HashSet<Piece> enemyPawns = getEnemyPawns(allyPieceColor, pieces);
+        HashSet<Position> enemyPossiblePositions = new HashSet<>();
+
 
         for (Piece enemyPiece : enemyPieces) {
             enemyPossiblePositions.addAll(enemyPiece.getPossibleMoves().getPositions());
         }
         for (Piece enemyPawn : enemyPawns) {
-            enemyPossiblePositions.addAll(((PawnPiece)enemyPawn).getThreatPosition());
+            enemyPossiblePositions.addAll(((PawnPiece) enemyPawn).getThreatPosition());
         }
 //        System.out.println("enemyPossiblePositions: " + enemyPossiblePositions);
         return enemyPossiblePositions;

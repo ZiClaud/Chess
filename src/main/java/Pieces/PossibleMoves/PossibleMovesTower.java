@@ -22,8 +22,4 @@ public class PossibleMovesTower extends PossibleMoves {
         }
         positions.remove(piecePos);
     }
-
-    @Override
-    protected void removeCheckIllegalMoves(Piece piece, BoardSize boardSize, HashSet<Piece> pieces) {
-    }
 }

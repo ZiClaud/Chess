@@ -53,7 +53,6 @@ public abstract class PieceAbst implements Piece {
         return PieceImg.getPieceImg(this);
     }
 
-    // TODO: Change using BoardSize, maybe move it
     protected void isValidPosition(BoardSize boardSize) {
         if (position.getX() < 'a' || position.getX() > boardSize.getX() || position.getY() < 1 || position.getY() > boardSize.getY()) {
             System.err.println("Invalid value of XY: " + position.getX() + position.getY());

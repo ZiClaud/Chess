@@ -20,8 +20,9 @@ public class PieceImpl extends PieceAbst {
                 this.possibleMoves = new PossibleMovesWhitePawn();
             } else if (pieceColor == PieceColor.BLACK) {
                 this.possibleMoves = new PossibleMovesBlackPawn();
+            } else {
+                assert false;
             }
-            assert false;
         } else if (pieceType == PieceType.Tower) {
             this.possibleMoves = new PossibleMovesTower();
         } else if (pieceType == PieceType.Knight) {
@@ -32,8 +33,9 @@ public class PieceImpl extends PieceAbst {
             this.possibleMoves = new PossibleMovesQueen();
         } else if (pieceType == PieceType.King) {
             this.possibleMoves = new PossibleMovesKing();
+        } else {
+            assert false;
         }
-        assert false;
     }
 
     @Override

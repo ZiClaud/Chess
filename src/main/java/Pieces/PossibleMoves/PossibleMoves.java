@@ -5,6 +5,7 @@ import BoardPieces.BoardConnectPieces;
 import Pieces.Piece;
 import Pieces.Position;
 import Rules.ComplexRules;
+import Rules.ThreatRules;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -29,8 +30,8 @@ public abstract class PossibleMoves {
     protected void removeIllegalMoves(Piece piece, BoardSize boardSize, HashSet<Piece> pieces) {
         removeOutOfBoardIllegalMoves(boardSize, pieces);
         removeThroughPieceIllegalMoves(piece, boardSize, pieces);
-        removeCheckIllegalMoves(piece, boardSize, pieces);
         removeSamePieceAlreadyThereMoves(piece, pieces);
+        removeCheckIllegalMoves(piece, pieces);
     }
 
     private void removeSamePieceAlreadyThereMoves(Piece piece, HashSet<Piece> pieces) {
@@ -101,5 +102,16 @@ public abstract class PossibleMoves {
         }
     }
 
-    protected abstract void removeCheckIllegalMoves(Piece piece, BoardSize boardSize, HashSet<Piece> pieces);
+    protected void removeCheckIllegalMoves(Piece piece, HashSet<Piece> pieces){
+        int i = 0;
+        while (i < positions.size()) {
+            Position position = positions.get(i);
+            if (ThreatRules.willThisMoveCauseCheck(piece, pieces, position)) {
+                positions.remove(position);
+                i = 0;
+                continue;
+            }
+            i++;
+        }
+    }
 }

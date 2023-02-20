@@ -25,7 +25,7 @@ import java.util.HashSet;
 public class WinRules {
     public static void win(HashSet<Piece> pieces) {
         if (Game.whitePlayer.isTurn() && didWin(pieces, PieceColor.WHITE)) {
-            if (true) {// (ThreatRules.isCheckWhiteK(pieces)) {
+            if (ThreatRules.isCheck(pieces)) {
                 JOptionPane.showMessageDialog(null, "Black won!");
             } else {
                 JOptionPane.showMessageDialog(null, "Draw by stalemate!");
@@ -33,7 +33,7 @@ public class WinRules {
             restart();
         }
         if (Game.blackPlayer.isTurn() && didWin(pieces, PieceColor.BLACK)) {
-            if (true) {//(ThreatRules.isCheckBlackK(pieces)) {
+            if (ThreatRules.isCheck(pieces)) {
                 JOptionPane.showMessageDialog(null, "White won!");
             } else {
                 JOptionPane.showMessageDialog(null, "Draw by stalemate!");
@@ -54,12 +54,11 @@ public class WinRules {
     private static boolean didWin(HashSet<Piece> pieces, PieceColor pieceColor) {
         for (Piece piece : pieces) {
             if (piece.getPieceColor() == pieceColor) {
-//                if (!PiecesRules.getPossibleMoves(piece, pieces).isEmpty()) {
-                return false;
-//                }
+                if (!piece.getPossibleMoves().getPositions().isEmpty()) {
+                    return false;
+                }
             }
         }
-
         return true;
     }
 

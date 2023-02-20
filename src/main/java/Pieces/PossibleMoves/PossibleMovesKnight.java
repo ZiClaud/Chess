@@ -21,8 +21,4 @@ public class PossibleMovesKnight extends PossibleMoves {
         positions.add(new Position((char) (pX - 2), pY + 1));
         positions.add(new Position((char) (pX + 1), pY - 2));
     }
-
-    @Override
-    protected void removeCheckIllegalMoves(Piece piece, BoardSize boardSize, HashSet<Piece> pieces) {
-    }
 }
