@@ -52,7 +52,7 @@ public class ThreatRules {
         futurePieces.remove(piece);
         futurePieces.add(futurePiece);
 
-        if (isCheck(futurePieces)){ // TODO: FIX THIS - idk why it doesn't work yet
+        if (isCheck(futurePieces)) { // TODO: FIX THIS - idk why it doesn't work yet
             System.out.println(piece.getPossibleMoves().getPositions());
             System.out.println(piece.getPieceType());
             System.out.println(futurePiece.getPieceType());

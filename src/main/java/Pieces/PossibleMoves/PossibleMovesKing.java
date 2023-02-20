@@ -4,7 +4,6 @@ import Board.BoardSize;
 import Pieces.Piece;
 import Pieces.PieceType;
 import Pieces.Position;
-import Rules.ThreatRules;
 
 import java.util.HashSet;
 

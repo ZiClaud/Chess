@@ -5,7 +5,7 @@ public class KingPiece extends PieceImpl {
         super(pieceType, pieceColor, position);
     }
 
-    public void castle(){
+    public void castle() {
 
     }
 }

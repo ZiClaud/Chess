@@ -4,8 +4,6 @@ import Board.BoardSize;
 import Pieces.Piece;
 import Pieces.Position;
 
-import java.util.HashSet;
-
 public class PossibleMovesBishop extends PossibleMoves {
     @Override
     public void addPossibleMovesPerPiece(Piece piece, BoardSize size) {
