@@ -22,7 +22,7 @@ public class Game {
         gameMode = askGameMode();
 
         // Board
-        windowBoard = new WindowBoard(boardSize, boardSize);
+        windowBoard = WindowBoard.getInstance(boardSize, boardSize);
         // PiecesOld in board
         boardPieces = new BoardConnectPieces(windowBoard);
         boardPieces.drawPiecesOnBoard();

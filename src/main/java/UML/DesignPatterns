@@ -6,7 +6,7 @@ To implement:
 5. Player      -> Factory (?), Observer (?)
 
 Implemented:
-1. Board       ->
+1. Board       -> Singleton
 2. BoardPieces ->
 3. Pieces      -> Strategy (getImg), Strategy (PossibleMoves), Factory
 4. Rules       ->
