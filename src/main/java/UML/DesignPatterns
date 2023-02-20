@@ -8,6 +8,8 @@ To implement:
 Implemented:
 1. Board       ->
 2. BoardPieces ->
-3. PiecesOld      -> Strategy (getImg), Decorator, Factory
+3. Pieces      -> Strategy (getImg), Strategy (PossibleMoves), Factory
 4. Rules       ->
 5. Player      -> Strategy
+
+0. PiecesOld -> Strategy, Decorator (not anymore), Factory
