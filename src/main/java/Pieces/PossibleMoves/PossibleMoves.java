@@ -17,14 +17,29 @@ public abstract class PossibleMoves {
         return positions;
     }
 
-    public void setPossibleMovesOnBoard(Piece piece, BoardConnectPieces board) {
+    public void updatePossibleMoves() {
+        BoardConnectPieces board = BoardConnectPieces.getInstance();
+        HashSet<Piece> pieces = board.getPieces();
+
+        for (Piece piece : pieces) {
+            setPossibleMovesOnBoard(piece, pieces);
+        }
+    }
+
+    public void updatePossibleMoves(HashSet<Piece> pieces) {
+        for (Piece piece : pieces) {
+            setPossibleMovesOnBoard(piece, pieces);
+        }
+    }
+
+    public void setPossibleMovesOnBoard(Piece piece, HashSet<Piece> pieces) {
+        BoardConnectPieces board = BoardConnectPieces.getInstance();
         BoardSize boardSize = board.getWindowBoard().getBoardSize();
-        HashSet<Piece> piecesOnBoard = board.getPieces(); //TODO: Use only ArrayList, not HashSet
         positions = new ArrayList<>();
 
         addPossibleMovesPerPiece(piece, boardSize);
-        extraMoves(piece, boardSize, piecesOnBoard);
-        removeIllegalMoves(piece, boardSize, piecesOnBoard);
+        extraMoves(piece, boardSize, pieces);
+        removeIllegalMoves(piece, boardSize, pieces);
     }
 
     protected void removeIllegalMoves(Piece piece, BoardSize boardSize, HashSet<Piece> pieces) {

@@ -1,5 +1,7 @@
 package Board;
 
+import Game.Game;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -7,23 +9,28 @@ import java.awt.*;
  * Board - Graphic UI that appears with all the tiles
  */
 public class WindowBoard {
-    private static WindowBoard instance = null;
+    private static WindowBoard instance;
     private final BoardSize boardSize = new BoardSize('h', 8);
     private final JFrame frame = new JFrame("Chess");
     private final JPanel panel = new JPanel();
     private final JPanel[][] matrixPanels = new JPanel[8][8];
 
-    public static WindowBoard getInstance(int WIDTH, int HEIGHT){
-        if (instance == null){
-            return new WindowBoard(WIDTH, HEIGHT);
-        }
-        return instance;
-    }
-
     private WindowBoard(int WIDTH, int HEIGHT) {
         addTiles(WIDTH, HEIGHT);
         colorTiles();
         setFrame(WIDTH, HEIGHT);
+    }
+
+    public static WindowBoard getInstance() {
+        if (instance == null) {
+            instance = new WindowBoard(Game.boardSize, Game.boardSize);
+        }
+        return instance;
+    }
+
+    public static WindowBoard getNewInstance() {
+        instance = new WindowBoard(Game.boardSize, Game.boardSize);
+        return instance;
     }
 
     public BoardSize getBoardSize() {

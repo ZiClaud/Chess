@@ -2,6 +2,7 @@ package Rules;
 
 import Game.Game;
 import Pieces.*;
+import Pieces.PossibleMoves.PossibleMoves;
 
 import java.util.HashSet;
 
@@ -15,6 +16,17 @@ public class ThreatRules {
 
         assert false;
         return false;
+    }
+
+    public static boolean isCheck2(HashSet<Piece> pieces) {
+        Piece piece = getKing(PieceColor.WHITE, pieces);
+        assert piece != null;
+//        System.out.println("piece.isTurn(): " + piece.isTurn());
+        if (piece.isTurn()) {
+            return isCheckThisColorK(PieceColor.WHITE, pieces);
+        } else {
+            return isCheckThisColorK(PieceColor.BLACK, pieces);
+        }
     }
 
     public static boolean isOpponentCheck(HashSet<Piece> pieces) { // TODO: Is this used right?
@@ -52,6 +64,13 @@ public class ThreatRules {
         futurePieces.remove(piece);
         futurePieces.add(futurePiece);
 
+//        PossibleMoves.updatePossibleMoves(futurePieces);
+
+        if (isCheck2(futurePieces) != isCheck(futurePieces)){
+            System.out.println("Ma che oh");
+            System.err.println("Ma che oh");
+        }
+
         if (isCheck(futurePieces)) { // TODO: FIX THIS - idk why it doesn't work yet
             System.out.println(piece.getPossibleMoves().getPositions());
             System.out.println(piece.getPieceType());
@@ -63,8 +82,11 @@ public class ThreatRules {
     }
 
     public static boolean isThisPositionThreatened(PieceColor pieceColor, HashSet<Piece> pieces, Position position) {
+        // TODO: It's possible that those positions are the old positions, we need to get the new ones
         HashSet<Position> enemyPossiblePositions = getEnemyPossiblePositions(pieceColor, pieces);
+
         // TODO: Fix bug -> If we take with the king an enemy piece that is protected
+        // I think this is fixed
 
         for (Position enemyPosition : enemyPossiblePositions) {
             if (enemyPosition.equals(position)) {

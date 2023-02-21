@@ -19,13 +19,28 @@ import java.util.HashSet;
  * Draws the PiecesOld into the Board
  */
 public class BoardConnectPieces {
+    private static BoardConnectPieces instance;
     private final WindowBoard windowBoard;
     private final HashSet<Piece> pieces = new HashSet<>();
     private final HashSet<JButton> jMovesButtons = new HashSet<>();
 
-    public BoardConnectPieces(WindowBoard windowBoard) {
-        this.windowBoard = windowBoard;
+    private BoardConnectPieces() {
+        this.windowBoard = WindowBoard.getInstance();
         SetupPieces.setupPieces(pieces);
+    }
+
+    public static BoardConnectPieces getInstance() {
+        if (instance == null) {
+            instance = new BoardConnectPieces();
+        }
+        return instance;
+    }
+
+    public static BoardConnectPieces getNewInstance() {
+        WindowBoard.getInstance().removeWindow();
+        WindowBoard.getNewInstance();
+        instance = new BoardConnectPieces();
+        return instance;
     }
 
     public WindowBoard getWindowBoard() {
@@ -52,6 +67,12 @@ public class BoardConnectPieces {
         updatePossibleMoves();
         drawPiecesOnBoard();
         colorCheck();
+    }
+
+    private void updatePossibleMoves() {
+        for (Piece piece : pieces) {
+            piece.getPossibleMoves().setPossibleMovesOnBoard(piece, pieces);
+        }
     }
 
     private void cleanPanel(JPanel panel) {
@@ -104,11 +125,6 @@ public class BoardConnectPieces {
         showPossibleMoves(piece);
     }
 
-    public void updatePossibleMoves() {
-        for (Piece piece : pieces) {
-            piece.getPossibleMoves().setPossibleMovesOnBoard(piece, this);
-        }
-    }
 
     private void showPossibleMoves(Piece piece) {
         ArrayList<Position> positions = piece.getPossibleMoves().getPositions();

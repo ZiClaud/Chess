@@ -14,17 +14,21 @@ public class Game {
     public static final Player whitePlayer = new PlayerWhite();
     public static final Player blackPlayer = new PlayerBlack();
     public static String gameMode;
+    public static Integer boardSize;
     private static WindowBoard windowBoard;
     private final BoardConnectPieces boardPieces;
 
     public Game() {
-        Integer boardSize = askBoardSize();
+        if (boardSize == null) {
+            boardSize = askBoardSize();
+        }
         gameMode = askGameMode();
 
         // Board
-        windowBoard = WindowBoard.getInstance(boardSize, boardSize);
-        // PiecesOld in board
-        boardPieces = new BoardConnectPieces(windowBoard);
+        windowBoard = WindowBoard.getInstance();
+
+        // Pieces in board
+        boardPieces = BoardConnectPieces.getNewInstance();
         boardPieces.drawPiecesOnBoard();
     }
 
@@ -60,9 +64,5 @@ public class Game {
         System.out.println(answer.contains("Normal"));
 
         return answer;
-    }
-
-    public BoardConnectPieces getBoardPieces() {
-        return boardPieces;
     }
 }

@@ -7,8 +7,9 @@ To implement:
 
 Implemented:
 1. Board       -> Singleton
-2. BoardPieces ->
+2. BoardPieces -> Singleton
 3. Pieces      -> Strategy (getImg), Strategy (PossibleMoves), Factory
+3.1 Pieces     -> PossibleMoves -> Template
 4. Rules       ->
 5. Player      -> Strategy
 
