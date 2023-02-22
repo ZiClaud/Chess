@@ -1,6 +1,7 @@
 package Pieces.PossibleMoves;
 
 import Board.BoardSize;
+import Board.WindowBoard;
 import BoardPieces.BoardConnectPieces;
 import Pieces.Piece;
 import Pieces.Position;
@@ -33,8 +34,7 @@ public abstract class PossibleMoves {
     }
 
     public void setPossibleMovesOnBoard(Piece piece, HashSet<Piece> pieces) {
-        BoardConnectPieces board = BoardConnectPieces.getInstance();
-        BoardSize boardSize = board.getWindowBoard().getBoardSize();
+        BoardSize boardSize = WindowBoard.getInstance().getBoardSize();
         positions = new ArrayList<>();
 
         addPossibleMovesPerPiece(piece, boardSize);

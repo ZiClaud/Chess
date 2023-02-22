@@ -2,6 +2,7 @@ package Game;
 
 import Board.WindowBoard;
 import BoardPieces.BoardConnectPieces;
+import BoardPieces.DrawOnBoard;
 import Player.Player;
 import Player.PlayerBlack;
 import Player.PlayerWhite;
@@ -29,7 +30,7 @@ public class Game {
 
         // Pieces in board
         boardPieces = BoardConnectPieces.getNewInstance();
-        boardPieces.drawPiecesOnBoard();
+        DrawOnBoard.drawPiecesOnBoard();
     }
 
     public static void restartGame() {

@@ -1,18 +1,8 @@
 package BoardPieces;
 
 import Board.WindowBoard;
-import Game.Game;
-import Game.SetupPieces;
 import Pieces.*;
-import Rules.ThreatRules;
-import Rules.TurnRules;
-import Rules.WinRules;
-import Utils.MyUtils;
 
-import javax.swing.*;
-import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.util.ArrayList;
 import java.util.HashSet;
 
 /**
@@ -21,12 +11,9 @@ import java.util.HashSet;
  */
 public class BoardConnectPieces {
     private static BoardConnectPieces instance;
-    private final WindowBoard windowBoard;
     private final HashSet<Piece> pieces = new HashSet<>();
-    private final HashSet<JButton> jMovesButtons = new HashSet<>();
 
     private BoardConnectPieces() {
-        this.windowBoard = WindowBoard.getInstance();
         SetupPieces.setupPieces(pieces);
     }
 
@@ -44,201 +31,8 @@ public class BoardConnectPieces {
         return instance;
     }
 
-    public WindowBoard getWindowBoard() {
-        return windowBoard;
-    }
-
     public HashSet<Piece> getPieces() {
         return pieces;
-    }
-
-    public void drawPiecesOnBoard() {
-        TurnRules.getTurn(getPieces());
-        for (Piece p : pieces) {
-            placePieceOnPanel(p, windowBoard.getMatrixPanels()[p.getPosition().getY() - 1][p.getPosition().getX() - 'a']);
-        }
-    }
-
-    public void resetBoard() {
-        for (int y = 8; y >= 1; y--) {
-            for (char x = 'a'; x <= 'h'; x++) {
-                cleanPanel(windowBoard.getMatrixPanels()[y - 1][x - 'a']);
-            }
-        }
-        updatePossibleMoves();
-        drawPiecesOnBoard();
-        colorCheck();
-    }
-
-    private void updatePossibleMoves() {
-        for (Piece piece : pieces) {
-            piece.getPossibleMoves().setPossibleMovesOnBoard(piece, pieces);
-        }
-    }
-
-    private void cleanPanel(JPanel panel) {
-        panel.removeAll();
-        panel.revalidate();
-        panel.repaint();
-    }
-
-    private void placePieceOnPanel(Piece piece, JPanel panel) {
-        BufferedImage myPicture = piece.getImg();
-        Image scaledImage = myPicture.getScaledInstance(panel.getWidth(), panel.getHeight(), Image.SCALE_SMOOTH);
-
-        JButton picLabel = new JButton(new ImageIcon(scaledImage));
-        picLabel.setOpaque(false);
-        picLabel.setContentAreaFilled(false);
-        picLabel.setBorderPainted(false);
-        if (piece.isTurn()) {
-            picLabel.addActionListener(e -> {
-                pieceClicked(piece);
-            });
-        }
-        cleanPanel(panel);
-        panel.add(picLabel);
-    }
-
-    private void placeMoveOnPanel(Piece piece, char x, int y) {
-        JButton moveHereBT = new JButton();
-        moveHereBT.setOpaque(true);
-        moveHereBT.setContentAreaFilled(false);
-        moveHereBT.setBorderPainted(false);
-        moveHereBT.addActionListener(actionEvent -> {
-            moveClicked(piece, x, y);
-        });
-
-        windowBoard.getMatrixPanels()[y - 1][x - 'a'].setBackground(Color.GRAY);
-        windowBoard.getMatrixPanels()[y - 1][x - 'a'].add(moveHereBT);
-        jMovesButtons.add(moveHereBT);
-
-        // TODO: Clean this code -> It makes picLabel button do the same thing of moveHereBT
-        if (windowBoard.getMatrixPanels()[y - 1][x - 'a'].getComponentCount() > 1) {
-            ((JButton) windowBoard.getMatrixPanels()[y - 1][x - 'a'].getComponents()[0]).addActionListener(actionEvent -> {
-                moveClicked(piece, x, y);
-            });
-        }
-    }
-
-    private void pieceClicked(Piece piece) {
-        windowBoard.colorTiles();
-        resetBoard();
-        showPossibleMoves(piece);
-    }
-
-
-    private void showPossibleMoves(Piece piece) {
-        ArrayList<Position> positions = piece.getPossibleMoves().getPositions();
-
-        for (Position position : positions) {
-            placeMoveOnPanel(piece, position.getX(), position.getY());
-        }
-    }
-
-    private void moveClicked(Piece piece, char x, int y) {
-        windowBoard.colorTiles();
-        removeMoveToCoordinatesPanels();
-        moveToCoordinates(piece, x, y);
-
-        TurnRules.switchTurn();
-
-        resetBoard();
-
-        WinRules.win(getPieces());
-    }
-
-    private void colorCheck() {
-        if (ThreatRules.isCheck(pieces)) {
-            Piece king = getKingWhoseTurnIsIt();
-            assert king != null;
-            char x = king.getPosition().getX();
-            int y = king.getPosition().getY();
-
-            windowBoard.colorThisTileRed(x, y);
-        }
-    }
-
-    private Piece getKingWhoseTurnIsIt() {
-        if (Game.whitePlayer.isTurn()) {
-            return ThreatRules.getKing(PieceColor.WHITE, pieces);
-        }
-        if (Game.blackPlayer.isTurn()) {
-            return ThreatRules.getKing(PieceColor.BLACK, pieces);
-        }
-
-        assert false;
-        return null;
-    }
-
-
-    private void moveToCoordinates(Piece piece, char x, int y) {
-        Position oldPosition = piece.getPosition();
-        Position position = new Position(x, y);
-        piece.move(position, getPieces());
-
-        placePieceOnPanel(piece, windowBoard.getMatrixPanels()[piece.getPosition().getY() - 1][piece.getPosition().getX() - 'a']);
-        removeMoveToCoordinatesPanels();
-
-        if (piece.getPieceType() == PieceType.Pawn && (piece.getPosition().getY() == 1 || piece.getPosition().getY() == 8)) {
-            upgradePawn(piece);
-        }
-
-        if (piece.getPieceType() == PieceType.King) {
-            MyUtils.getCastlingRooks(piece, pieces);
-            if (position.getX() == (oldPosition.getX() + 2)) {
-                castleRightRook(piece);
-            }
-            if (position.getX() == (oldPosition.getX() - 2)) {
-                castleLeftRook(piece);
-            }
-        }
-    }
-
-    private void castleRightRook(Piece king) {
-        HashSet<Piece> rooks = MyUtils.getCastlingRooks(king, pieces);
-        Position position = new Position('f', king.getPosition().getY());
-        for (Piece rook : rooks) {
-            if (rook.getPosition().getX() > king.getPosition().getX()) {
-                rook.move(position, pieces);
-            }
-        }
-    }
-
-    private void castleLeftRook(Piece king) {
-        HashSet<Piece> rooks = MyUtils.getCastlingRooks(king, pieces);
-        Position position = new Position('d', king.getPosition().getY());
-        for (Piece rook : rooks) {
-            if (rook.getPosition().getX() < king.getPosition().getX()) {
-                rook.move(position, pieces);
-            }
-        }
-    }
-
-    private void upgradePawn(Piece piece) {
-        PieceType pieceType = chooseUpgradePiece();
-        pieces.remove(piece);
-        piece = new PieceImpl(pieceType, piece.getPieceColor(), piece.getPosition());
-        pieces.add(piece);
-    }
-
-    private PieceType chooseUpgradePiece() {
-        PieceType[] options = {PieceType.Queen, PieceType.Knight, PieceType.Bishop, PieceType.Tower};
-        PieceType selectedPiece;
-        do {
-            selectedPiece = (PieceType) JOptionPane.showInputDialog(null, "Board size", "Choose the board size", JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
-        } while (selectedPiece == null);
-        return selectedPiece;
-    }
-
-    private void removeMoveToCoordinatesPanels() {
-        JPanel[][] matrixPanels = WindowBoard.getInstance().getMatrixPanels();
-        for (int y = 8; y >= 1; y--) {
-            for (char x = 'a'; x <= 'h'; x++) {
-                for (JButton b : jMovesButtons) {
-                    matrixPanels[y - 1][x - 'a'].remove(b);
-                }
-            }
-        }
     }
 }
 

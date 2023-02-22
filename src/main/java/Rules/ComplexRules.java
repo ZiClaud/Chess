@@ -17,7 +17,7 @@ public class ComplexRules {
             return true;
         } else if (pieceType == PieceType.Bishop && isBishopGoingThroughPiecesToGetThere(piece, pieces, x, y)) {
             return true;
-        } else if (pieceType == PieceType.Tower && isTowerGoingThroughPiecesToGetThere(piece, pieces, x, y)) {
+        } else if ((pieceType == PieceType.Tower || pieceType == PieceType.King) && isTowerGoingThroughPiecesToGetThere(piece, pieces, x, y)) {
             return true;
         } else return pieceType == PieceType.Queen && isQueenGoingThroughPiecesToGetThere(piece, pieces, x, y);
     }

@@ -1,5 +1,6 @@
-package Game;
+package BoardPieces;
 
+import Game.Game;
 import Pieces.*;
 
 import java.util.*;

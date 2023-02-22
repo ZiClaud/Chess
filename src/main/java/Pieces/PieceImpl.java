@@ -43,11 +43,11 @@ public class PieceImpl extends PieceAbst {
     public void move(Position position, HashSet<Piece> pieces) {
         isValidPosition(WindowBoard.getInstance().getBoardSize());
         this.moved = true;
-        take(pieces, position);
+        take(position, pieces);
         setPosition(position);
     }
 
-    private void take(HashSet<Piece> pieces, Position position) {
+    private void take(Position position, HashSet<Piece> pieces) {
         for (Piece piece : pieces) {
             if (piece.getPosition().equals(position)) {
                 pieces.remove(piece);
