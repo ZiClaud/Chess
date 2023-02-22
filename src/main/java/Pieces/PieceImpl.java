@@ -1,6 +1,5 @@
 package Pieces;
 
-import Board.BoardSize;
 import Board.WindowBoard;
 import Pieces.PossibleMoves.*;
 
@@ -45,6 +44,19 @@ public class PieceImpl extends PieceAbst {
         this.moved = true;
         take(position, pieces);
         setPosition(position);
+        removeAllyElPassant(pieces);
+    }
+
+    /**
+     * Each move, will cause all ally's pawns to have: allowsElPassant = false
+     */
+    private void removeAllyElPassant(HashSet<Piece> pieces) {
+        for (Piece piece : pieces) {
+            if (piece.getPieceColor() == pieceColor &&
+                    piece.getPieceType() == PieceType.Pawn) {
+                ((PawnPiece)piece).setAllowsElPassant(false);
+            }
+        }
     }
 
     private void take(Position position, HashSet<Piece> pieces) {

@@ -10,8 +10,6 @@ import java.util.HashSet;
  * This is abstract because it can be both white and black pawn
  */
 public abstract class PossibleMovesPawn extends PossibleMoves {
-    protected boolean allowsElPassant = false;
-
     protected void addPawnTakesMoves(Piece piece, Position posTakeLeft, Position posTakeRight, BoardSize boardSize, HashSet<Piece> pieces) {
         for (Piece enemyPiece : pieces) {
             if (enemyPiece.getPieceColor() != piece.getPieceColor()) {

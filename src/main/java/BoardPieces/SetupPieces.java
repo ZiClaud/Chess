@@ -7,6 +7,9 @@ import java.util.*;
 
 public class SetupPieces {
     public static void setupPieces(HashSet<Piece> pieces) {
+        if (!pieces.isEmpty()) {
+            pieces.removeAll(pieces);
+        }
         addPawns(pieces);
         addPieces(pieces);
     }

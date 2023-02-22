@@ -24,6 +24,18 @@ public class PossibleMovesWhitePawn extends PossibleMovesPawn {
      */
     @Override
     protected void extraMoves(Piece piece, BoardSize boardSize, HashSet<Piece> pieces) {
+        takePieceExtraMoves(piece, boardSize, pieces);
+        elPassantExtraMove(piece, boardSize, pieces);
+    }
+
+    private void elPassantExtraMove(Piece piece, BoardSize boardSize, HashSet<Piece> pieces) {
+        //TODO
+        // If opponent's pawn is next to yours, and it allows el passant
+        // Add el passant move
+        // Remove that pawn if moves there
+    }
+
+    private void takePieceExtraMoves(Piece piece, BoardSize boardSize, HashSet<Piece> pieces) {
         Position posTL = new Position((char) (piece.getPosition().getX() - 1), piece.getPosition().getY() + 1);
         Position posTR = new Position((char) (piece.getPosition().getX() + 1), piece.getPosition().getY() + 1);
 

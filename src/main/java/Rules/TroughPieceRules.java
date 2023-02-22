@@ -6,7 +6,7 @@ import Pieces.Position;
 
 import java.util.HashSet;
 
-public class ComplexRules {
+public class TroughPieceRules {
     public static boolean isGoingThroughPieceToGetThere(Piece piece, HashSet<Piece> pieces, Position position) {
         char x = position.getX();
         int y = position.getY();

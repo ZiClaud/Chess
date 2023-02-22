@@ -5,8 +5,8 @@ import Board.WindowBoard;
 import BoardPieces.BoardConnectPieces;
 import Pieces.Piece;
 import Pieces.Position;
-import Rules.ComplexRules;
 import Rules.ThreatRules;
+import Rules.TroughPieceRules;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -16,21 +16,6 @@ public abstract class PossibleMoves {
 
     public ArrayList<Position> getPositions() {
         return positions;
-    }
-
-    public void updatePossibleMoves() {
-        BoardConnectPieces board = BoardConnectPieces.getInstance();
-        HashSet<Piece> pieces = board.getPieces();
-
-        for (Piece piece : pieces) {
-            setPossibleMovesOnBoard(piece, pieces);
-        }
-    }
-
-    public void updatePossibleMoves(HashSet<Piece> pieces) {
-        for (Piece piece : pieces) {
-            setPossibleMovesOnBoard(piece, pieces);
-        }
     }
 
     public void setPossibleMovesOnBoard(Piece piece, HashSet<Piece> pieces) {
@@ -111,7 +96,7 @@ public abstract class PossibleMoves {
     protected void removeThroughPieceIllegalMoves(Piece piece, BoardSize size, HashSet<Piece> pieces) {
         for (int i = 0; i < positions.size(); i++) {
             Position position = positions.get(i);
-            if (ComplexRules.isGoingThroughPieceToGetThere(piece, pieces, position)) {
+            if (TroughPieceRules.isGoingThroughPieceToGetThere(piece, pieces, position)) {
                 positions.remove(position);
                 i = -1;
             }
