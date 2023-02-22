@@ -13,7 +13,7 @@ public interface Piece {
 
     boolean hasMoved();
 
-    void move(Position position, BoardSize boardSize, HashSet<Piece> pieces);
+    void move(Position position, HashSet<Piece> pieces);
 
     boolean isTurn();
 

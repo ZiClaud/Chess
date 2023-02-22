@@ -7,6 +7,7 @@ import Pieces.*;
 import Rules.ThreatRules;
 import Rules.TurnRules;
 import Rules.WinRules;
+import Utils.MyUtils;
 
 import javax.swing.*;
 import java.awt.*;
@@ -136,7 +137,7 @@ public class BoardConnectPieces {
 
     private void moveClicked(Piece piece, char x, int y) {
         windowBoard.colorTiles();
-        removeMoveToCoordinatesPanels(windowBoard);
+        removeMoveToCoordinatesPanels();
         moveToCoordinates(piece, x, y);
 
         TurnRules.switchTurn();
@@ -171,14 +172,45 @@ public class BoardConnectPieces {
 
 
     private void moveToCoordinates(Piece piece, char x, int y) {
+        Position oldPosition = piece.getPosition();
         Position position = new Position(x, y);
-        piece.move(position, windowBoard.getBoardSize(), getPieces());
+        piece.move(position, getPieces());
 
         placePieceOnPanel(piece, windowBoard.getMatrixPanels()[piece.getPosition().getY() - 1][piece.getPosition().getX() - 'a']);
-        removeMoveToCoordinatesPanels(windowBoard);
+        removeMoveToCoordinatesPanels();
 
         if (piece.getPieceType() == PieceType.Pawn && (piece.getPosition().getY() == 1 || piece.getPosition().getY() == 8)) {
             upgradePawn(piece);
+        }
+
+        if (piece.getPieceType() == PieceType.King) {
+            MyUtils.getCastlingRooks(piece, pieces);
+            if (position.getX() == (oldPosition.getX() + 2)) {
+                castleRightRook(piece);
+            }
+            if (position.getX() == (oldPosition.getX() - 2)) {
+                castleLeftRook(piece);
+            }
+        }
+    }
+
+    private void castleRightRook(Piece king) {
+        HashSet<Piece> rooks = MyUtils.getCastlingRooks(king, pieces);
+        Position position = new Position('f', king.getPosition().getY());
+        for (Piece rook : rooks) {
+            if (rook.getPosition().getX() > king.getPosition().getX()) {
+                rook.move(position, pieces);
+            }
+        }
+    }
+
+    private void castleLeftRook(Piece king) {
+        HashSet<Piece> rooks = MyUtils.getCastlingRooks(king, pieces);
+        Position position = new Position('d', king.getPosition().getY());
+        for (Piece rook : rooks) {
+            if (rook.getPosition().getX() < king.getPosition().getX()) {
+                rook.move(position, pieces);
+            }
         }
     }
 
@@ -198,8 +230,8 @@ public class BoardConnectPieces {
         return selectedPiece;
     }
 
-    private void removeMoveToCoordinatesPanels(WindowBoard windowBoard) {
-        JPanel[][] matrixPanels = windowBoard.getMatrixPanels();
+    private void removeMoveToCoordinatesPanels() {
+        JPanel[][] matrixPanels = WindowBoard.getInstance().getMatrixPanels();
         for (int y = 8; y >= 1; y--) {
             for (char x = 'a'; x <= 'h'; x++) {
                 for (JButton b : jMovesButtons) {
@@ -278,45 +310,6 @@ public class BoardConnectPieces {
                         ((KingOld) king).setCastle(false);
                         ((TowerOld) rook).setAllowCastle(false);
                         break;
-                    }
-                }
-            }
-        }
-    }
-*/
-/*
-    private void showPossibleMoves(Piece piece) {
-// TODO: Change with PiecesRules.getPossibleMoves(piece, getPieces()); ?
-
-        for (int y = 8; y >= 1; y--) {
-            for (char x = 'a'; x <= 'h'; x++) {
-                if (PiecesRules.isThisAPossibleMove(piece, getPieces(), x, y)) {
-                    if (ThreatRules.isCheckWhiteK(getPieces()) || ThreatRules.isCheckBlackK(getPieces())) {
-                        if (ThreatRules.doesStopCheck(getPieces(), piece, x, y)) {
-                            placeMoveOnPanel(piece, x, y);
-                        }
-                    } else {
-                        placeMoveOnPanel(piece, x, y);
-                    }
-                }
-            }
-        }
-
-        if (piece.getPieceType() == PieceType.King) {
-            showCastleMove(piece);
-        }
-    }     */
-
-/*
-    private void showCastleMove(Piece king) {
-        if (king.getPieceType() == PieceType.King) {
-            for (Piece rook : pieces) {
-                if (rook.getPieceType() == PieceType.Tower && rook.getPosY() == king.getPosY()) {
-                    if (((TowerOld) rook).allowsCastling() && rook.getPosX() == 'h' && ComplexRules.canThisKingCastleRight(king, getPieces())) {
-                        placeCaslteMoveOnPanel(king, rook);
-                    }
-                    if (((TowerOld) rook).allowsCastling() && rook.getPosX() == 'a' && ComplexRules.canThisKingCastleLeft(king, getPieces())) {
-                        placeCaslteMoveOnPanel(king, rook);
                     }
                 }
             }

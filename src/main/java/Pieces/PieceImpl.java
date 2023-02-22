@@ -1,6 +1,7 @@
 package Pieces;
 
 import Board.BoardSize;
+import Board.WindowBoard;
 import Pieces.PossibleMoves.*;
 
 import java.util.HashSet;
@@ -39,8 +40,8 @@ public class PieceImpl extends PieceAbst {
     }
 
     @Override
-    public void move(Position position, BoardSize boardSize, HashSet<Piece> pieces) {
-        isValidPosition(boardSize);
+    public void move(Position position, HashSet<Piece> pieces) {
+        isValidPosition(WindowBoard.getInstance().getBoardSize());
         this.moved = true;
         take(pieces, position);
         setPosition(position);
