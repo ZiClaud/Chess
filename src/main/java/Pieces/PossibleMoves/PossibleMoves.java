@@ -39,6 +39,7 @@ public abstract class PossibleMoves {
 
         addPossibleMovesPerPiece(piece, boardSize);
         extraMoves(piece, boardSize, pieces);
+
         removeIllegalMoves(piece, boardSize, pieces);
     }
 
@@ -46,7 +47,9 @@ public abstract class PossibleMoves {
         removeOutOfBoardIllegalMoves(boardSize, pieces);
         removeThroughPieceIllegalMoves(piece, boardSize, pieces);
         removeSamePieceAlreadyThereMoves(piece, pieces);
-        removeCheckIllegalMoves(piece, pieces);
+        if (BoardConnectPieces.getInstance().getPieces() == pieces) {
+            removeCheckIllegalMoves(piece, pieces);
+        }
     }
 
     private void removeSamePieceAlreadyThereMoves(Piece piece, HashSet<Piece> pieces) {

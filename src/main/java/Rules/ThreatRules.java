@@ -2,7 +2,6 @@ package Rules;
 
 import Game.Game;
 import Pieces.*;
-import Pieces.PossibleMoves.PossibleMoves;
 
 import java.util.HashSet;
 
@@ -30,7 +29,6 @@ public class ThreatRules {
     }
 
     public static boolean isOpponentCheck(HashSet<Piece> pieces) { // TODO: Is this used right?
-
         if (Game.whitePlayer.isTurn()) {
             return isCheckThisColorK(PieceColor.BLACK, pieces);
         } else if (Game.blackPlayer.isTurn()) {
@@ -59,34 +57,29 @@ public class ThreatRules {
     }
 
     public static boolean willThisMoveCauseCheck(Piece piece, HashSet<Piece> pieces, Position position) {
-        HashSet<Piece> futurePieces = new HashSet<>(pieces);
+        HashSet<Piece> futurePieces = getPiecesCopy(pieces);
         Piece futurePiece = PieceFactory.newPiece(piece.getPieceType(), piece.getPieceColor(), position);
         futurePieces.remove(piece);
         futurePieces.add(futurePiece);
 
-//        PossibleMoves.updatePossibleMoves(futurePieces);
-
-        if (isCheck2(futurePieces) != isCheck(futurePieces)){
-            System.out.println("Ma che oh");
-            System.err.println("Ma che oh");
-        }
-
-        if (isCheck(futurePieces)) { // TODO: FIX THIS - idk why it doesn't work yet
-            System.out.println(piece.getPossibleMoves().getPositions());
-            System.out.println(piece.getPieceType());
-            System.out.println(futurePiece.getPieceType());
-            System.out.println(position);
+        //TODO: THERE'S THE BUG
+        for (Piece fPiece : futurePieces) {
+            fPiece.getPossibleMoves().setPossibleMovesOnBoard(fPiece, futurePieces);
         }
 
         return isCheck(futurePieces);
     }
 
-    public static boolean isThisPositionThreatened(PieceColor pieceColor, HashSet<Piece> pieces, Position position) {
-        // TODO: It's possible that those positions are the old positions, we need to get the new ones
-        HashSet<Position> enemyPossiblePositions = getEnemyPossiblePositions(pieceColor, pieces);
+    private static HashSet<Piece> getPiecesCopy(HashSet<Piece> pieces) {
+        HashSet<Piece> ris = new HashSet<>();
+        for (Piece p : pieces) {
+            ris.add(PieceFactory.newPiece(p.getPieceType(), p.getPieceColor(), p.getPosition()));
+        }
+        return ris;
+    }
 
-        // TODO: Fix bug -> If we take with the king an enemy piece that is protected
-        // I think this is fixed
+    public static boolean isThisPositionThreatened(PieceColor pieceColor, HashSet<Piece> pieces, Position position) {
+        HashSet<Position> enemyPossiblePositions = getEnemyPossiblePositions(pieceColor, pieces);
 
         for (Position enemyPosition : enemyPossiblePositions) {
             if (enemyPosition.equals(position)) {
@@ -159,7 +152,6 @@ public class ThreatRules {
         for (Piece enemyPawn : enemyPawns) {
             enemyPossiblePositions.addAll(((PawnPiece) enemyPawn).getThreatPosition());
         }
-//        System.out.println("enemyPossiblePositions: " + enemyPossiblePositions);
         return enemyPossiblePositions;
     }
 }
