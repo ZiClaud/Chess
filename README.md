@@ -5,6 +5,7 @@ Chess made with Software Engeneering principles
 * Strategy
 * Decorator
 * Factory
+* Singleton
 
 ## Other design patterns that will be implemented:
 * State
