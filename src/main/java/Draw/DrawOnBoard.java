@@ -1,6 +1,8 @@
-package BoardPieces;
+package Draw;
 
+import Board.Board;
 import Board.WindowBoard;
+import BoardPieces.BoardConnectPieces;
 import Game.Game;
 import Pieces.*;
 import Rules.ThreatRules;
@@ -12,11 +14,12 @@ import javax.swing.*;
 import java.util.ArrayList;
 import java.util.HashSet;
 
-import static BoardPieces.DrawOnPanel.*;
+import static Draw.DrawOnPanel.*;
 
 public class DrawOnBoard {
+    private static final Board board = Board.getInstance();
     private static final HashSet<JButton> jMovesButtons = new HashSet<>();
-    private static BoardConnectPieces board = BoardConnectPieces.getInstance();
+    private static BoardConnectPieces boardPieces = BoardConnectPieces.getInstance();
 
     public static void resetBoard() {
         for (int y = 8; y >= 1; y--) {
@@ -30,8 +33,7 @@ public class DrawOnBoard {
     }
 
     public static void drawPiecesOnBoard() {
-        TurnRules.getTurn(board.getPieces());
-        for (Piece p : board.getPieces()) {
+        for (Piece p : board.getAllPieces()) {
             placePieceOnPanel(p, WindowBoard.getInstance().getMatrixPanels()[p.getPosition().getY() - 1][p.getPosition().getX() - 'a']);
         }
     }
@@ -43,7 +45,7 @@ public class DrawOnBoard {
         TurnRules.switchTurn();
 
         resetBoard();
-        WinRules.win(board.getPieces());
+        WinRules.win(board.getAllPieces());
     }
 
     protected static void pieceClicked(Piece piece) {
@@ -53,15 +55,15 @@ public class DrawOnBoard {
     }
 
     private static void updatePossibleMoves() {
-        for (Piece piece : board.getPieces()) {
-            piece.getPossibleMoves().setPossibleMovesOnBoard(piece, board.getPieces());
+        for (Piece piece : board.getAllPieces()) {
+            piece.getPossibleMoves().setPossibleMovesOnBoard(piece, board.getAllPieces());
         }
     }
 
     private static void moveToCoordinates(Piece piece, char x, int y) {
         Position oldPosition = piece.getPosition();
         Position position = new Position(x, y);
-        piece.move(position, board.getPieces());
+        piece.move(position, board.getAllPieces());
 
         placePieceOnPanel(piece, WindowBoard.getInstance().getMatrixPanels()[piece.getPosition().getY() - 1][piece.getPosition().getX() - 'a']);
         removeMoveToCoordinatesPanels();
@@ -71,7 +73,7 @@ public class DrawOnBoard {
         }
 
         if (piece.getPieceType() == PieceType.King) {
-            MyUtils.getCastlingRooks(piece, board.getPieces());
+            MyUtils.getCastlingRooks(piece, board.getAllPieces());
             if (position.getX() == (oldPosition.getX() + 2)) {
                 castleRightRook(piece);
             }
@@ -82,30 +84,30 @@ public class DrawOnBoard {
     }
 
     private static void castleRightRook(Piece king) {
-        HashSet<Piece> rooks = MyUtils.getCastlingRooks(king, board.getPieces());
+        HashSet<Piece> rooks = MyUtils.getCastlingRooks(king, board.getAllPieces());
         Position position = new Position('f', king.getPosition().getY());
         for (Piece rook : rooks) {
             if (rook.getPosition().getX() > king.getPosition().getX()) {
-                rook.move(position, board.getPieces());
+                rook.move(position, board.getAllPieces());
             }
         }
     }
 
     private static void castleLeftRook(Piece king) {
-        HashSet<Piece> rooks = MyUtils.getCastlingRooks(king, board.getPieces());
+        HashSet<Piece> rooks = MyUtils.getCastlingRooks(king, board.getAllPieces());
         Position position = new Position('d', king.getPosition().getY());
         for (Piece rook : rooks) {
             if (rook.getPosition().getX() < king.getPosition().getX()) {
-                rook.move(position, board.getPieces());
+                rook.move(position, board.getAllPieces());
             }
         }
     }
 
     private static void upgradePawn(Piece piece) {
         PieceType pieceType = chooseUpgradePiece();
-        board.getPieces().remove(piece);
+        board.removePiece(piece);
         piece = new PieceImpl(pieceType, piece.getPieceColor(), piece.getPosition());
-        board.getPieces().add(piece);
+        board.addPiece(piece);
     }
 
     private static PieceType chooseUpgradePiece() {
@@ -118,7 +120,7 @@ public class DrawOnBoard {
     }
 
     private static void colorCheck() {
-        if (ThreatRules.isCheck(board.getPieces())) {
+        if (ThreatRules.isCheck(board.getAllPieces())) {
             Piece king = getKingWhoseTurnIsIt();
             assert king != null;
             char x = king.getPosition().getX();
@@ -130,10 +132,10 @@ public class DrawOnBoard {
 
     private static Piece getKingWhoseTurnIsIt() {
         if (Game.whitePlayer.isTurn()) {
-            return ThreatRules.getKing(PieceColor.WHITE, board.getPieces());
+            return ThreatRules.getKing(PieceColor.WHITE, board.getAllPieces());
         }
         if (Game.blackPlayer.isTurn()) {
-            return ThreatRules.getKing(PieceColor.BLACK, board.getPieces());
+            return ThreatRules.getKing(PieceColor.BLACK, board.getAllPieces());
         }
 
         assert false;

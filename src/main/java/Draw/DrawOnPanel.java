@@ -1,4 +1,4 @@
-package BoardPieces;
+package Draw;
 
 import Board.WindowBoard;
 import Pieces.Piece;
@@ -8,8 +8,8 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.HashSet;
 
-import static BoardPieces.DrawOnBoard.moveClicked;
-import static BoardPieces.DrawOnBoard.pieceClicked;
+import static Draw.DrawOnBoard.moveClicked;
+import static Draw.DrawOnBoard.pieceClicked;
 
 public class DrawOnPanel {
     protected static void cleanPanel(JPanel panel) {

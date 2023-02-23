@@ -1,8 +1,7 @@
 package Game;
 
 import Board.WindowBoard;
-import BoardPieces.BoardConnectPieces;
-import BoardPieces.DrawOnBoard;
+import Draw.DrawOnBoard;
 import Player.Player;
 import Player.PlayerBlack;
 import Player.PlayerWhite;
@@ -12,12 +11,11 @@ import javax.swing.*;
 import java.util.Arrays;
 
 public class Game {
-    public static final Player whitePlayer = new PlayerWhite();
-    public static final Player blackPlayer = new PlayerBlack();
+    public static final Player whitePlayer = PlayerWhite.getInstance();
+    public static final Player blackPlayer = PlayerBlack.getInstance();
     public static String gameMode;
     public static Integer boardSize;
     private static WindowBoard windowBoard;
-    private final BoardConnectPieces boardPieces;
 
     public Game() {
         if (boardSize == null) {
@@ -29,7 +27,6 @@ public class Game {
         windowBoard = WindowBoard.getInstance();
 
         // Pieces in board
-        boardPieces = BoardConnectPieces.getNewInstance();
         DrawOnBoard.drawPiecesOnBoard();
     }
 

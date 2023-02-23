@@ -1,7 +1,9 @@
 package BoardPieces;
 
 import Board.WindowBoard;
-import Pieces.*;
+import Pieces.Piece;
+import Player.PlayerBlack;
+import Player.PlayerWhite;
 
 import java.util.HashSet;
 
@@ -11,10 +13,11 @@ import java.util.HashSet;
  */
 public class BoardConnectPieces {
     private static BoardConnectPieces instance;
-    private final HashSet<Piece> pieces = new HashSet<>();
+    private final HashSet<Piece> whitePieces = PlayerWhite.getInstance().getPieces();
+    private final HashSet<Piece> blackPieces = PlayerBlack.getInstance().getPieces();
 
     private BoardConnectPieces() {
-        SetupPieces.setupPieces(pieces);
+        SetupPieces.setupPieces();
     }
 
     public static BoardConnectPieces getInstance() {
@@ -31,8 +34,12 @@ public class BoardConnectPieces {
         return instance;
     }
 
-    public HashSet<Piece> getPieces() {
-        return pieces;
+    public HashSet<Piece> getWhitePieces() {
+        return whitePieces;
+    }
+
+    public HashSet<Piece> getBlackPieces() {
+        return blackPieces;
     }
 }
 

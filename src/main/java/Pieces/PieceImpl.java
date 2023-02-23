@@ -1,5 +1,6 @@
 package Pieces;
 
+import Board.Board;
 import Board.WindowBoard;
 import Pieces.PossibleMoves.*;
 
@@ -54,7 +55,7 @@ public class PieceImpl extends PieceAbst {
         for (Piece piece : pieces) {
             if (piece.getPieceColor() == pieceColor &&
                     piece.getPieceType() == PieceType.Pawn) {
-                ((PawnPiece)piece).setAllowsElPassant(false);
+                ((PawnPiece) piece).setAllowsElPassant(false);
             }
         }
     }
@@ -62,7 +63,7 @@ public class PieceImpl extends PieceAbst {
     private void take(Position position, HashSet<Piece> pieces) {
         for (Piece piece : pieces) {
             if (piece.getPosition().equals(position)) {
-                pieces.remove(piece);
+                Board.getInstance().removePiece(piece);
                 break;
             }
         }

@@ -1,6 +1,5 @@
 package Pieces;
 
-import Board.BoardSize;
 import Pieces.PossibleMoves.PossibleMoves;
 
 import java.awt.image.BufferedImage;

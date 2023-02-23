@@ -2,11 +2,54 @@ package BoardPieces;
 
 import Game.Game;
 import Pieces.*;
+import Player.PlayerBlack;
+import Player.PlayerWhite;
 
 import java.util.*;
 
 public class SetupPieces {
-    public static void setupPieces(HashSet<Piece> pieces) {
+    private static ArrayList<PieceType> pieceOrder = new ArrayList<>(List.of(PieceType.Tower, PieceType.Knight, PieceType.Bishop, PieceType.Queen, PieceType.King, PieceType.Bishop, PieceType.Knight, PieceType.Tower));
+
+    public static void setupPieces() {
+        if (!Game.gameMode.equals("Normal")) {
+            do {
+                Collections.shuffle(pieceOrder);
+            } while (!isKingBetweenRooks(pieceOrder) || areBishopsOnSameColor(pieceOrder));
+        }
+
+        setupWhitePieces();
+        setupBlackPieces();
+    }
+
+
+    public static void setupPieces(HashSet<Piece> allPieces) {
+        if (!Game.gameMode.equals("Normal")) {
+            do {
+                Collections.shuffle(pieceOrder);
+            } while (!isKingBetweenRooks(pieceOrder) || areBishopsOnSameColor(pieceOrder));
+        }
+
+        if (!allPieces.isEmpty()) {
+            allPieces.removeAll(allPieces);
+        }
+        setupWhitePieces();
+        setupBlackPieces();
+
+        allPieces.addAll(PlayerWhite.getInstance().getPieces());
+        allPieces.addAll(PlayerBlack.getInstance().getPieces());
+    }
+
+    private static void setupWhitePieces() {
+        HashSet<Piece> pieces = PlayerWhite.getInstance().getPieces();
+        if (!pieces.isEmpty()) {
+            pieces.removeAll(pieces);
+        }
+        addPawns(pieces);
+        addPieces(pieces);
+    }
+
+    private static void setupBlackPieces() {
+        HashSet<Piece> pieces = PlayerBlack.getInstance().getPieces();
         if (!pieces.isEmpty()) {
             pieces.removeAll(pieces);
         }
@@ -15,6 +58,11 @@ public class SetupPieces {
     }
 
     private static void addPawns(HashSet<Piece> pieces) {
+        addWhitePawns(pieces);
+        addBlackPawns(pieces);
+    }
+
+    private static void addWhitePawns(HashSet<Piece> pieces) {
         pieces.addAll(Set.of(
                 PieceFactory.newPiece(PieceType.Pawn, PieceColor.WHITE, new Position('a', 2)),
                 PieceFactory.newPiece(PieceType.Pawn, PieceColor.WHITE, new Position('b', 2)),
@@ -23,8 +71,12 @@ public class SetupPieces {
                 PieceFactory.newPiece(PieceType.Pawn, PieceColor.WHITE, new Position('e', 2)),
                 PieceFactory.newPiece(PieceType.Pawn, PieceColor.WHITE, new Position('f', 2)),
                 PieceFactory.newPiece(PieceType.Pawn, PieceColor.WHITE, new Position('g', 2)),
-                PieceFactory.newPiece(PieceType.Pawn, PieceColor.WHITE, new Position('h', 2)),
+                PieceFactory.newPiece(PieceType.Pawn, PieceColor.WHITE, new Position('h', 2))
+        ));
+    }
 
+    private static void addBlackPawns(HashSet<Piece> pieces) {
+        pieces.addAll(Set.of(
                 PieceFactory.newPiece(PieceType.Pawn, PieceColor.BLACK, new Position('a', 7)),
                 PieceFactory.newPiece(PieceType.Pawn, PieceColor.BLACK, new Position('b', 7)),
                 PieceFactory.newPiece(PieceType.Pawn, PieceColor.BLACK, new Position('c', 7)),
@@ -37,14 +89,11 @@ public class SetupPieces {
     }
 
     private static void addPieces(HashSet<Piece> pieces) {
-        ArrayList<PieceType> pieceOrder = new ArrayList<>(List.of(PieceType.Tower, PieceType.Knight, PieceType.Bishop, PieceType.Queen, PieceType.King, PieceType.Bishop, PieceType.Knight, PieceType.Tower));
+        addWhitePieces(pieces);
+        addBlackPieces(pieces);
+    }
 
-        if (!Game.gameMode.equals("Normal")) {
-            do {
-                Collections.shuffle(pieceOrder);
-            } while (!isKingBetweenRooks(pieceOrder) || areBishopsOnSameColor(pieceOrder));
-        }
-
+    private static void addWhitePieces(HashSet<Piece> pieces) {
         pieces.addAll(Set.of(
                 PieceFactory.newPiece(pieceOrder.get(0), PieceColor.WHITE, new Position('a', 1)),
                 PieceFactory.newPiece(pieceOrder.get(1), PieceColor.WHITE, new Position('b', 1)),
@@ -53,8 +102,12 @@ public class SetupPieces {
                 PieceFactory.newPiece(pieceOrder.get(4), PieceColor.WHITE, new Position('e', 1)),
                 PieceFactory.newPiece(pieceOrder.get(5), PieceColor.WHITE, new Position('f', 1)),
                 PieceFactory.newPiece(pieceOrder.get(6), PieceColor.WHITE, new Position('g', 1)),
-                PieceFactory.newPiece(pieceOrder.get(7), PieceColor.WHITE, new Position('h', 1)),
+                PieceFactory.newPiece(pieceOrder.get(7), PieceColor.WHITE, new Position('h', 1))
+        ));
+    }
 
+    private static void addBlackPieces(HashSet<Piece> pieces) {
+        pieces.addAll(Set.of(
                 PieceFactory.newPiece(pieceOrder.get(0), PieceColor.BLACK, new Position('a', 8)),
                 PieceFactory.newPiece(pieceOrder.get(1), PieceColor.BLACK, new Position('b', 8)),
                 PieceFactory.newPiece(pieceOrder.get(2), PieceColor.BLACK, new Position('c', 8)),

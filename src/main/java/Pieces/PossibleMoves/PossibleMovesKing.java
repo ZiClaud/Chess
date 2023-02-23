@@ -2,7 +2,6 @@ package Pieces.PossibleMoves;
 
 import Board.BoardSize;
 import Pieces.Piece;
-import Pieces.PieceType;
 import Pieces.Position;
 import Rules.ThreatRules;
 import Utils.MyUtils;
@@ -26,7 +25,7 @@ public class PossibleMovesKing extends PossibleMoves {
         positions.add(new Position((char) (pX - 1), pY - 1));
         positions.add(new Position((char) (pX - 1), pY + 1));
     }
-/*
+
     @Override
     protected void removeCheckIllegalMoves(Piece piece, HashSet<Piece> pieces) {
         int i = 0;
@@ -40,7 +39,7 @@ public class PossibleMovesKing extends PossibleMoves {
             i++;
         }
     }
-*/
+
     /**
      * Castle
      */

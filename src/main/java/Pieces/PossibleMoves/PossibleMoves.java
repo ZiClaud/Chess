@@ -1,8 +1,8 @@
 package Pieces.PossibleMoves;
 
+import Board.Board;
 import Board.BoardSize;
 import Board.WindowBoard;
-import BoardPieces.BoardConnectPieces;
 import Pieces.Piece;
 import Pieces.Position;
 import Rules.ThreatRules;
@@ -32,7 +32,7 @@ public abstract class PossibleMoves {
         removeOutOfBoardIllegalMoves(boardSize, pieces);
         removeThroughPieceIllegalMoves(piece, boardSize, pieces);
         removeSamePieceAlreadyThereMoves(piece, pieces);
-        if (BoardConnectPieces.getInstance().getPieces() == pieces) {
+        if (Board.getInstance().getAllPieces() == pieces) {
             removeCheckIllegalMoves(piece, pieces);
         }
     }

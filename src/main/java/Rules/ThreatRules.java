@@ -57,17 +57,20 @@ public class ThreatRules {
     }
 
     public static boolean willThisMoveCauseCheck(Piece piece, HashSet<Piece> pieces, Position position) {
-        HashSet<Piece> futurePieces = getPiecesCopy(pieces);
+/*
+        FutureBoard futureBoard = FutureBoard.getNewInstance();
+        futureBoard.setBoardPieces();
         Piece futurePiece = PieceFactory.newPiece(piece.getPieceType(), piece.getPieceColor(), position);
-        futurePieces.remove(piece);
-        futurePieces.add(futurePiece);
+        futureBoard.removePiece(piece);
+        futureBoard.addPiece(futurePiece);
 
         //TODO: THERE'S THE BUG
-        for (Piece fPiece : futurePieces) {
-            fPiece.getPossibleMoves().setPossibleMovesOnBoard(fPiece, futurePieces);
+        for (Piece fPiece : futureBoard.getPieces()) {
+            fPiece.getPossibleMoves().setPossibleMovesOnBoard(fPiece, futureBoard.getPieces());
         }
-
-        return isCheck(futurePieces);
+        return isCheck(futureBoard.getPieces());
+ */
+        return false;
     }
 
     private static HashSet<Piece> getPiecesCopy(HashSet<Piece> pieces) {
@@ -99,6 +102,7 @@ public class ThreatRules {
     private static boolean isThisPieceProtected(Piece piece, HashSet<Piece> pieces) {
         HashSet<Piece> piecesWithoutPiece = getEnemyPieces(piece.getPieceColor(), pieces);
         piecesWithoutPiece.remove(piece);
+        // TODO: FIX THISSS
         HashSet<Position> possiblePositions = getEnemyPossiblePositions(piece.getPieceColor(), piecesWithoutPiece);
         if (possiblePositions.contains(piece.getPosition())) {
             return true;
@@ -147,6 +151,7 @@ public class ThreatRules {
 
 
         for (Piece enemyPiece : enemyPieces) {
+            // TODO: FIX THISSSSSSS
             enemyPossiblePositions.addAll(enemyPiece.getPossibleMoves().getPositions());
         }
         for (Piece enemyPawn : enemyPawns) {
